@@ -1,0 +1,1 @@
+# vc-theme-auto-tests
