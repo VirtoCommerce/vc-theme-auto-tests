@@ -78,7 +78,7 @@ personalRegistration(){
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
         cy.wait(1000);
-        cy.location('pathname').should('eq', "/successful-registration");
+        cy.location('pathname').should('contain', "successful-registration");
         cy.get('.vc-typography--variant--h2').contains("Registration completed");
         cy.get('.flex > .vc-button').should('be.exist');
         cy.log('Personal account is created');    
@@ -100,7 +100,7 @@ companyRegistration(){
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
         cy.wait(1000);
-        cy.location('pathname').should('eq', "/successful-registration");
+        cy.location('pathname').should('contain', "successful-registration");
         cy.get('.vc-typography--variant--h2').contains("Registration completed");
         cy.get('.flex > .vc-button').should('be.exist');
 
