@@ -1,0 +1,54 @@
+name: example-start-and-yarn-workspaces
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  single:
+    # the example has Yarn workspace in its "root" folder
+    # examples/start-and-yarn-workspaces
+    # and tests in a subfolder like "workspace-1"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Single
+        uses: ./
+        with:
+          working-directory: examples/start-and-yarn-workspaces/workspace-1
+          build: yarn run build
+          start: yarn start
+          wait-on: 'http://localhost:5000'
+
+  multiple:
+    # example with web application build,
+    # server start and waiting for the server
+    # to respond before running tests
+    # in each Yarn workspaces subfolder
+    runs-on: ubuntu-22.04
+    strategy:
+      # when one test fails, DO NOT cancel the other
+      # containers, because this will kill Cypress processes
+      # leaving the Cypress Cloud hanging ...
+      # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
+      matrix:
+        cypress:
+          - working_directory: examples/start-and-yarn-workspaces/workspace-1
+          - working_directory: examples/start-and-yarn-workspaces/workspace-2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress tests
+        uses: ./
+        with:
+          working-directory: ${{ matrix.cypress.working_directory }}
+          build: yarn run build
+          start: yarn start
+          wait-on: 'http://localhost:5000'

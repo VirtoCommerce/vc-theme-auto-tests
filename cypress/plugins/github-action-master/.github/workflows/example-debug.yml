@@ -1,0 +1,21 @@
+name: example-debug
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  debug-logs:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress debug logs 📝
+        uses: ./
+        env:
+          DEBUG: '@cypress/github-action'
+        with:
+          working-directory: examples/basic
