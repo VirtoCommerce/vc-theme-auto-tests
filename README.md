@@ -3,5 +3,10 @@
 ## environment setup
 
 - install packages `npm install`
-- create file .env based on .env.example
-- fill it with proper data
+- create file .env based on `.env.example`
+- create the `.env` file in the same folder as `.env.example`
+- assign the variables the desired values without quotes.
+  Spaces between the equal sign are also not needed.
+
+## open tests browser environment
+`npm run cy:open`
