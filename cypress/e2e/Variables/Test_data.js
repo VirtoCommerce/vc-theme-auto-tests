@@ -1,8 +1,8 @@
 class TestData {
     constructor() {
         this.email = 'mutykovaele@gmail.com';
-        this.password = 'Password1';
+        this.password = 'Password2';
     }
 }
 
-export default new TestData();
+export default new TestData;
