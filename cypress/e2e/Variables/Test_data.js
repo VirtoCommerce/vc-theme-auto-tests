@@ -1,7 +1,7 @@
 class TestData {
     constructor() {
-        this.email = 'mutykovaele@gmail.com';
-        this.password = 'Password1';
+        this.email = Cypress.env('LOGIN_PERSONAL_EMAIL');
+        this.password = Cypress.env('LOGIN_PERSONAL_PASSWORD');
     }
 }
 
