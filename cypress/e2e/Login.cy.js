@@ -1,10 +1,10 @@
 // Importing Page Objects
 import LoginPage from '../support/page_objects/LoginPage/LoginPage';
-import TestData from './Variables/Test_data';
+import TestData from './Variables/TestData';
 
 describe('Login', () => {
   // Initializing Page Objects
-  const loginPage = new LoginPage(); 
+  const loginPage = new LoginPage();
 
   // This block runs before each test
   beforeEach(() => {
