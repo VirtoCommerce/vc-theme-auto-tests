@@ -4,17 +4,17 @@ class AuthLogin {
     cy.viewport(1024, 700)
   }
     visitHomePage() {
-      cy.visit('https://vcst-qa-storefront.paas.govirto.com');
+      cy.visit(Cypress.env('baseUrl'));
      
     }
 
     visitSignUpPage() {
-      cy.visit('https://vcst-qa-storefront.paas.govirto.com/sign-up');
+      cy.visit(Cypress.env('baseUrl'));
      
     }
 
     visitSignInPage() {
-      cy.visit('https://vcst-qa-storefront.paas.govirto.com/sign-in');
+      cy.visit(Cypress.env('baseUrl'));
       
     }
   }

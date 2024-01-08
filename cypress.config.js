@@ -8,7 +8,7 @@ module.exports = defineConfig({
     LOGIN_PERSONAL_PASSWORD: process.env.LOGIN_PERSONAL_PASSWORD,
     LOGIN_CORP_EMAIL: process.env.LOGIN_CORP_EMAIL,
     LOGIN_CORP_PASSWORD: process.env.LOGIN_CORP_PASSWORD,
-    baseUrl: process.env.PLATFORM_URL,
+    baseUrl:'https://virtostart-demo-store.govirto.com',   
     viewportWidth: 1600,
     viewportHeight: 700
   },
