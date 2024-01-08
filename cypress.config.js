@@ -4,9 +4,11 @@ require('dotenv').config();
 
 module.exports = defineConfig({
   env: {
-    username: process.env.LOGIN,
-    password: process.env.PASSWORD,
-    baseUrl: "https://vcst-qa-storefront.paas.govirto.com",
+    LOGIN_PERSONAL_EMAIL: process.env.LOGIN_PERSONAL_EMAIL,
+    LOGIN_PERSONAL_PASSWORD: process.env.LOGIN_PERSONAL_PASSWORD,
+    LOGIN_CORP_EMAIL: process.env.LOGIN_CORP_EMAIL,
+    LOGIN_CORP_PASSWORD: process.env.LOGIN_CORP_PASSWORD,
+    baseUrl: process.env.PLATFORM_URL,
     viewportWidth: 1600,
     viewportHeight: 700
   },
