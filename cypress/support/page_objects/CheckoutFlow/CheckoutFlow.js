@@ -42,3 +42,26 @@ export class AnonymousCheckout {
     cy.url().should('include', '/checkout/completed');
   }
 }
+
+export class PersonalCheckout {
+  selectShippingAddress() {
+    cy.contains('button', 'select a shipping address').click();
+    cy.wait(500);
+    cy.contains('button', 'Select').click();
+    cy.contains('button', 'OK').click();
+  }
+
+  selectDelivery(method) {
+    cy.contains('span', 'Select a delivery method').click();
+    cy.contains('span', method).click();
+  }
+
+  proceedToBilling() {
+    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
+  }
+
+  leaveComment(text) {
+    cy.get('textarea').type(text);
+
+  }
+}

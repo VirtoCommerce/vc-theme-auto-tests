@@ -1,4 +1,5 @@
 import LoginPage from '../support/page_objects/LoginPage/LoginPage';
+import TestData from "./Variables/TestData";
 
 describe('Login', () => {
   // Initializing Page Objects
@@ -13,7 +14,7 @@ describe('Login', () => {
 
   // Main Test Scenario
   it('Should login and then perform actions', () => {
-    loginPage.login();
+    loginPage.login(TestData.email, TestData.password);
     // Verify successful login
     cy.wait(2000);
     cy.url().should('include', '/catalog')

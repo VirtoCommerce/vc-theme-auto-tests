@@ -1,10 +1,8 @@
 import AuthLogin from '../../../support/navigation/AuthLogin';
 import { LoginPageLocators } from './LoginPageLocators/LoginPageLocators';
-import TestData from "../../../e2e/Variables/TestData";
 
 // Class for handling operations related to the Login Page
 class LoginPage {
-
   // Navigate to the Login Page
   visit() {
     AuthLogin.visitSignInPage();
@@ -69,11 +67,11 @@ class LoginPage {
     });
   }
 
-  login() {
+  login(email, password) {
     cy.log('Starting Login Phase');
     this.visit();
-    this.fillEmail(TestData.email);
-    this.fillPassword(TestData.password);
+    this.fillEmail(email);
+    this.fillPassword(password);
     this.clickLoginButton();
     this.checkNoErrorMessage();
     cy.log('Verifying successful login');
