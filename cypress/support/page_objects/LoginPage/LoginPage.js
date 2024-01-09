@@ -1,5 +1,6 @@
 import AuthLogin from '../../../support/navigation/AuthLogin';
 import { LoginPageLocators } from './LoginPageLocators/LoginPageLocators';
+import TestData from "../../../e2e/Variables/TestData";
 
 // Class for handling operations related to the Login Page
 class LoginPage {
@@ -66,6 +67,16 @@ class LoginPage {
         cy.log('Completed: No error message element found, which is expected.'); // Logging
       }
     });
+  }
+
+  login() {
+    cy.log('Starting Login Phase');
+    this.visit();
+    this.fillEmail(TestData.email);
+    this.fillPassword(TestData.password);
+    this.clickLoginButton();
+    this.checkNoErrorMessage();
+    cy.log('Verifying successful login');
   }
 }
 
