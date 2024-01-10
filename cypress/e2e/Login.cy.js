@@ -15,10 +15,6 @@ describe('Login', () => {
   // Main Test Scenario
   it('Should login and then perform actions', () => {
     loginPage.login(TestData.email, TestData.password);
-    // Verify successful login
-    cy.wait(2000);
-    cy.url().should('include', '/catalog')
-
   })
 
 })

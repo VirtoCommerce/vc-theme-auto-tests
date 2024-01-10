@@ -75,6 +75,7 @@ class LoginPage {
     this.clickLoginButton();
     this.checkNoErrorMessage();
     cy.log('Verifying successful login');
+    cy.url().should('include', '/catalog');
   }
 }
 
