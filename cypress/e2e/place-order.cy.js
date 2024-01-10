@@ -36,12 +36,13 @@ describe('place order', () => {
   });
 
   it('places order created by Anonymous user', () => {
-    cy.log('Adding to cart');
     productPage.visit(PRODUCT_URL);
-    productPage.purchase();
-    cy.wait(1000);
-    cartPage.visit();
-    cartPage.checkout();
+
+    cy.wait(500);
+
+    cy.wait('@GetProductQuery').then(productPage.purchase);
+    cy.wait('@AddItemMutation').then(cartPage.visitByCartClick);
+    cy.wait('@GetFullCartQuery').then(cartPage.checkout);
 
     anonymousCheckout.fillShippingAddress();
     anonymousCheckout.selectDelivery('Fixed Rate (Ground)');
