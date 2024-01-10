@@ -46,7 +46,6 @@ export class AnonymousCheckout {
 export class PersonalCheckout {
   selectShippingAddress() {
     cy.contains('button', 'select a shipping address').click();
-    cy.wait(500);
     cy.contains('button', 'Select').click();
     cy.contains('button', 'OK').click();
   }
