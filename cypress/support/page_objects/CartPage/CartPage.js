@@ -5,6 +5,10 @@ class CartPage {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
   }
 
+  visitByCartClick() {
+    cy.get(CartPageLocators.HEADER_CART_LINK).click();
+  }
+
   checkout() {
     cy.get(CartPageLocators.CHECKOUT_BUTTON).click();
   }

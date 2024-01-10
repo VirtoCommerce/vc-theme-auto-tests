@@ -42,3 +42,52 @@ export class AnonymousCheckout {
     cy.url().should('include', '/checkout/completed');
   }
 }
+
+export class PersonalCheckout {
+  selectShippingAddress() {
+    cy.contains('button', 'select a shipping address').click();
+    cy.contains('button', 'Select').click();
+    cy.contains('button', 'OK').click();
+  }
+
+  selectDelivery(method) {
+    cy.contains('span', 'Select a delivery method').click();
+    cy.contains('span', method).click();
+  }
+
+  proceedToBilling() {
+    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
+  }
+
+  leaveComment(text) {
+    cy.get('textarea').type(text);
+  }
+
+  selectPaymentMethod(method) {
+    cy.contains('span', 'Select a payment method').click();
+    cy.contains('span', method).click();
+  }
+
+  reviewOrder() {
+    cy.get(CheckoutFlowLocators.REVIEW_ORDER).click();
+  }
+
+  placeOrder() {
+    cy.contains('button', 'Place order').click();
+  }
+
+  fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
+    cy.contains('div', 'Card number').find('input').type(cardNumber);
+    cy.contains('div', 'Security Code').find('input').type(cvv);
+    cy.contains('div', 'Cardholder name').find('input').type(name);
+    cy.contains('div', 'Expiration date').find('input').type(date);
+  }
+
+  pay() {
+    cy.contains('button', 'Pay Now').click();
+  }
+
+  isPayed() {
+    cy.url().should('include', '/checkout/payment/success');
+  }
+}

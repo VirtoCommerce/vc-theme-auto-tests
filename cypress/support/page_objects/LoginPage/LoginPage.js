@@ -3,7 +3,6 @@ import { LoginPageLocators } from './LoginPageLocators/LoginPageLocators';
 
 // Class for handling operations related to the Login Page
 class LoginPage {
-
   // Navigate to the Login Page
   visit() {
     AuthLogin.visitSignInPage();
@@ -66,6 +65,17 @@ class LoginPage {
         cy.log('Completed: No error message element found, which is expected.'); // Logging
       }
     });
+  }
+
+  login(email, password) {
+    cy.log('Starting Login Phase');
+    this.visit();
+    this.fillEmail(email);
+    this.fillPassword(password);
+    this.clickLoginButton();
+    this.checkNoErrorMessage();
+    cy.log('Verifying successful login');
+    cy.url().should('include', '/catalog');
   }
 }
 
