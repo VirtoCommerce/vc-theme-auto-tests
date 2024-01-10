@@ -1,4 +1,4 @@
-class ProductPage {
+class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
     cy.log('Step: Visited Catalog Page');
@@ -12,4 +12,4 @@ class ProductPage {
   }
 }
 
-export default ProductPage;
+export default CatalogPage;
