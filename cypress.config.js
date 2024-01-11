@@ -12,8 +12,7 @@ module.exports = defineConfig({
     CVV: process.env.CVV,
 
     PLATFORM_URL: process.env.PLATFORM_URL,
-    viewportWidth: 1600,
-    viewportHeight: 700
+    DEVICE_NAME: process.env.DEVICE_NAME,
   },
   e2e: {
     setupNodeEvents(on, config) {

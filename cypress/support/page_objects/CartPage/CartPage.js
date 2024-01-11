@@ -14,12 +14,17 @@ class CartPage {
   }
 
   clearCart() {
-    cy.get('button').contains('Clear cart').click();
-    cy.get('button').contains('Yes').click();
+    cy.get('button').contains('Clear cart').click();   
+  }
+
+  confirmClearCart(){
+cy.contains('#headlessui-dialog-title-6', 'Clear cart').should('exist');
+cy.get('button').contains('Yes').click();
   }
 
   isCleared() {
     cy.contains('h2', 'Your cart is empty').should('be.visible');
+    cy.get('.vc-badge__content').should('not.exist');
   }
 }
 
