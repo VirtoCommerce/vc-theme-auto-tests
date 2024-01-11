@@ -17,6 +17,10 @@ class CartPage {
     cy.get('button').contains('Clear cart').click();
     cy.get('button').contains('Yes').click();
   }
+
+  isCleared() {
+    cy.contains('h2', 'Your cart is empty').should('be.visible');
+  }
 }
 
 export default CartPage;
