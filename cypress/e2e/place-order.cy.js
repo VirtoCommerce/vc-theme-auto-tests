@@ -21,28 +21,16 @@ describe('place order', () => {
 
     cy.intercept('/xapi/graphql', (req) => {
       aliasQuery(req, 'GetShortCart');
-      aliasQuery(req, 'GetMyAddresses');
-      aliasQuery(req, 'GetMe');
-      aliasQuery(req, 'GetShortCart');
-      aliasQuery(req, 'GetProduct');
-      aliasQuery(req, 'GetFullCart');
-
-      aliasMutation(req, 'ClearCart');
-      aliasMutation(req, 'AddItem');
-      aliasMutation(req, 'InitializePayment');
     });
-
-    cy.intercept({ url: '/storefrontapi/account/login' }).as('storefrontLogin');
   });
 
   it('places order created by Anonymous user', () => {
     productPage.visit(PRODUCT_URL);
-
-    cy.wait(500);
-
-    cy.wait('@GetProductQuery').then(productPage.purchase);
-    cy.wait('@AddItemMutation').then(cartPage.visitByCartClick);
-    cy.wait('@GetFullCartQuery').then(cartPage.checkout);
+    productPage.purchase();
+    cy.checkLoading('.vc-button__loader');
+    cartPage.visitByCartClick();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.checkout();
 
     anonymousCheckout.fillShippingAddress();
     anonymousCheckout.selectDelivery('Fixed Rate (Ground)');
@@ -56,43 +44,47 @@ describe('place order', () => {
 
   it('places order as Personal user', () => {
     loginPage.login(TestData.email, TestData.password);
-    cy.wait('@storefrontLogin')
-      .wait('@GetMeQuery')
-      .wait('@GetShortCartQuery')
+    cy.wait('@GetShortCartQuery')
       .wait('@GetShortCartQuery')
       .then((interception) => {
       if(interception.response.body.data.cart.itemsQuantity) {
         cy.log('Clearing cart');
         cartPage.visit();
         cartPage.clearCart();
-        cy.wait('@ClearCartMutation').then(() => {
-          productPage.visit(PRODUCT_URL);
-        })
+        cartPage.confirmClearCart();
+        cy.checkLoading('.vc-loader-overlay__spinner');
+        productPage.visit(PRODUCT_URL);
       } else {
         productPage.visit(PRODUCT_URL);
       }
 
       cy.wait(500);
 
-      cy.wait('@GetProductQuery').then(productPage.purchase);
-      cy.wait('@AddItemMutation').then(cartPage.visit);
-      cy.wait('@GetFullCartQuery').then(cartPage.checkout);
+      productPage.purchase();
 
-      cy.wait('@GetMyAddressesQuery').then(() => {
-        personalCheckout.selectShippingAddress();
-        personalCheckout.selectDelivery('Fixed Rate (Ground)');
-        personalCheckout.leaveComment('place-order.cy test');
-        personalCheckout.proceedToBilling();
-        personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
-        personalCheckout.reviewOrder();
-        personalCheckout.placeOrder();
-      })
+      cy.checkLoading('.vc-button__loader');
 
-      cy.wait('@InitializePaymentMutation').then(() => {
-        personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
-        personalCheckout.pay();
-        personalCheckout.isPayed();
-      })
+      cartPage.visitByCartClick();
+
+      cy.checkLoading('.vc-loader-overlay__spinner');
+
+      cartPage.checkout();
+
+      cy.checkLoading('.vc-loader-overlay__spinner');
+
+      personalCheckout.selectShippingAddress();
+      personalCheckout.selectDelivery('Fixed Rate (Ground)');
+      personalCheckout.leaveComment('place-order.cy test');
+      personalCheckout.proceedToBilling();
+      personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+      personalCheckout.reviewOrder();
+      personalCheckout.placeOrder();
+
+      cy.checkLoading('.vc-loader-overlay__spinner');
+
+      personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
+      personalCheckout.pay();
+      personalCheckout.isPayed();
     })
   });
 });

@@ -73,6 +73,7 @@ class LoginPage {
     this.fillEmail(email);
     this.fillPassword(password);
     this.clickLoginButton();
+    cy.checkLoading('.vc-button__loader');
     this.checkNoErrorMessage();
     cy.log('Verifying successful login');
     cy.url().should('include', '/catalog');

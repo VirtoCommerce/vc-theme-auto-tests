@@ -4,8 +4,9 @@ class ProductPage {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
     cy.log('Step: Visited Product Page');
   }
+
   purchase() {
-    cy.get(ProductPageLocators.ADD_TO_CART_BUTTON).click();
+    cy.get(ProductPageLocators.ADD_TO_CART_BUTTON).should('be.visible').click();
   }
 }
 

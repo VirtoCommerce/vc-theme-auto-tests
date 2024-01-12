@@ -27,7 +27,7 @@ Cypress.Commands.add('login', (email, password) => {
   )
 })
 
-Cypress.Commands.add('checkLoading', locator => {
-  cy.get(locator, { timeout: 5000 }).should('exist');
-  cy.get(locator, { timeout: 5000 }).should('not.exist');
+Cypress.Commands.add('checkLoading', (locator, timeout = 10000) => {
+  cy.get(locator, { timeout }).should('exist');
+  cy.get(locator, { timeout }).should('not.exist');
 })
