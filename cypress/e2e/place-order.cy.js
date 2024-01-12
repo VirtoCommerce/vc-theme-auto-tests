@@ -65,8 +65,9 @@ describe('place order', () => {
         cy.log('Clearing cart');
         cartPage.visit();
         cartPage.clearCart();
-        cy.get('.vc-button__loader', { timeout: 5000 }).should('not.exist');
-        productPage.visit(PRODUCT_URL);
+        cy.wait('@ClearCartMutation').then(() => {
+          productPage.visit(PRODUCT_URL);
+        })
       } else {
         productPage.visit(PRODUCT_URL);
       }
