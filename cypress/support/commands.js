@@ -31,3 +31,4 @@ Cypress.Commands.add('checkLoading', locator => {
   cy.get(locator, { timeout: 5000 }).should('exist');
   cy.get(locator, { timeout: 5000 }).should('not.exist');
 })
+
