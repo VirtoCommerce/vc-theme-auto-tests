@@ -10,3 +10,5 @@
 
 ## open tests browser environment
 `npm run cy:open`
+
+DEVICE_NAME - viewport https://docs.cypress.io/api/commands/viewport

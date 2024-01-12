@@ -5,7 +5,7 @@ import LoginPage from "../support/page_objects/LoginPage/LoginPage";
 import TestData from "./Variables/TestData";
 import { aliasQuery, aliasMutation } from "../utils/graphql-test-utils";
 
-const PRODUCT_URL = 'snacks/chips/lays-chips-paprika-box-20x40gr';
+const PRODUCT_URL = TestData.defaultProductPage;
 
 describe('place order', () => {
   const productPage = new ProductPage();
