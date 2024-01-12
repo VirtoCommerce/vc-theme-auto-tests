@@ -15,8 +15,7 @@ describe('Remove many cart items', () => {
     cy.viewport(Cypress.env('DEVICE_NAME'));  
     cy.intercept('/xapi/graphql', (req) => {
       aliasQuery(req, 'SearchProducts');
-      aliasQuery(req, 'GetFullCart');
-      aliasQuery(req, 'AddItem')
+      aliasQuery(req, 'GetFullCart');   
     })
   });
 
