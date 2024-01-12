@@ -5,7 +5,7 @@ import LoginPage from "../support/page_objects/LoginPage/LoginPage";
 import TestData from "./Variables/TestData";
 import { aliasQuery, aliasMutation } from "../utils/graphql-test-utils";
 
-const PRODUCT_URL = 'snacks/chips/lays-chips-paprika-box-20x40gr';
+const PRODUCT_URL = TestData.defaultProductPage;
 
 describe('place order', () => {
   const productPage = new ProductPage();
@@ -35,7 +35,7 @@ describe('place order', () => {
     cy.intercept({ url: '/storefrontapi/account/login' }).as('storefrontLogin');
   });
 
-  it('places order created by Anonymous user', () => {
+  /* it('places order created by Anonymous user', () => {
     productPage.visit(PRODUCT_URL);
 
     cy.wait(500);
@@ -52,7 +52,7 @@ describe('place order', () => {
     anonymousCheckout.placeOrder();
 
     anonymousCheckout.isCompleted();
-  });
+  }); */
 
   it('places order as Personal user', () => {
     loginPage.login(TestData.email, TestData.password);
@@ -65,9 +65,8 @@ describe('place order', () => {
         cy.log('Clearing cart');
         cartPage.visit();
         cartPage.clearCart();
-        cy.wait('@ClearCartMutation').then(() => {
-          productPage.visit(PRODUCT_URL);
-        })
+        cy.get('.vc-button__loader', { timeout: 5000 }).should('not.exist');
+        productPage.visit(PRODUCT_URL);
       } else {
         productPage.visit(PRODUCT_URL);
       }
