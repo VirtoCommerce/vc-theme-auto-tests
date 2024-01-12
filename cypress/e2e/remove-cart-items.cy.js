@@ -16,6 +16,7 @@ describe('Remove many cart items', () => {
     cy.intercept('/xapi/graphql', (req) => {
       aliasQuery(req, 'SearchProducts');
       aliasQuery(req, 'GetFullCart');
+      aliasQuery(req, 'AddItem')
     })
   });
 
@@ -24,18 +25,20 @@ describe('Remove many cart items', () => {
     catalogPage.visit(FIRST_CATALOG);  
    
     cy.wait('@SearchProductsQuery').then(() => {
-      catalogPage.purchaseAll();     
+      catalogPage.purchaseAll(); 
+      cartPage.visitByCartClick();    
        
    });
 
-cartPage.visitByCartClick();
 cy.wait(5000);
 cy.intercept('/cart').as('GetFullCart');
-cy.get('.vc-loader-overlay').should('not.be.visible');
-cy.get('#products').should('be.visible');
+cy.get('.vc-loader-overlay__spinner').should('exist');
+cy.get('.vc-loader-overlay__spinner', { timeout: 5000 }).should('not.exist');
+cy.wait(5000);
+cy.get('.vc-line-items').should('exist');
 cy.scrollTo('bottom');
-cy.wait(1000);
 cartPage.clearCart();
+cy.wait(1000);
 cartPage.confirmClearCart();
 cartPage.isCleared();
 
