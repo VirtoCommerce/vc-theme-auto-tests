@@ -24,7 +24,7 @@ cy.get('button').contains('Yes').click();
 
   isCleared() {
     cy.contains('h2', 'Your cart is empty').should('be.visible');
-    cy.get('.vc-badge__content').should('not.exist');
+    cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('not.exist');   
   }
 }
 
