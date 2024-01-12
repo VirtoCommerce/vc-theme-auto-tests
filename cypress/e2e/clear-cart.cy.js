@@ -16,12 +16,18 @@ describe('Clear cart', () => {
   it('Should login and then perform actions', () => {
     productPage.visit(PRODUCT_URL);
     productPage.purchase();
-    cy.get('.vc-button__loader', { timeout: 5000 }).should('not.exist');
+
+    cy.checkLoading('.vc-button__loader');
+
     cartPage.visitByCartClick();
-    cy.get('.vc-loader-overlay__spinner', { timeout: 5000 }).should('not.exist');
+
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
     cartPage.clearCart();
     cartPage.confirmClearCart();
-    cy.get('.vc-button__loader', { timeout: 5000 }).should('not.exist');
+
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
     cartPage.isCleared();
   })
 

@@ -35,7 +35,7 @@ describe('place order', () => {
     cy.intercept({ url: '/storefrontapi/account/login' }).as('storefrontLogin');
   });
 
-  /* it('places order created by Anonymous user', () => {
+  it('places order created by Anonymous user', () => {
     productPage.visit(PRODUCT_URL);
 
     cy.wait(500);
@@ -52,7 +52,7 @@ describe('place order', () => {
     anonymousCheckout.placeOrder();
 
     anonymousCheckout.isCompleted();
-  }); */
+  });
 
   it('places order as Personal user', () => {
     loginPage.login(TestData.email, TestData.password);
