@@ -31,13 +31,11 @@ describe('Remove many cart items', () => {
 
 cy.wait(5000);
 cy.intercept('/cart').as('GetFullCart');
-cy.get('.vc-loader-overlay__spinner').should('exist');
-cy.get('.vc-loader-overlay__spinner', { timeout: 5000 }).should('not.exist');
+cy.checkLoading('.vc-loader-overlay__spinner');
 cy.wait(5000);
 cy.get('.vc-line-items').should('exist');
 cy.scrollTo('bottom');
 cartPage.clearCart();
-cy.wait(1000);
 cartPage.confirmClearCart();
 cartPage.isCleared();
 

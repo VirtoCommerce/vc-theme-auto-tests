@@ -18,6 +18,7 @@ describe('place order', () => {
     cy.log('Clearing cookies and local storage');
     cy.clearCookies();
     cy.clearLocalStorage();
+    cy.viewport(Cypress.env('DEVICE_NAME'));
 
     cy.intercept('/xapi/graphql', (req) => {
       aliasQuery(req, 'GetShortCart');
@@ -54,10 +55,7 @@ describe('place order', () => {
         cartPage.confirmClearCart();
         cy.checkLoading('.vc-loader-overlay__spinner');
         productPage.visit(PRODUCT_URL);
-      } else {
-        productPage.visit(PRODUCT_URL);
-      }
-
+        
       cy.wait(500);
 
       productPage.purchase();

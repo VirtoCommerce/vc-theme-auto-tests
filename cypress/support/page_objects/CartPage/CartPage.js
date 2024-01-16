@@ -9,6 +9,16 @@ class CartPage {
     cy.get(CartPageLocators.HEADER_CART_LINK).click();
   }
 
+cartLineItemsCheck(){
+
+cy.checkLoading('.vc-loader-overlay__spinner');
+cy.wait(5000);
+cy.reload();
+cy.wait(5000);
+cy.get('.vc-line-items').should('exist');
+
+  }
+
   checkout() {
     cy.get(CartPageLocators.CHECKOUT_BUTTON).click();
   }
@@ -26,6 +36,15 @@ cy.get('button').contains('Yes').click();
     cy.contains('h2', 'Your cart is empty').should('be.visible');
     cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('not.exist');   
   }
-}
+
+  proceedButtonInactive(){
+    cy.proceedButtonDisabled(CartPageLocators.CHECKOUT_BUTTON_DISABLED);
+  }
+
+  proceedButtonActive(){
+    cy.proceedButtonEnabled(CartPageLocators.CHECKOUT_BUTTON);
+  }
+
+  }
 
 export default CartPage;

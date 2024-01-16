@@ -9,7 +9,7 @@ class CatalogPage {
         button.click();
       })
     })
-  }
+  } 
 }
 
 export default CatalogPage;

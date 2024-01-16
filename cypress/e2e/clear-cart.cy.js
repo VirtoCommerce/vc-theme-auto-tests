@@ -11,6 +11,7 @@ describe('Clear cart', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearLocalStorage();
+    cy.viewport(Cypress.env('DEVICE_NAME'));
   });
 
   it('Should login and then perform actions', () => {
