@@ -38,7 +38,7 @@ checkOne(){
 selectOnlyDigital(){
   
 // Assuming the product list is loaded dynamically, wait for it to be visible
-cy.get('.vc-line-items__body').should('be.visible');   
+cy.get('.vc-line-item__main').should('be.visible');  
 
     cy.log('Find and select the element with class .vc-line-item__main and chip "Digital product')
     cy.get('.vc-line-item__main').each(($mainElement) => {
@@ -87,6 +87,21 @@ totalSubtotalAfterUncheckALL(){
 
 
 }
+
+totalSubtotal(){
+
+    cy.log('check section subTotal') 
+    cy.get('.vc-line-items__subtotal-sum').should('not.contain.text', '0.00');
+ 
+    cy.log('check Order Summary') 
+    cy.get('.mb-4 > :nth-child(2) > span').should('not.contain.text', '0.00');
+ 
+    //check Order summary > Total
+    cy.get('.text-green-700 > span').should('not.contain.text', '0.00');
+  
+ 
+ 
+ }
 
 
   

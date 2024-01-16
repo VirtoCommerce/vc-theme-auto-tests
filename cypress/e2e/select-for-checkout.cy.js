@@ -33,15 +33,18 @@ describe('Select for checkout', () => {
     cartPage.visitByCartClick();
     cy.intercept('/cart').as('GetFullCart');    
     cartPage.cartLineItemsCheck();
+    
     selectForCheckout.SelectedState();   
     selectForCheckout.uncheckAll();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.proceedButtonInactive();
     selectForCheckout.totalSubtotalAfterUncheckALL();       
     selectForCheckout.unselectedState();
+
     selectForCheckout.selectOnlyDigital();
     cy.checkLoading('.vc-loader-overlay__spinner');
-    cartPage.proceedButtonActive();    
+    cartPage.proceedButtonActive();  
+    selectForCheckout.totalSubtotal();  
        
    
     })
