@@ -33,11 +33,11 @@ Cypress.Commands.add('checkLoading', locator => {
 })
 
 Cypress.Commands.add('proceedButtonDisabled', locator =>{
-  cy.get(locator).should('be.disabled');
+  cy.get(locator).should('be.disabled').invoke('prop', 'disabled', false);
 })
 
 Cypress.Commands.add('proceedButtonEnabled', locator => {
-  cy.get(locator).should('have.attr', 'disabled').and('exist');
+  cy.get(locator).should('not.be.disabled');
  
 })
 

@@ -9,9 +9,11 @@ class CartPage {
     cy.get(CartPageLocators.HEADER_CART_LINK).click();
   }
 
-  cartLineItemsCheck(){
+cartLineItemsCheck(){
 
 cy.checkLoading('.vc-loader-overlay__spinner');
+cy.wait(5000);
+cy.reload();
 cy.wait(5000);
 cy.get('.vc-line-items').should('exist');
 

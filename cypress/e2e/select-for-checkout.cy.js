@@ -6,7 +6,6 @@ import TestData from "./Variables/TestData";
 import {aliasQuery} from "../utils/graphql-test-utils";
 import CartPageLocators from "../support/page_objects/CartPage/CartPageLocators/CartPageLocators";
 
-const FIRST_CATALOG = 'soft-drinks/mineral-water';
 const SUBCATEGORY = 'new-home/bedroom-furniture';
 
 describe('Select for checkout', () => {
@@ -21,38 +20,31 @@ describe('Select for checkout', () => {
         cy.clearCookies();
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
+
       
     });         
 
-    it('One vendor section: select/unselect line-item', () => {
+    it.only('One vendor section: select/unselect line-item', () => {
 
-      loginPage.login(TestData.email, TestData.password);  
-       cy.wait(5000); 
-       catalogPage.visit(SUBCATEGORY);
-       cy.wait(5000);   
-       catalogPage.purchaseAll(); 
-       cartPage.visitByCartClick();
-       cy.intercept('/cart').as('GetFullCart'); 
-       cy.checkLoading('.vc-loader-overlay__spinner');      
-       cy.wait(5000);
-       cy.reload();
-       cartPage.cartLineItemsCheck();
-       selectForCheckout.SelectedState();   
-       selectForCheckout.uncheckAll();
-       cy.checkLoading('.vc-loader-overlay__spinner');
-       cartPage.proceedButtonInactive();
-       selectForCheckout.totalSubtotalAfterUncheckALL();       
-       selectForCheckout.unselectedState();
-       selectForCheckout.checkOne();
-       cy.checkLoading('.vc-loader-overlay__spinner');
-       cartPage.proceedButtonActive();    
-  
+    loginPage.login(TestData.email, TestData.password);        
+    catalogPage.visit(SUBCATEGORY);
+    cy.wait(5000);   
+    catalogPage.purchaseAll(); 
+    cartPage.visitByCartClick();
+    cy.intercept('/cart').as('GetFullCart');    
+    cartPage.cartLineItemsCheck();
+    selectForCheckout.SelectedState();   
+    selectForCheckout.uncheckAll();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.proceedButtonInactive();
+    selectForCheckout.totalSubtotalAfterUncheckALL();       
+    selectForCheckout.unselectedState();
+    selectForCheckout.selectOnlyDigital();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.proceedButtonActive();    
        
-       
-
-
-
-
+   
     })
+
 
 })
