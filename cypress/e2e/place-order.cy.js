@@ -18,6 +18,7 @@ describe('place order', () => {
     cy.log('Clearing cookies and local storage');
     cy.clearCookies();
     cy.clearLocalStorage();
+    cy.viewport(Cypress.env('DEVICE_NAME'));
 
     cy.intercept('/xapi/graphql', (req) => {
       aliasQuery(req, 'GetShortCart');
@@ -65,6 +66,7 @@ describe('place order', () => {
         cy.log('Clearing cart');
         cartPage.visit();
         cartPage.clearCart();
+        cartPage.confirmClearCart();
         cy.wait('@ClearCartMutation').then(() => {
           productPage.visit(PRODUCT_URL);
         })
