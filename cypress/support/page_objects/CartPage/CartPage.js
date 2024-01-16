@@ -34,6 +34,15 @@ cy.get('button').contains('Yes').click();
     cy.contains('h2', 'Your cart is empty').should('be.visible');
     cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('not.exist');   
   }
-}
+
+  proceedButtonInactive(){
+    cy.proceedButtonDisabled(CartPageLocators.CHECKOUT_BUTTON_DISABLED);
+  }
+
+  proceedButtonActive(){
+    cy.proceedButtonEnabled(CartPageLocators.CHECKOUT_BUTTON);
+  }
+
+  }
 
 export default CartPage;

@@ -32,3 +32,17 @@ Cypress.Commands.add('checkLoading', locator => {
   cy.get(locator, { timeout: 5000 }).should('not.exist');
 })
 
+Cypress.Commands.add('proceedButtonDisabled', locator =>{
+  cy.get(locator).should('be.disabled');
+})
+
+Cypress.Commands.add('proceedButtonEnabled', locator => {
+  cy.get(locator).should('have.attr', 'disabled').and('exist');
+ 
+})
+
+
+
+
+
+
