@@ -55,6 +55,7 @@ describe('place order', () => {
         cartPage.confirmClearCart();
         cy.checkLoading('.vc-loader-overlay__spinner');
         productPage.visit(PRODUCT_URL);
+      }
         
       cy.wait(500);
 

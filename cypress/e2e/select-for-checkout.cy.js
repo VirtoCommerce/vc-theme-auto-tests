@@ -20,13 +20,19 @@ describe('Select for checkout', () => {
         cy.clearCookies();
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
+        loginPage.login(TestData.email, TestData.password);
+         
+       
+      
 
       
     });         
 
-    it.only('One vendor section: select/unselect line-item', () => {
+    it('Select only digital product', () => { 
 
-    loginPage.login(TestData.email, TestData.password);        
+
+    cartPage.emptyOrNot(); 
+            
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
     catalogPage.purchaseAll(); 
@@ -44,7 +50,10 @@ describe('Select for checkout', () => {
     selectForCheckout.selectOnlyDigital();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.proceedButtonActive();  
-    selectForCheckout.totalSubtotal();  
+    selectForCheckout.totalSubtotal(); 
+    
+    //Checkout
+    cartPage.checkout();
        
    
     })

@@ -35,16 +35,15 @@ checkOne(){
     cy.get(CartPageLocators.CHECKBOX).last().check();
 }
 
-selectOnlyDigital(){
-  
-// Assuming the product list is loaded dynamically, wait for it to be visible
+selectOnlyDigital(){  
+
 cy.get('.vc-line-item__main').should('be.visible');  
 
     cy.log('Find and select the element with class .vc-line-item__main and chip "Digital product')
     cy.get('.vc-line-item__main').each(($mainElement) => {
       // Check if the current element contains the chip with text "Digital product"
       if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
-        // Perform actions on the selected element, for example, clicking the checkbox
+      
         cy.wrap($mainElement)
           .find('input[type="checkbox"]')
           .click();
@@ -55,8 +54,7 @@ cy.get('.vc-line-item__main').should('be.visible');
 cy.log('Assert that the checkbox is checked')
 cy.get('.vc-line-item__main').each(($mainElement) => {
     // Check if the current element contains the chip with text "Digital product"
-    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
-      // Perform actions on the selected element, for example, clicking the checkbox
+    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
       cy.wrap($mainElement)
         .find('input[type="checkbox"]')
         .should('be.checked');

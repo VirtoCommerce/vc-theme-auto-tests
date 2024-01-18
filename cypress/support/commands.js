@@ -1,8 +1,11 @@
-import AuthLogin from "./navigation/AuthLogin"
+import AuthLogin from "./navigation/AuthLogin";
+import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
+
 
 
 require('cypress-xpath');
 
+import 'cypress-if'
 import 'cypress-real-events/support'
 
 Cypress.Commands.add('login', (email, password) => {
@@ -38,8 +41,10 @@ Cypress.Commands.add('proceedButtonDisabled', locator =>{
 
 Cypress.Commands.add('proceedButtonEnabled', locator => {
   cy.get(locator).should('not.be.disabled');
+}); 
+
  
-})
+
 
 
 
