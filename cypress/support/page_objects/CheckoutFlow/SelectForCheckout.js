@@ -4,11 +4,11 @@ import 'cypress-real-events/support';
 
 class SelectForCheckout{
 
-    SelectedState(){
+SelectedState(){
 
 cy.get(CartPageLocators.CHECKBOX).should('be.checked');
 
-           
+          
           
  }
 
@@ -44,9 +44,10 @@ cy.get('.vc-line-item__main').should('be.visible');
       // Check if the current element contains the chip with text "Digital product"
       if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
       
-        cy.wrap($mainElement)
-          .find('input[type="checkbox"]')
-          .click();
+ cy.wrap($mainElement)
+.find('input[type="checkbox"]')
+.click()
+.should('be.checked');
   }
 })
   
@@ -67,6 +68,30 @@ checkoutForDigitalProduct(){
 
   cy.get('.vc-steps__item').should('not.have.text', 'Shipping').and('have.length', 4);
    
+}
+
+selectOnlyPysical(){  
+
+  cy.get('.vc-line-item__main').should('be.visible');  
+  
+  cy.log('Select only Pysical product')
+
+  cy.get('.vc-line-item__main').each(($mainElement) => {
+    // Check if the current element contains the chip with text "Digital product"
+    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
+      cy.wrap($mainElement)
+        .find('input[type="checkbox"]')
+        .uncheck()
+        .should('not.be.checked')
+}
+})
+    
+}
+
+digitalProductInCart(){
+
+cy.digitalLabel();
+
 }
 
 totalSubtotalAfterUncheckALL(){
@@ -92,13 +117,13 @@ totalSubtotalAfterUncheckALL(){
 totalSubtotal(){
 
     cy.log('check section subTotal') 
-    cy.get('.vc-line-items__subtotal-sum').should('not.contain.text', '0.00');
+    cy.get('.vc-line-items__subtotal-sum').should('not.have.text', '0.00');
  
     cy.log('check Order Summary') 
-    cy.get('.mb-4 > :nth-child(2) > span').should('not.contain.text', '0.00');
+    cy.get('.mb-4 > :nth-child(2) > span').should('not.have.text', '0.00');
  
     //check Order summary > Total
-    cy.get('.text-green-700 > span').should('not.contain.text', '0.00');  
+    cy.get('.text-green-700 > span').should('not.have.text', '0.00');  
  
  
  }

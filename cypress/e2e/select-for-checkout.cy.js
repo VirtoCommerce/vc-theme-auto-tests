@@ -23,11 +23,7 @@ describe('Select for checkout', () => {
         cy.viewport(Cypress.env('DEVICE_NAME'));
         loginPage.login(TestData.email, TestData.password);
         cartPage.emptyOrNot();
-         
-       
-      
 
-      
     });         
 
     it('Select only digital product', () => { 
@@ -57,19 +53,73 @@ describe('Select for checkout', () => {
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
     selectForCheckout.checkoutForDigitalProduct();
-    personalCheckout.addNewAddress();   
+    personalCheckout.addNewBillingAddress();   
     personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
     personalCheckout.pay();
-    personalCheckout.isPayed(); 
+    personalCheckout.isPayed();
+
+    //check cart after order creation
+
+    cartPage.visitByCartClick();
+    cartPage.visitByCartClick();
+    cy.intercept('/cart').as('GetFullCart');    
+    cartPage.cartLineItemsCheck();    
+    selectForCheckout.SelectedState(); 
+    cy.digitalProductChipAbsent('.vc-chip__content');
 
 
-       
-   
-    })
+ })
 
+ it('Select only Pysical product', () => {
+
+    catalogPage.visit(SUBCATEGORY);
+    cy.wait(5000);   
+    catalogPage.purchaseAll(); 
+    cartPage.visitByCartClick();
+    cy.intercept('/cart').as('GetFullCart');    
+    cartPage.cartLineItemsCheck();
+    
+    selectForCheckout.SelectedState();
+    
+    //Select only Pysical
+
+    selectForCheckout.selectOnlyPysical();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.proceedButtonActive();  
+    selectForCheckout.totalSubtotal();
+
+    //Checkout
+    cartPage.checkout();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
+    personalCheckout.checkShippingPage();
+    personalCheckout.addNewShippingAddress();
+    personalCheckout.selectDelivery('Fixed Rate (Ground)');
+    personalCheckout.leaveComment('place-order.cy test');
+    personalCheckout.proceedToBilling();
+    personalCheckout.checkBillingPage();
+    personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+    personalCheckout.reviewOrder();
+    personalCheckout.placeOrder();
+
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
+    personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
+    personalCheckout.pay();
+    personalCheckout.isPayed();
+
+    //check cart after order creation
+    cartPage.visitByCartClick();    
+    cy.intercept('/cart').as('GetFullCart');    
+    cartPage.cartLineItemsCheck();    
+    selectForCheckout.SelectedState();
+    cy.digitalLabel('.vc-chip__content');    
+    
+
+ })
 
 })
