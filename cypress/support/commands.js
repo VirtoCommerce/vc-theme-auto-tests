@@ -42,12 +42,3 @@ Cypress.Commands.add('proceedButtonDisabled', locator =>{
 Cypress.Commands.add('proceedButtonEnabled', locator => {
   cy.get(locator).should('not.be.disabled');
 }); 
-
- 
-
-
-
-
-
-
-

@@ -46,29 +46,29 @@ cy.get('button').contains('Yes').click();
   }
 
   emptyOrNot(){
+
   
-    cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
-    cy.checkLoading('.vc-loader-overlay__spinner');
+cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
+cy.checkLoading('.vc-loader-overlay__spinner');
 
 // Check if the "Clear Cart" button exists
 
- cy.contains('button', 'Clear cart').then(($text) => {
-  if ($text.length = 1) {
-
-  cy.get('button').contains('Clear cart').click(); 
+cy.contains('button', 'Clear cart')
+.if('visible')
+.then(() => {
+  cy.log('The cart is full')
+  cy.contains('button', 'Clear cart').click();
   cy.get('button').contains('Yes').click(); 
   cy.contains('h2', 'Your cart is empty').should('be.visible');
-  
-      } else {
+})
+.else()
+.then(() => {
+  cy.log('Cart is empty')
+  cy.go('back');
+}) 
 
-      // "Clear Cart" button does not exist, return back
-        cy.go('back');
-      }
-    });   
+}
 
-  }
-
-
-  }
+}
 
 export default CartPage;

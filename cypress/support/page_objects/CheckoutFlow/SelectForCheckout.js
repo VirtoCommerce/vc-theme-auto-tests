@@ -59,12 +59,15 @@ cy.get('.vc-line-item__main').each(($mainElement) => {
         .find('input[type="checkbox"]')
         .should('be.checked');
 }
-})
-  
+})  
    
 }
 
+checkoutForDigitalProduct(){
 
+  cy.get('.vc-steps__item').should('not.have.text', 'Shipping').and('have.length', 4);
+   
+}
 
 totalSubtotalAfterUncheckALL(){
 
@@ -95,13 +98,10 @@ totalSubtotal(){
     cy.get('.mb-4 > :nth-child(2) > span').should('not.contain.text', '0.00');
  
     //check Order summary > Total
-    cy.get('.text-green-700 > span').should('not.contain.text', '0.00');
-  
+    cy.get('.text-green-700 > span').should('not.contain.text', '0.00');  
  
  
  }
-
-
   
 }
 
