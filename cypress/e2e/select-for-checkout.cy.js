@@ -74,7 +74,7 @@ describe('Select for checkout', () => {
 
  })
 
- it('Select only Pysical product', () => {
+ it('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
@@ -85,7 +85,7 @@ describe('Select for checkout', () => {
     
     selectForCheckout.SelectedState();
     
-    //Select only Pysical
+    //Select only Physical product
 
     selectForCheckout.selectOnlyPysical();
     cy.checkLoading('.vc-loader-overlay__spinner');
