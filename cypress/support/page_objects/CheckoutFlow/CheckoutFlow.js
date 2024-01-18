@@ -2,8 +2,18 @@ import {CheckoutFlowLocators} from "./CheckoutFlowLocators/CheckoutFlowLocators"
 import testData from "./testData";
 import TestData from "../../../e2e/Variables/TestData";
 
+
 export class AnonymousCheckout {
-  fillShippingAddress() {
+
+  checkShippingPage(){
+
+    cy.location('pathname').should('eq', "/checkout/shipping");
+    cy.get('.vc-steps__item').should('have.length', 5);
+    cy.contains('Shipping')
+    
+    }
+
+ fillShippingAddress() {
     cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
     cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
     cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
@@ -59,7 +69,34 @@ export class AnonymousCheckout {
 }
 
 export class PersonalCheckout {
-  selectShippingAddress() {
+
+  checkShippingPage(){
+
+    cy.location('pathname').should('eq', "/checkout/shipping");
+    cy.get('.vc-steps__item').should('have.length', 5);
+    cy.contains('Shipping')
+    
+    }
+
+    addNewShippingAddress(){
+
+      cy.contains('button', 'select a shipping address').click();
+      cy.wait(500);
+      cy.contains('button', 'Add new address').click();
+      cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
+      cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
+      cy.contains('div', 'Email').find('input').type(testData.shipping.email);
+      cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
+      cy.contains('li', testData.shipping.country).click();
+      cy.contains('div', 'ZIP / Postal code').find('input').type(testData.shipping.postCode);
+      cy.contains('div', 'City').find('input').type(testData.shipping.city);
+      cy.contains('div', 'Address').find('input').type(testData.shipping.address);
+  
+      cy.contains('button', 'Create').click();
+  
+    }
+
+  selectShippingAddress() {    
     cy.contains('button', 'select a shipping address').click();
     cy.contains('button', 'Select').first().click();
     cy.contains('button', 'OK').click();
@@ -78,13 +115,22 @@ export class PersonalCheckout {
     cy.get('textarea').type(text);
   }
 
+checkBillingPage(){
+  
+cy.location('pathname').should('eq', "/checkout/billing");
+cy.get('.vc-steps__item').should('have.length', 5);
+cy.contains('Billing');
+cy.get('input[type="checkbox"]').should('be.checked');
+    
+ }
+
   selectBillingAddress() {
     cy.contains('button', 'Select a billing address').click();
     cy.contains('button', 'Select').first().click();
     cy.contains('button', 'OK').click();
   }
 
-  addNewAddress(){
+  addNewBillingAddress(){
 
     cy.contains('button', 'Select a billing address').click();
     cy.wait(500);

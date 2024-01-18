@@ -41,4 +41,16 @@ Cypress.Commands.add('proceedButtonDisabled', locator =>{
 
 Cypress.Commands.add('proceedButtonEnabled', locator => {
   cy.get(locator).should('not.be.disabled');
-}); 
+})
+
+Cypress.Commands.add('digitalLabel', (locator) => {
+
+cy.get(locator).contains('Digital product');
+
+})
+
+Cypress.Commands.add('digitalProductChipAbsent', (locator) => {
+
+cy.get(locator).should('not.have.text', 'Digital product');
+  
+})

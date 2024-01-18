@@ -45,7 +45,7 @@ cy.get('button').contains('Yes').click();
     cy.proceedButtonEnabled(CartPageLocators.CHECKOUT_BUTTON);
   }
 
-  emptyOrNot(){
+emptyOrNot(){
 
   
 cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
@@ -66,7 +66,6 @@ cy.contains('button', 'Clear cart')
   cy.log('Cart is empty')
   cy.go('back');
 }) 
-
 }
 
 }
