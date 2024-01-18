@@ -1,4 +1,5 @@
 import {CartPageLocators} from "./CartPageLocators/CartPageLocators";
+import CatalogPage from "../CatalogPage/CatalogPage";
 
 class CartPage {
   visit() {
@@ -12,7 +13,6 @@ class CartPage {
 cartLineItemsCheck(){
 
 cy.checkLoading('.vc-loader-overlay__spinner');
-cy.wait(5000);
 cy.reload();
 cy.wait(5000);
 cy.get('.vc-line-items').should('exist');
@@ -45,6 +45,30 @@ cy.get('button').contains('Yes').click();
     cy.proceedButtonEnabled(CartPageLocators.CHECKOUT_BUTTON);
   }
 
-  }
+  emptyOrNot(){
+
+  
+cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
+cy.checkLoading('.vc-loader-overlay__spinner');
+
+// Check if the "Clear Cart" button exists
+
+cy.contains('button', 'Clear cart')
+.if('visible')
+.then(() => {
+  cy.log('The cart is full')
+  cy.contains('button', 'Clear cart').click();
+  cy.get('button').contains('Yes').click(); 
+  cy.contains('h2', 'Your cart is empty').should('be.visible');
+})
+.else()
+.then(() => {
+  cy.log('Cart is empty')
+  cy.go('back');
+}) 
+
+}
+
+}
 
 export default CartPage;
