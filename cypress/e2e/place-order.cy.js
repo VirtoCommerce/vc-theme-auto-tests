@@ -33,12 +33,16 @@ describe('place order', () => {
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.checkout();
 
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
     anonymousCheckout.fillShippingAddress();
     anonymousCheckout.selectDelivery('Fixed Rate (Ground)');
     anonymousCheckout.proceedToBilling();
     anonymousCheckout.selectPaymentMethod('Manual');
     anonymousCheckout.reviewOrder();
     anonymousCheckout.placeOrder();
+
+    cy.checkLoading('.vc-loader-overlay__spinner');
 
     anonymousCheckout.isCompleted();
   });
@@ -54,9 +58,10 @@ describe('place order', () => {
         cartPage.clearCart();
         cartPage.confirmClearCart();
         cy.checkLoading('.vc-loader-overlay__spinner');
-        productPage.visit(PRODUCT_URL);
       }
-        
+
+      productPage.visit(PRODUCT_URL);
+
       cy.wait(500);
 
       productPage.purchase();
