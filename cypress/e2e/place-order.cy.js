@@ -76,6 +76,8 @@ describe('place order', () => {
 
       cy.checkLoading('.vc-loader-overlay__spinner');
 
+      cy.wait(500);
+
       personalCheckout.selectShippingAddress();
       personalCheckout.selectDelivery('Fixed Rate (Ground)');
       personalCheckout.leaveComment('place-order.cy test');
