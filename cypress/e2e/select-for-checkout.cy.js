@@ -26,7 +26,7 @@ describe('Select for checkout', () => {
 
     });         
 
-    it.only('Select only digital product', () => { 
+    it('Select only digital product', () => { 
 
                
     catalogPage.visit(SUBCATEGORY);
