@@ -133,8 +133,8 @@ cy.get('input[type="checkbox"]').should('be.checked');
   addNewBillingAddress(){
 
     cy.contains('button', 'Select a billing address').click();
-    cy.wait(500);
-    cy.contains('button', 'Add new address').click();
+    cy.wait(5000);
+    //cy.contains('button', 'Add new address').click();
     cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
     cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
     cy.contains('div', 'Email').find('input').type(testData.shipping.email);

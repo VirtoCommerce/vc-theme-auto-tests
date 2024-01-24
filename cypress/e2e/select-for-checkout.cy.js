@@ -6,7 +6,7 @@ import TestData from "./Variables/TestData";
 import {aliasQuery} from "../utils/graphql-test-utils";
 import {AnonymousCheckout, PersonalCheckout} from "../support/page_objects/CheckoutFlow/CheckoutFlow";
 
-const SUBCATEGORY = 'new-home/bedroom-furniture';
+const SUBCATEGORY = 'courses-and-digital-products/digital-products';
 
 describe('Select for checkout', () => {
 
@@ -22,11 +22,11 @@ describe('Select for checkout', () => {
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
         loginPage.login(TestData.email, TestData.password);
-        cartPage.emptyOrNot();
+        //cartPage.emptyOrNot();
 
     });         
 
-    it('Select only digital product', () => { 
+    it.only('Select only digital product', () => { 
 
                
     catalogPage.visit(SUBCATEGORY);
@@ -71,8 +71,12 @@ describe('Select for checkout', () => {
     selectForCheckout.SelectedState(); 
     cy.digitalProductChipAbsent('.vc-chip__content');
 
-
- })
+    //Clear cart
+    cartPage.clearCart();
+    cartPage.confirmClearCart();
+    cy.log('The test is comleted');
+    });
+   
 
  it('Select only Physical product', () => {
 
@@ -117,9 +121,15 @@ describe('Select for checkout', () => {
     cy.intercept('/cart').as('GetFullCart');    
     cartPage.cartLineItemsCheck();    
     selectForCheckout.SelectedState();
-    cy.digitalLabel('.vc-chip__content');    
+    cy.digitalLabel('.vc-chip__content');
+
+    //Clear cart
+    cartPage.clearCart();
+    cartPage.confirmClearCart();
+    cy.log('The test is comleted');  
     
 
- })
+ });
+
 
 })

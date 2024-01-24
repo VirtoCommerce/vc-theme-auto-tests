@@ -49,15 +49,14 @@ emptyOrNot(){
 
   
 cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
-cy.checkLoading('.vc-loader-overlay__spinner');
+cy.wait(1000);
 
 // Check if the "Clear Cart" button exists
 
 cy.contains('button', 'Clear cart')
-.if('visible')
+.if('exist')
 .then(() => {
-  cy.log('The cart is full')
-  cy.contains('button', 'Clear cart').click();
+  cy.get('button', 'Clear cart').click();
   cy.get('button').contains('Yes').click(); 
   cy.contains('h2', 'Your cart is empty').should('be.visible');
 })

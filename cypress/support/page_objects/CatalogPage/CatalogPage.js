@@ -13,3 +13,4 @@ class CatalogPage {
 }
 
 export default CatalogPage;
+ 
