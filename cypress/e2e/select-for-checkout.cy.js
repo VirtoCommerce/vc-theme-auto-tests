@@ -6,7 +6,7 @@ import TestData from "./Variables/TestData";
 import {aliasQuery} from "../utils/graphql-test-utils";
 import {AnonymousCheckout, PersonalCheckout} from "../support/page_objects/CheckoutFlow/CheckoutFlow";
 
-const SUBCATEGORY = 'courses-and-digital-products/digital-products';
+const SUBCATEGORY = 'new-home/bedroom-furniture';
 
 describe('Select for checkout', () => {
 
@@ -21,8 +21,7 @@ describe('Select for checkout', () => {
         cy.clearCookies();
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
-        loginPage.login(TestData.email, TestData.password);
-        //cartPage.emptyOrNot();
+        loginPage.login(TestData.email, TestData.password);        
 
     });         
 

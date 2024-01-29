@@ -1,5 +1,6 @@
 
 import AuthLogin from '../../../support/navigation/AuthLogin';
+import TestData from '../../../e2e/Variables/TestData';
 
 class SignUpPage{
 
@@ -72,9 +73,9 @@ personalRegistration(){
     
         cy.get('input[name=firstName]').type('Mila');
         cy.get('input[name=lastName]').type('Mur');
-        cy.get('input[name=email]').type('mila-mur@mail.com');
-        cy.get('[type="password"]').eq(0).type('Password1');
-        cy.get('[placeholder="Confirm your password"]').type('Password1');
+        cy.get('input[name=email]').type(TestData.email);
+        cy.get('[type="password"]').eq(0).type(TestData.password);
+        cy.get('[placeholder="Confirm your password"]').type(TestData.password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
         cy.wait(1000);
@@ -93,10 +94,10 @@ companyRegistration(){
     
         cy.get('input[name=firstName]').type('Andrew');
         cy.get('input[name=lastName]').type('Cook');
-        cy.get('input[name=email]').type('andrew+cook@mail.com');
+        cy.get('input[name=email]').type(TestData.login_corp_email);
         cy.get('[name="organizationName"]').type('Andrew Corporate');
-        cy.get('[type="password"]').eq(0).type('Password1');
-        cy.get('[placeholder="Confirm your password"]').type('Password1');
+        cy.get('[type="password"]').eq(0).type(TestData.login_corp_password);
+        cy.get('[placeholder="Confirm your password"]').type(TestData.login_corp_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
         cy.wait(1000);

@@ -1,5 +1,6 @@
 import AuthLogin from '../../../support/navigation/AuthLogin';
 import { LoginPageLocators } from './LoginPageLocators/LoginPageLocators';
+import TestData from '../../../e2e/Variables/TestData';
 
 // Class for handling operations related to the Login Page
 class LoginPage {
@@ -78,6 +79,21 @@ class LoginPage {
     cy.log('Verifying successful login');
     cy.url().should('include', '/catalog');
   }
+
+
+  checkEmailVerification(email, password) {
+    cy.log('Starting Login Phase');
+    this.visit();
+    this.fillEmail(email);
+    this.fillPassword(password);
+    this.clickLoginButton();
+    cy.checkLoading('.vc-button__loader');
+    cy.get('.vc-alert').contains('Email verification required. Please verify your email address');
+    cy.log('Verifying email confirmation is required')
+  }
+    
+
+
 }
 
 export default LoginPage;
