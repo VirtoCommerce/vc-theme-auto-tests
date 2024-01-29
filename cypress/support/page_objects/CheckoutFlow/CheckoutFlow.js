@@ -80,8 +80,9 @@ export class PersonalCheckout {
 
     addNewShippingAddress(){
 
-      cy.contains('button', 'select a shipping address').click();
-      cy.wait(500);
+      cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();
+      cy.wait(5000);
+      cy.get('span[class="grow"]').should('exist').and('have.text', 'Select address');      
       cy.contains('button', 'Add new address').click();
       cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
       cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
@@ -98,9 +99,11 @@ export class PersonalCheckout {
 
   selectShippingAddress() {    
     cy.contains('button', 'select a shipping address').click();
+    cy.wait(5000); 
     cy.contains('button', 'Select').first().click();
-    cy.contains('button', 'OK').click();
-  }
+    cy.contains('button', 'OK').click();   
+    } 
+  
 
   selectDelivery(method) {
     cy.contains('span', 'Select a delivery method').click();
@@ -162,7 +165,6 @@ cy.get('input[type="checkbox"]').should('be.checked');
   }
 
   fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
-    //cy.contains('div', 'Card number').find('input').type(cardNumber);
     cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
     cy.contains('div', 'Security Code').find('input').type(cvv);
     cy.contains('div', 'Cardholder name').find('input').type(name);
@@ -174,6 +176,14 @@ cy.get('input[type="checkbox"]').should('be.checked');
   }
 
   isPayed() {
-    cy.url().should('include', '/checkout/payment/success');
+    cy.url().should('include', 'checkout/payment/success');    
+  }
+
+  checkOrder(){
+    cy.contains('a', 'Show order').click();  
+    cy.location().should((loc) => {
+      expect(loc.href).to.include('/account/orders/')
+    })
+
   }
 }

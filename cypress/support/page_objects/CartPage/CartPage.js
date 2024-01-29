@@ -12,7 +12,6 @@ class CartPage {
 
 cartLineItemsCheck(){
 
-cy.checkLoading('.vc-loader-overlay__spinner');
 cy.reload();
 cy.wait(5000);
 cy.get('.vc-line-items').should('exist');

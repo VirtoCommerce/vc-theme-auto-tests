@@ -30,9 +30,9 @@ describe('Select for checkout', () => {
                
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
-    catalogPage.purchaseAll(); 
-    cartPage.visitByCartClick();
-    cy.intercept('/cart').as('GetFullCart');    
+    catalogPage.purchaseAll();     
+    cartPage.visitByCartClick();    
+    cy.checkLoading('.vc-loader-overlay__spinner');    
     cartPage.cartLineItemsCheck();
     
     selectForCheckout.SelectedState();   
@@ -59,7 +59,9 @@ describe('Select for checkout', () => {
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
     personalCheckout.pay();
+    cy.wait(1000);
     personalCheckout.isPayed();
+    personalCheckout.checkOrder();
 
     //check cart after order creation
 
@@ -77,13 +79,13 @@ describe('Select for checkout', () => {
     });
    
 
- it('Select only Physical product', () => {
+    it('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
-    catalogPage.purchaseAll(); 
-    cartPage.visitByCartClick();
-    cy.intercept('/cart').as('GetFullCart');    
+    catalogPage.purchaseAll();     
+    cartPage.visitByCartClick();    
+    cy.checkLoading('.vc-loader-overlay__spinner');    
     cartPage.cartLineItemsCheck();
     
     selectForCheckout.SelectedState();
@@ -113,7 +115,9 @@ describe('Select for checkout', () => {
 
     personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
     personalCheckout.pay();
+    cy.wait(1000);
     personalCheckout.isPayed();
+    personalCheckout.checkOrder();
 
     //check cart after order creation
     cartPage.visitByCartClick();    
