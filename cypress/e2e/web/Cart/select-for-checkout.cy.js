@@ -87,7 +87,7 @@ describe('Select for checkout', () => {
     });
    
 
-    it.skip('Select only Physical product', () => {
+    it('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
