@@ -1,10 +1,9 @@
-import CartPage from "../support/page_objects/CartPage/CartPage";
-import CatalogPage from "../support/page_objects/CatalogPage/CatalogPage";
-import SelectForCheckout from "../support/page_objects/CheckoutFlow/SelectForCheckout";
-import LoginPage from "../support/page_objects/LoginPage/LoginPage";
-import TestData from "./Variables/TestData";
-import {aliasQuery} from "../utils/graphql-test-utils";
-import {AnonymousCheckout, PersonalCheckout} from "../support/page_objects/CheckoutFlow/CheckoutFlow";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
+import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
+import {PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
+import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
+import TestData from "../../Variables/TestData";
 
 const SUBCATEGORY = 'new-home/bedroom-furniture';
 
@@ -80,7 +79,7 @@ describe('Select for checkout', () => {
     });
    
 
-    it.only('Select only Physical product', () => {
+    it('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   

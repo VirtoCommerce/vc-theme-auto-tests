@@ -1,7 +1,7 @@
-import CatalogPage from "../support/page_objects/CatalogPage/CatalogPage";
-import CartPage from "../support/page_objects/CartPage/CartPage";
-import {aliasQuery} from "../utils/graphql-test-utils";
-import TestData from "./Variables/TestData";
+import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import {aliasQuery} from "../../../utils/graphql-test-utils";
+import TestData from "../../Variables/TestData";
 
 const FIRST_CATALOG = 'soft-drinks';
 

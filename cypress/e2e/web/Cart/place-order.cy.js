@@ -1,9 +1,9 @@
-import ProductPage from "../support/page_objects/ProductPage/ProductPage";
-import CartPage from "../support/page_objects/CartPage/CartPage";
-import {AnonymousCheckout, PersonalCheckout} from "../support/page_objects/CheckoutFlow/CheckoutFlow";
-import LoginPage from "../support/page_objects/LoginPage/LoginPage";
-import TestData from "./Variables/TestData";
-import { aliasQuery, aliasMutation } from "../utils/graphql-test-utils";
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
+import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
+import TestData from "../../Variables/TestData";
+import { aliasQuery, aliasMutation } from "../../../utils/graphql-test-utils";
 
 const PRODUCT_URL = TestData.defaultProductPage;
 

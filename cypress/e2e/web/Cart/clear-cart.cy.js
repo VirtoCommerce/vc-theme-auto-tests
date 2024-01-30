@@ -1,6 +1,6 @@
-import TestData from "./Variables/TestData";
-import ProductPage from "../support/page_objects/ProductPage/ProductPage";
-import CartPage from "../support/page_objects/CartPage/CartPage";
+import TestData from "../../Variables/TestData";
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
 
 const PRODUCT_URL = TestData.defaultProductPage;
 

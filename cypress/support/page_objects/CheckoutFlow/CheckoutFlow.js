@@ -78,11 +78,13 @@ export class PersonalCheckout {
     
     }
 
+  // There is no any address
+
     addNewShippingAddress(){
 
       cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();      
-      cy.get('span[class="grow"]').should('exist').and('have.text', 'Select address');      
-      cy.contains('button', 'Add new address').click();
+      //cy.get('.mx-auto').should('be.visible');      
+      //cy.contains('button', 'Add new address').click();
       cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
       cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
       cy.contains('div', 'Email').find('input').type(testData.shipping.email);
@@ -96,9 +98,11 @@ export class PersonalCheckout {
   
     }
 
+  // Select shipping address if address has already added
+
   selectShippingAddress() {    
     cy.contains('button', 'select a shipping address').click();
-    cy.wait(5000); 
+    cy.get('.mx-auto').should('be.visible'); 
     cy.contains('button', 'Select').first().click();
     cy.contains('button', 'OK').click();   
     } 

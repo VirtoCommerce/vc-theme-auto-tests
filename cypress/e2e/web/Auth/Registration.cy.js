@@ -1,7 +1,8 @@
-import AuthLogin from '../support/navigation/AuthLogin';
-import SignUpPage from '../support/page_objects/SignUpPage/SignUpPage';
-import LoginPage from '../support/page_objects/LoginPage/LoginPage';
-import TestData from './Variables/TestData';
+import AuthLogin from "../../../support/navigation/AuthLogin";
+import SignUpPage from "../../../support/page_objects/SignUpPage/SignUpPage";
+import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
+import TestData from "../../Variables/TestData";
+
 
 describe('Successful registration', () => {
 
