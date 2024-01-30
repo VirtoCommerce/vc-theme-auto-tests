@@ -68,7 +68,6 @@ describe('Select for checkout', () => {
     //check cart after order creation
 
     cartPage.visitByCartClick();
-    cartPage.visitByCartClick();
     cy.intercept('/cart').as('GetFullCart');    
     cartPage.cartLineItemsCheck();    
     selectForCheckout.SelectedState(); 
@@ -121,6 +120,8 @@ describe('Select for checkout', () => {
     personalCheckout.placeOrder();
 
     cy.checkLoading('.vc-loader-overlay__spinner');
+
+    //Payment page
 
     personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
     personalCheckout.pay();
