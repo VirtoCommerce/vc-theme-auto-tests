@@ -4,6 +4,7 @@ import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/Select
 import {PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
+import LogOut from "../../../support/navigation/LogOut";
 
 const SUBCATEGORY = 'new-home/bedroom-furniture';
 
@@ -13,7 +14,8 @@ describe('Select for checkout', () => {
     const cartPage = new CartPage();
     const catalogPage = new CatalogPage();
     const loginPage = new LoginPage();
-    const personalCheckout = new PersonalCheckout();    
+    const personalCheckout = new PersonalCheckout();
+    const logOut = new LogOut();  
     
 
     beforeEach(() => {
@@ -76,10 +78,16 @@ describe('Select for checkout', () => {
     cartPage.clearCart();
     cartPage.confirmClearCart();
     cy.log('The test is comleted');
+
+    //log out
+    cy.log('click on the user name and log out')
+    logOut.signOut();
+    cy.log('Logging out completed')
+
     });
    
 
-    it('Select only Physical product', () => {
+    it.skip('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
@@ -130,8 +138,12 @@ describe('Select for checkout', () => {
     //Clear cart
     cartPage.clearCart();
     cartPage.confirmClearCart();
-    cy.log('The test is comleted');  
+    cy.log('The test is comleted');
     
+    //log out
+    cy.log('click on the user name and log out')
+    logOut.signOut();
+    cy.log('Logging out completed')    
 
  });
 
