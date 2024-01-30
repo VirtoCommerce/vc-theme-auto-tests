@@ -78,6 +78,8 @@ class LoginPage {
     this.checkNoErrorMessage();
     cy.log('Verifying successful login');
     cy.url().should('include', '/catalog');
+    cy.get('div[class="grow"]').should('be.visible').and('contain.text', 'Catalog');    
+    cy.log('Catalog page is loaded');
   }
 
 

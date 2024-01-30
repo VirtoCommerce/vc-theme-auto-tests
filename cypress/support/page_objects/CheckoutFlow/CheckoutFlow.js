@@ -80,8 +80,7 @@ export class PersonalCheckout {
 
     addNewShippingAddress(){
 
-      cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();
-      cy.wait(5000);
+      cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();      
       cy.get('span[class="grow"]').should('exist').and('have.text', 'Select address');      
       cy.contains('button', 'Add new address').click();
       cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);

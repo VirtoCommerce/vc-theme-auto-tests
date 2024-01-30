@@ -12,8 +12,7 @@ class CartPage {
 
 cartLineItemsCheck(){
 
-cy.reload();
-cy.wait(5000);
+cy.get('.vc-line-items').should('be.visible');
 cy.get('.vc-line-items').should('exist');
 
   }
@@ -27,7 +26,7 @@ cy.get('.vc-line-items').should('exist');
   }
 
   confirmClearCart(){
-cy.contains('#headlessui-dialog-title-6', 'Clear cart').should('exist');
+cy.contains('.grow', 'Clear cart').should('exist');
 cy.get('button').contains('Yes').click();
   }
 
@@ -46,23 +45,23 @@ cy.get('button').contains('Yes').click();
 
 emptyOrNot(){
 
-  
-cy.visit(`${Cypress.env('PLATFORM_URL')}/cart`);
-cy.wait(1000);
+cy.log('Verifying cart is empty')  
 
-// Check if the "Clear Cart" button exists
-
-cy.contains('button', 'Clear cart')
-.if('exist')
+cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('be.visible')
+.if('visible')
 .then(() => {
-  cy.get('button', 'Clear cart').click();
+  cy.get(CartPageLocators.HEADER_CART_LINK).click();
+  cy.url().should('include', '/cart');
+  this.cartLineItemsCheck();
+  cy.scrollTo('bottom');
+  cy.contains('button', 'Clear cart').click();
   cy.get('button').contains('Yes').click(); 
   cy.contains('h2', 'Your cart is empty').should('be.visible');
 })
 .else()
 .then(() => {
   cy.log('Cart is empty')
-  cy.go('back');
+  //cy.go('back');
 }) 
 }
 

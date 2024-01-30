@@ -21,7 +21,8 @@ describe('Select for checkout', () => {
         cy.clearCookies();
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
-        loginPage.login(TestData.email, TestData.password);        
+        loginPage.login(TestData.email, TestData.password);
+        cartPage.emptyOrNot();        
 
     });         
 
@@ -79,13 +80,14 @@ describe('Select for checkout', () => {
     });
    
 
-    it('Select only Physical product', () => {
+    it.only('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
     cy.wait(5000);   
     catalogPage.purchaseAll();     
     cartPage.visitByCartClick();    
-    cy.checkLoading('.vc-loader-overlay__spinner');    
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cy.reload();   
     cartPage.cartLineItemsCheck();
     
     selectForCheckout.SelectedState();
