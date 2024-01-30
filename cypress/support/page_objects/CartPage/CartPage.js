@@ -45,8 +45,7 @@ cy.get('button').contains('Yes').click();
 
 emptyOrNot(){
 
-cy.log('Verifying cart is empty')  
-
+cy.log('Verifying cart is empty') 
 cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('be.visible')
 .if('visible')
 .then(() => {
@@ -60,8 +59,7 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('be.visible')
 })
 .else()
 .then(() => {
-  cy.log('Cart is empty')
-  //cy.go('back');
+  cy.log('Cart is empty')  
 }) 
 }
 
