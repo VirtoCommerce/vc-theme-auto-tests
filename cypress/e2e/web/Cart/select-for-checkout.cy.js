@@ -27,15 +27,14 @@ describe('Select for checkout', () => {
 
     });         
 
-    it('Select only digital product', () => { 
+    it.only('Select only digital product', () => { 
 
                
     catalogPage.visit(SUBCATEGORY);
-    cy.wait(5000);   
-    catalogPage.purchaseAll();     
+    cy.get('h2').should('be.visible');   
+    catalogPage.addToCart();     
     cartPage.visitByCartClick();    
-    cy.checkLoading('.vc-loader-overlay__spinner');
-    cy.reload();    
+    cy.checkLoading('.vc-loader-overlay__spinner');        
     cartPage.cartLineItemsCheck();
     
     selectForCheckout.SelectedState();   
@@ -90,7 +89,7 @@ describe('Select for checkout', () => {
     it('Select only Physical product', () => {
 
     catalogPage.visit(SUBCATEGORY);
-    cy.wait(5000);   
+    cy.get('h2').should('be.visible');   
     catalogPage.purchaseAll();     
     cartPage.visitByCartClick();    
     cy.checkLoading('.vc-loader-overlay__spinner');
