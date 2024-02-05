@@ -5,12 +5,11 @@ class CatalogPage {
   }
   purchaseAll() {
 
-  let countAddToCart = null;
   cy.log('Add products to cart')
   cy.get('button[title="Add to cart"]').each(($addToCart) => {
-  countAddToCart = $addToCart.length;
   cy.wrap($addToCart)
   .click();
+  
  })
   
 }
