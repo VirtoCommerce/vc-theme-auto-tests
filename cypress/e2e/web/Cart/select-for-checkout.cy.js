@@ -6,7 +6,7 @@ import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
 import LogOut from "../../../support/navigation/LogOut";
 
-const SUBCATEGORY = 'new-home/bedroom-furniture';
+const SUBCATEGORY = 'snacks';
 
 describe('Select for checkout', () => {
 
@@ -34,7 +34,8 @@ describe('Select for checkout', () => {
     cy.wait(5000);   
     catalogPage.purchaseAll();     
     cartPage.visitByCartClick();    
-    cy.checkLoading('.vc-loader-overlay__spinner');    
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cy.reload();    
     cartPage.cartLineItemsCheck();
     
     selectForCheckout.SelectedState();   
@@ -110,7 +111,8 @@ describe('Select for checkout', () => {
     cy.checkLoading('.vc-loader-overlay__spinner');
 
     personalCheckout.checkShippingPage();
-    personalCheckout.addNewShippingAddress();
+    //personalCheckout.addNewShippingAddress();
+    personalCheckout.selectShippingAddress();
     personalCheckout.selectDelivery('Fixed Rate (Ground)');
     personalCheckout.leaveComment('place-order.cy test');
     personalCheckout.proceedToBilling();
