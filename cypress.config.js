@@ -25,8 +25,7 @@ module.exports = defineConfig({
   },  
   "testrail": {
   "domain": "virtowayqa.testrail.io",
-  "username": "elena.mutykova@virtoway.com",
-  "password": "test7QAcase",
+  "apikey": "sWC5LzaMIvE.wfPoOeiC-VbDQ9Y1gsGS5O8/i8L7J",
   "runId": "R13618",
   "screenshots": false    
 }
