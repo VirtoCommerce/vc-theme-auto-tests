@@ -1,0 +1,10 @@
+/node_modules
+/.idea
+/cypress/
+.DS_Store
+/coverage
+node_modules
+/tests/Cypress/cypress/videos
+/tests/Cypress/cypress/screenshots
+/tests/Cypress/cucumber-report.html
+/tests/Cypress/created_run.json

@@ -27,7 +27,7 @@ describe('Select for checkout', () => {
 
     });         
 
-    it('Select only digital product', () => { 
+    it('C378456: add mixed items > unselect physical products > create an order', () => { 
 
                
     catalogPage.visit(SUBCATEGORY);
