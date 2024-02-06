@@ -3,7 +3,7 @@ const { defineConfig } = require("cypress");
 require('dotenv').config();
 
 module.exports = defineConfig({
-  projectId: '4qfpp4',
+  projectId: '4qfpp4', 
   env: {
     LOGIN_PERSONAL_EMAIL: process.env.LOGIN_PERSONAL_EMAIL,
     LOGIN_PERSONAL_PASSWORD: process.env.LOGIN_PERSONAL_PASSWORD,
@@ -20,6 +20,14 @@ module.exports = defineConfig({
   },
   e2e: {
     setupNodeEvents(on, config) {
+  return require('./cypress/plugins/index')(on, config)
     },
-  },
+  },  
+  "testrail": {
+  "domain": "virtowayqa.testrail.io",
+  "username": "elena.mutykova@virtoway.com",
+  "password": "test7QAcase",
+  "runId": "R13618",
+  "screenshots": false    
+}
 });

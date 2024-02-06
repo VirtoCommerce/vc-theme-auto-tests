@@ -7,6 +7,7 @@ require('cypress-xpath');
 
 import 'cypress-if'
 import 'cypress-real-events/support'
+import 'cypress-testrail'
 
 Cypress.Commands.add('login', (email, password) => {
   cy.session(

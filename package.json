@@ -12,6 +12,7 @@
   "devDependencies": {
     "cypress": "^13.6.4",
     "cypress-if": "^1.10.5",
+    "cypress-testrail": "^2.10.0",
     "cypress-xpath": "^2.0.1"
   },
   "dependencies": {

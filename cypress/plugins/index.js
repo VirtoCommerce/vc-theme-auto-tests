@@ -1,4 +1,4 @@
-import '../support/commands';
+//import '../support/commands';
 require('dotenv').config();
 
 module.exports = (on, config) => {
@@ -34,4 +34,11 @@ module.exports = (on, config) => {
     console.log('Preprocessing file:', file.filePath);
     return file;
   });
+};
+
+const TestRailReporter = require('cypress-testrail');
+
+module.exports = (on, config) => {
+    new TestRailReporter(on, config).register();
+    return config
 };
