@@ -5,6 +5,8 @@ import {PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/Check
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
 import LogOut from "../../../support/navigation/LogOut";
+import userData from "../../Variables/userData";
+
 
 const SUBCATEGORY = 'new-home/bedroom-furniture';
 //const SUBCATEGORY = 'courses-and-digital-products/digital-products/images';
@@ -23,7 +25,7 @@ describe('Select for checkout', () => {
         cy.clearCookies();
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
-        loginPage.login(TestData.email, TestData.password);
+        loginPage.login(userData.userData[0].email, userData.userData[0].password);
         cartPage.emptyOrNot();        
 
     });         
