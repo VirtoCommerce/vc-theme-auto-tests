@@ -6,7 +6,8 @@ import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
 import LogOut from "../../../support/navigation/LogOut";
 
-const SUBCATEGORY = 'snacks';
+const SUBCATEGORY = 'new-home/bedroom-furniture';
+//const SUBCATEGORY = 'courses-and-digital-products/digital-products/images';
 
 describe('Select for checkout', () => {
 
