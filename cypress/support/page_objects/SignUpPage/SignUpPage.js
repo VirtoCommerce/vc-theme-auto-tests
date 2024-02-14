@@ -1,6 +1,6 @@
 
 import AuthLogin from '../../../support/navigation/AuthLogin';
-import TestData from '../../../e2e/Variables/TestData';
+import userData from '../../../e2e/Variables/userData';
 
 class SignUpPage{
 
@@ -71,11 +71,11 @@ personalRegistration(){
 
         cy.get('[type="radio"]').first().check().should('be.checked');
     
-        cy.get('input[name=firstName]').type('Mila');
-        cy.get('input[name=lastName]').type('Mur');
-        cy.get('input[name=email]').type(TestData.email);
-        cy.get('[type="password"]').eq(0).type(TestData.password);
-        cy.get('[placeholder="Confirm your password"]').type(TestData.password);
+        cy.get('input[name=firstName]').type(userData.userData[0].first_name);
+        cy.get('input[name=lastName]').type(userData.userData[0].last_name);
+        cy.get('input[name=email]').type(userData.userData[0].email);
+        cy.get('[type="password"]').eq(0).type(userData.userData[0].password);
+        cy.get('[placeholder="Confirm your password"]').type(userData.userData[0].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
         cy.wait(1000);
@@ -92,12 +92,12 @@ companyRegistration(){
 
         cy.get('[type="radio"]').last().check().should('be.checked'); 
     
-        cy.get('input[name=firstName]').type('Andrew');
-        cy.get('input[name=lastName]').type('Cook');
-        cy.get('input[name=email]').type(TestData.login_corp_email);
-        cy.get('[name="organizationName"]').type('Andrew Corporate');
-        cy.get('[type="password"]').eq(0).type(TestData.login_corp_password);
-        cy.get('[placeholder="Confirm your password"]').type(TestData.login_corp_password);
+        cy.get('input[name=firstName]').type(userData.userData[1].first_name);
+        cy.get('input[name=lastName]').type(userData.userData[1].last_name);
+        cy.get('input[name=email]').type(userData.userData[1].email);
+        cy.get('[name="organizationName"]').type(userData.userData[1].company_name);
+        cy.get('[type="password"]').eq(0).type(userData.userData[1].password);
+        cy.get('[placeholder="Confirm your password"]').type(userData.userData[1].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
         cy.wait(1000);

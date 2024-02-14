@@ -1,7 +1,7 @@
 import AuthLogin from "../../../support/navigation/AuthLogin";
 import SignUpPage from "../../../support/page_objects/SignUpPage/SignUpPage";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
-import TestData from "../../Variables/TestData";
+import userData from "../../Variables/userData";
 
 
 describe('Successful registration', () => {
@@ -49,7 +49,7 @@ it('Create company account', () => {
 //Login as a personal account
 it('Personal: Email verification is mandatory', () => {
   cy.log('Login as a personal account');
-  loginPage.checkEmailVerification(TestData.email, TestData.password);
+  loginPage.checkEmailVerification(userData.userData[0].email, userData.userData[0].password);
   cy.log('Need to confirm the email');  
 
 })
@@ -57,7 +57,7 @@ it('Personal: Email verification is mandatory', () => {
 //Login as a company account
 it('Company: Email verification is mandatory', () => {
   cy.log('Login as a company account');
-  loginPage.checkEmailVerification(TestData.login_corp_email, TestData.login_corp_password);
+  loginPage.checkEmailVerification(userData.userData[1].email, userData.userData[1].password);
   cy.log('Need to confirm the email');  
 
 })
