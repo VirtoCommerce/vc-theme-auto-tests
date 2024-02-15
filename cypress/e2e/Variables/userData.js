@@ -39,8 +39,9 @@ userData:[
     last_name: "Thring",
     email: "sthring3@a8.net",
     gender: "Female",
-    password: "0B1r1pI",
-    confirm_password: "0B1r1pI"
+    password: "Simona0B1r1pI",
+    confirm_password: "Simona0B1r1pI0B1r1pI",
+    user_name: "Simona Thring"
   },
   {
     id: 5,
