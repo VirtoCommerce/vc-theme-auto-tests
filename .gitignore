@@ -1,4 +1,4 @@
 .idea
 .env
 node_modules
-cypress/e2e/Variables
+Variables
