@@ -11,11 +11,10 @@ startFromHome(){
        
         AuthLogin.visitHomePage();
         cy.log('Step: Visited Home Page'); // Logging
-        cy.wait(2000);
+        cy.get('h2').should('be.visible').and('have.text', "Daily Deals");
         cy.get('[href="/sign-up"]').click();
-        cy.wait(1000);
-        cy.location("pathname").should('eq', "/sign-up");
-        cy.get('h1').contains('Registration');
+        cy.get('h1').should('be.visible').contains('Registration');
+        cy.location("pathname").should('eq', "/sign-up");        
         cy.get('form').should('be.visible');
         cy.log('Step: Open sign-up page');      
         
