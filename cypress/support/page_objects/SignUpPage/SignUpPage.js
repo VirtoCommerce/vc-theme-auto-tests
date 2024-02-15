@@ -78,9 +78,8 @@ personalRegistration(){
         cy.get('[placeholder="Confirm your password"]').type(userData.userData[0].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
-        cy.wait(1000);
-        cy.location('pathname').should('eq', "/successful-registration");
-        cy.get('.vc-typography--variant--h2').contains("Registration completed");
+        cy.get('.vc-typography--variant--h2').should('be.visible').and('have.text', 'Registration completed');
+        cy.location('pathname').should('eq', "/successful-registration");        
         cy.get('.flex > .vc-button').should('be.exist');
         cy.log('Personal account is created');    
    
@@ -100,11 +99,9 @@ companyRegistration(){
         cy.get('[placeholder="Confirm your password"]').type(userData.userData[1].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
-        cy.wait(1000);
-        cy.location('pathname').should('eq', "/successful-registration");
-        cy.get('.vc-typography--variant--h2').contains("Registration completed");
+        cy.get('.vc-typography--variant--h2').should('be.visible').and('have.text', 'Registration completed');
+        cy.location('pathname').should('eq', "/successful-registration");        
         cy.get('.flex > .vc-button').should('be.exist');
-
         cy.log('Company account is created'); 
 
 }

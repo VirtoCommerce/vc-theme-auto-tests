@@ -4,6 +4,7 @@ import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
 import { aliasQuery, aliasMutation } from "../../../utils/graphql-test-utils";
+import userData from "../../Variables/userData";
 
 const PRODUCT_URL = TestData.defaultProductPage;
 
@@ -48,7 +49,7 @@ describe('place order', () => {
   });
 
   it('places order as Personal user', () => {
-    loginPage.login(TestData.email, TestData.password);
+    loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cy.wait('@GetShortCartQuery')
       .wait('@GetShortCartQuery')
       .then((interception) => {
