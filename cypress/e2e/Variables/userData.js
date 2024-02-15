@@ -30,7 +30,8 @@ userData:[
     email: "sswanborrow2@nationalgeographic.com",
     gender: "Female",
     password: "lMfd8Jt",
-    confirm_password: "lMfd8Jt"
+    confirm_password: "lMfd8Jt",
+    user_name:"Sherill Swanborrow"
   },
   {
     id: 4,
