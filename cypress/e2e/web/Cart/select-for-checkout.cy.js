@@ -56,9 +56,12 @@ describe('Select for checkout', () => {
     //Checkout
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
+    
     selectForCheckout.checkoutForDigitalProduct();
     personalCheckout.addNewBillingAddress();   
     personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkBillingPage();
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -118,6 +121,8 @@ describe('Select for checkout', () => {
     personalCheckout.proceedToBilling();
     personalCheckout.checkBillingPage();
     personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkStepsNumber();
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
 
@@ -176,10 +181,11 @@ it('C367723: select All items > create an order', () => {
     personalCheckout.selectDelivery('Fixed Rate (Air)');
     personalCheckout.leaveComment('place-order.cy test');
     personalCheckout.proceedToBilling();
-    personalCheckout.checkBillingPage();
-
+    
     cy.log('Select manual payment')
     personalCheckout.selectPaymentMethod('Manual');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkBillingPage();
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
 

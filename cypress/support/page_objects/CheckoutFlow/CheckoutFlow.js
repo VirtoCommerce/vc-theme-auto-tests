@@ -136,9 +136,15 @@ checkBillingPage(){
 cy.location('pathname').should('eq', "/checkout/billing");
 cy.get('.vc-steps__item').should('have.length', 5);
 cy.contains('Billing');
-cy.get('input[type="checkbox"]').should('be.checked');
     
- }
+}
+
+ checkStepsNumber(){
+  
+  cy.location('pathname').should('eq', "/checkout/billing");
+  cy.get('.vc-steps__item').should('have.length', 6);
+  cy.contains('Payment');
+}
 
   selectBillingAddress() {
     cy.contains('button', 'Select a billing address').click();
