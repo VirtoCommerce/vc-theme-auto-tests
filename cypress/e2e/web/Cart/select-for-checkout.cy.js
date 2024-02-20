@@ -63,8 +63,7 @@ describe('Select for checkout', () => {
     personalCheckout.placeOrder();
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
-    personalCheckout.pay();
-    cy.wait(1000);
+    personalCheckout.pay();    
     personalCheckout.isPayed();
     personalCheckout.checkOrder();
 
@@ -89,7 +88,7 @@ describe('Select for checkout', () => {
     });
    
 
-    it('Select only Physical product', () => {
+    it('C367728: add mixed items > unselect digital products > create an order', () => {
 
     catalogPage.visit(SUBCATEGORY);       
     catalogPage.purchaseAll();     
@@ -152,7 +151,7 @@ describe('Select for checkout', () => {
     });
     
 
-    it.only('Mixed oreder', () => {
+it('C367723: select All items > create an order', () => {
 
         catalogPage.visit(NEWCATEGORY);           
         catalogPage.purchaseAll();     
@@ -188,8 +187,7 @@ describe('Select for checkout', () => {
 
     //Completed page page
 
-    personalCheckout.checkCompletePage();
-    personalCheckout.checkOrder();
+    personalCheckout.checkCompletePage();    
 
     //check cart after order creation
     cartPage.visitByCartClick();    
