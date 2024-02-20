@@ -192,24 +192,27 @@ cy.get('input[type="checkbox"]').should('be.checked');
     cy.contains('button', 'Pay Now').click();
   }
 
-  isPayed() {
-    cy.url().should('include', 'checkout/payment/success');    
+isPayed() {
+ cy.url().should('include', 'checkout/payment/success');    
   }
 
 checkCompletePage(){
 
 cy.url().should('include', '/checkout/completed');
 cy.contains('h1', 'Order completed');
-cy.contains('a', 'Show order').should('be.visible');
 cy.contains('a', "Home Page").should('be.visible');
+cy.contains('a', 'Show order').should('be.visible').click();
+cy.location().should((loc) => {
+expect(loc.href).to.include('/account/orders/')
+})
+
 
 }
 
-  checkOrder(){
-    cy.contains('a', 'Show order').click();  
-    cy.location().should((loc) => {
-      expect(loc.href).to.include('/account/orders/')
-    })
-
-  }
+checkOrder(){
+cy.contains('a', 'Show order').click();  
+cy.location().should((loc) => {
+expect(loc.href).to.include('/account/orders/')
+})
+}
 }
