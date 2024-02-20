@@ -42,7 +42,10 @@ export class AnonymousCheckout {
   }
 
   selectDelivery(method) {
-    cy.contains('span', 'Select a delivery method').click();
+    cy.get('.vc-dropdown-menu__trigger').should('be.visible');
+    cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a delivery method");
+    cy.get('.vc-select__button').click();
+    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
     cy.contains('span', method).click();
   }
 
@@ -51,7 +54,10 @@ export class AnonymousCheckout {
   }
 
   selectPaymentMethod(method) {
-    cy.contains('span', 'Select a payment method').click();
+    cy.get('.vc-dropdown-menu__trigger').should('be.visible');
+    cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a payment method");
+    cy.get('.vc-select__button').click();
+    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
     cy.contains('span', method).click();
   }
 
@@ -118,7 +124,7 @@ export class PersonalCheckout {
   }
 
   proceedToBilling() {
-    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
+    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).should('not.be.disabled').click();
   }
 
   leaveComment(text) {
