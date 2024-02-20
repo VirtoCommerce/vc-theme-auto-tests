@@ -67,6 +67,7 @@ cy.get('.vc-line-item__main').each(($mainElement) => {
 checkoutForDigitalProduct(){
 
   cy.get('.vc-steps__item').should('not.have.text', 'Shipping').and('have.length', 4);
+  cy.get('input[type="checkbox"]').should('not.exist');
    
 }
 

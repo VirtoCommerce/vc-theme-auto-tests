@@ -42,7 +42,10 @@ export class AnonymousCheckout {
   }
 
   selectDelivery(method) {
-    cy.contains('span', 'Select a delivery method').click();
+    cy.get('.vc-dropdown-menu__trigger').should('be.visible');
+    cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a delivery method");
+    cy.get('.vc-select__button').click();
+    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
     cy.contains('span', method).click();
   }
 
@@ -51,7 +54,10 @@ export class AnonymousCheckout {
   }
 
   selectPaymentMethod(method) {
-    cy.contains('span', 'Select a payment method').click();
+    cy.get('.vc-dropdown-menu__trigger').should('be.visible');
+    cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a payment method");
+    cy.get('.vc-select__button').click();
+    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
     cy.contains('span', method).click();
   }
 
@@ -118,7 +124,7 @@ export class PersonalCheckout {
   }
 
   proceedToBilling() {
-    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
+    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).should('not.be.disabled').click();
   }
 
   leaveComment(text) {
@@ -130,9 +136,15 @@ checkBillingPage(){
 cy.location('pathname').should('eq', "/checkout/billing");
 cy.get('.vc-steps__item').should('have.length', 5);
 cy.contains('Billing');
-cy.get('input[type="checkbox"]').should('be.checked');
     
- }
+}
+
+ checkStepsNumber(){
+  
+  cy.location('pathname').should('eq', "/checkout/billing");
+  cy.get('.vc-steps__item').should('have.length', 6);
+  cy.contains('Payment');
+}
 
   selectBillingAddress() {
     cy.contains('button', 'Select a billing address').click();
@@ -186,15 +198,27 @@ cy.get('input[type="checkbox"]').should('be.checked');
     cy.contains('button', 'Pay Now').click();
   }
 
-  isPayed() {
-    cy.url().should('include', 'checkout/payment/success');    
+isPayed() {
+ cy.url().should('include', 'checkout/payment/success');    
   }
 
-  checkOrder(){
-    cy.contains('a', 'Show order').click();  
-    cy.location().should((loc) => {
-      expect(loc.href).to.include('/account/orders/')
-    })
+checkCompletePage(){
 
-  }
+cy.url().should('include', '/checkout/completed');
+cy.contains('h1', 'Order completed');
+cy.contains('a', "Home Page").should('be.visible');
+cy.contains('a', 'Show order').should('be.visible').click();
+cy.location().should((loc) => {
+expect(loc.href).to.include('/account/orders/')
+})
+
+
+}
+
+checkOrder(){
+cy.contains('a', 'Show order').click();  
+cy.location().should((loc) => {
+expect(loc.href).to.include('/account/orders/')
+})
+}
 }
