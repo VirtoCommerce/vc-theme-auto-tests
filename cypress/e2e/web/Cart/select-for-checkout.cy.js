@@ -174,21 +174,21 @@ describe('Select for checkout', () => {
 
     personalCheckout.checkShippingPage();    
     personalCheckout.selectShippingAddress();
-    personalCheckout.selectDelivery('Fixed Rate (Ground)');
+    personalCheckout.selectDelivery('Fixed Rate (Air)');
     personalCheckout.leaveComment('place-order.cy test');
     personalCheckout.proceedToBilling();
     personalCheckout.checkBillingPage();
-    personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+
+    cy.log('Select manual payment')
+    personalCheckout.selectPaymentMethod('Manual');
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
 
     cy.checkLoading('.vc-loader-overlay__spinner');
 
-    //Payment page
+    //Completed page page
 
-    personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
-    personalCheckout.pay();    
-    personalCheckout.isPayed();
+    personalCheckout.checkCompletePage();
     personalCheckout.checkOrder();
 
     //check cart after order creation

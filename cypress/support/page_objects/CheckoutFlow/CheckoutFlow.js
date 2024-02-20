@@ -196,6 +196,15 @@ cy.get('input[type="checkbox"]').should('be.checked');
     cy.url().should('include', 'checkout/payment/success');    
   }
 
+checkCompletePage(){
+
+cy.url().should('include', '/checkout/completed');
+cy.contains('h1', 'Order completed');
+cy.contains('a', 'Show order').should('be.visible');
+cy.contains('a', "Home Page").should('be.visible');
+
+}
+
   checkOrder(){
     cy.contains('a', 'Show order').click();  
     cy.location().should((loc) => {
