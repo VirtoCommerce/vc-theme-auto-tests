@@ -35,38 +35,74 @@ cy.log('The product was added to cart');
 
 }
 
-addToListAnonim(label){
+isStarGrey(){
 
-  cy.log('User is Anonim');
-  cy.get('a[href="/sign-up"]').should('be.visible').and('have.text', 'Sign up now');
-  cy.get('.space-x-2 > .text-primary').contains(label).click();
-
-  cy.get('.flex > .vc-icon > use')
-  .eq(5)
-  .should('have.css', 'color')
-  .and('eq', 'rgb(163, 163, 163)');
-  cy.log('The color of star is grey');
-  
-  cy.contains('span' , "Grid").click();
-  cy.log('Check star from Grid View')
-  cy.get('.flex > .vc-icon > use')
-  .eq(5)
-  .should('have.css', 'color')
-  .and('eq', 'rgb(163, 163, 163)');
-  cy.log('The color of star is grey');
+cy.get('.flex > .vc-icon > use')
+.eq(5)
+.should('have.css', 'color')
+.and('eq', 'rgb(163, 163, 163)');
+cy.log('The color of star is grey');
 
 }
 
-addToList(label){
+isStarOrange(){
+
+cy.log('Check the color of a star after adding it to the list')
+cy.get('.flex > .vc-icon > use')
+.eq(5)
+.should('have.css', 'color')
+.and('eq', 'rgb(240, 173, 78)');
+cy.log('The product was added to the list. The color of star is orange')
+
+}
+
+addToListAnonim(){
+
+cy.log('User is Anonim');
+cy.get('a[href="/sign-up"]').should('be.visible').and('have.text', 'Sign up now');
+
+this.inActiveStateView('List');
+cy.switchProductView('List');
+this.activeStateView('List');
+
+this.isStarGrey();
+  
+this.inActiveStateView('Grid')
+cy.switchProductView('Grid')
+this.activeStateView('Grid')
+this.isStarGrey();
+
+
+}
+
+inActiveStateView(label){
+
+cy.log('Check color if inActive')
+cy.get('.space-x-2 > .text-primary')
+.contains(label)
+.should('have.css', 'color')
+.and('eq', 'rgb(240, 173, 78)')
+
+}
+
+activeStateView(label){
+
+cy.log('Check color if Active')
+cy.get('.space-x-2 > .text-neutral-700')
+.contains(label)
+.should('have.css', 'color')
+.and('eq', 'rgb(64, 64, 64)')
+
+}
+
+addToList(){
 
   cy.log('add product to list from List view')
-  cy.get('.space-x-2 > .text-primary').contains(label).click();
+  this.inActiveStateView('List');
+  cy.switchProductView('List');
+  this.activeStateView('List');
 
-  cy.get('.flex > .vc-icon > use')
-  .eq(5)
-  .should('have.css', 'color')
-  .and('eq', 'rgb(163, 163, 163)');
-  cy.log('The color of star is grey');
+  this.isStarGrey();
   
   cy.get('.flex > .vc-icon > use')
   .eq(5)
@@ -81,21 +117,20 @@ addToList(label){
   .and('be.enabled')
   .click();
 
+ // Check the notification banner
   cy.get('.vc-notifications'). should('be.visible').and('have.text', "Your lists were successfully updated");
   cy.log('Banner is presented');
   cy.get('.vc-notifications__close-button').click();
   cy.get('.vc-notifications'). should('not.be.visible');
   cy.log('Banner is disappeared');
   
-  cy.log('Check the color of a star after adding it to the list')
-  cy.get('.flex > .vc-icon > use')
-  .eq(5)
-  .should('have.css', 'color')
-  .and('eq', 'rgb(240, 173, 78)');
-  cy.log('The product was added to the list. The color of star is orange')
+  this.isStarOrange();
 
-  cy.contains('span' , "Grid").click();
-  cy.wait(1000)
+  this.inActiveStateView('Grid')
+  cy.switchProductView('Grid')
+  this.activeStateView('Grid')
+
+  //cy.wait(1000)
   cy.log('Check star from Grid View')
   cy.get('.flex > .vc-icon > use')
   .eq(7)

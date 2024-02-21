@@ -20,7 +20,7 @@ it('Star is grey > Add product anonymously', ()=> {
 
 catalogPage.visit('catalog');
 cy.get('h2').should('be.visible');
-catalogPage.addToListAnonim('List');
+catalogPage.addToListAnonim();
 
 });
 
@@ -28,7 +28,16 @@ it('Star is orange > Add product to the wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
-catalogPage.addToList('List');
+catalogPage.addToList();
 
+})
+
+it.skip('Star is orange > Add product to existing wish list', () => {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+cy.get('h2').should('be.visible');
+catalogPage.visit('soft-drinks/soda')
+catalogPage.addToList();
+    
 })
 })
