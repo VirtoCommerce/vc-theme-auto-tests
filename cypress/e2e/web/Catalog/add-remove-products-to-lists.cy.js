@@ -22,7 +22,6 @@ catalogPage.visit('catalog');
 cy.get('h2').should('be.visible');
 catalogPage.addToListAnonim('List');
 
-
 });
 
 it('Star is orange > Add product to the wish list from List view', () => {
