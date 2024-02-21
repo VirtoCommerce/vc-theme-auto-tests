@@ -94,6 +94,14 @@ addToList(label){
   .and('eq', 'rgb(240, 173, 78)');
   cy.log('The product was added to the list. The color of star is orange')
 
+  cy.contains('span' , "Grid").click();
+  cy.wait(1000)
+  cy.log('Check star from Grid View')
+  cy.get('.flex > .vc-icon > use')
+  .eq(7)
+  .should('have.css', 'color')
+  .and('eq', 'rgb(240, 173, 78)');
+  cy.log('The product was added to the list. The color of star is orange')
 
 }
 
