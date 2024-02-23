@@ -67,11 +67,21 @@ this.inActiveStateView('List');
 cy.switchProductView('List');
 this.activeStateView('List');
 
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.should('be.disabled');
+
+
 ProductCard.isStarGrey();
   
 this.inActiveStateView('Grid')
 cy.switchProductView('Grid')
 this.activeStateView('Grid')
+
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.should('be.disabled');
+
 ProductCard.isStarGrey();
 }
 
@@ -85,8 +95,8 @@ addToList(){
 
   ProductCard.isStarGrey();
   
-  cy.get('.flex > .vc-icon > use')
-  .eq(5)
+  cy.get('button[type="button"][class="flex"]')
+  .eq(0)
   .click();
   
   cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
