@@ -1,3 +1,6 @@
+import ProductCard from "./ProductCard";
+
+
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
@@ -32,6 +35,99 @@ cy.wrap($updateCart)
 cy.log('The product was added to cart');
 
 });
+
+}
+
+inActiveStateView(label){
+
+  cy.log('Check color if inActive')
+  cy.get('.space-x-2 > .text-primary')
+  .contains(label)
+  .should('have.css', 'color')
+  .and('eq', 'rgb(240, 173, 78)')
+          
+  }
+          
+  activeStateView(label){
+          
+  cy.log('Check color if Active')
+  cy.get('.space-x-2 > .text-neutral-700')
+  .contains(label)
+  .should('have.css', 'color')
+  .and('eq', 'rgb(64, 64, 64)')
+          
+  }
+
+addToListAnonim(){
+
+cy.log('User is Anonim');
+cy.get('a[href="/sign-up"]').should('be.visible').and('have.text', 'Sign up now');
+
+this.inActiveStateView('List');
+cy.switchProductView('List');
+this.activeStateView('List');
+
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.should('be.disabled');
+
+
+ProductCard.isStarGrey();
+  
+this.inActiveStateView('Grid')
+cy.switchProductView('Grid')
+this.activeStateView('Grid')
+
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.should('be.disabled');
+
+ProductCard.isStarGrey();
+}
+
+
+addToList(){
+
+  cy.log('add product to list from List view')
+  this.inActiveStateView('List');
+  cy.switchProductView('List');
+  this.activeStateView('List');
+
+  ProductCard.isStarGrey();
+  
+  cy.get('button[type="button"][class="flex"]')
+  .eq(0)
+  .click();
+  
+  cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
+  cy.contains('button', " Add new list").click();
+  cy.get('input[type="checkbox"]').should('be.checked');
+  cy.get('button[type="button"]')
+  .eq(76)
+  .should('have.text', "Save")
+  .and('be.enabled')
+  .click();
+
+ // Check the notification banner
+  cy.get('.vc-notifications'). should('be.visible').and('have.text', "Your lists were successfully updated");
+  cy.log('Banner is presented');
+  cy.get('.vc-notifications__close-button').click();
+  cy.get('.vc-notifications'). should('not.be.visible');
+  cy.log('Banner is disappeared');
+  
+  ProductCard.isStarOrange();
+
+  this.inActiveStateView('Grid')
+  cy.switchProductView('Grid')
+  this.activeStateView('Grid')
+
+  //cy.wait(1000)
+  cy.log('Check star from Grid View')
+  cy.get('.flex > .vc-icon > use')
+  .eq(7)
+  .should('have.css', 'color')
+  .and('eq', 'rgb(240, 173, 78)');
+  cy.log('The product was added to the list. The color of star is orange')
 
 }
 
