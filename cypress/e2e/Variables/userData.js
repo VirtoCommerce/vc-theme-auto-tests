@@ -6,7 +6,7 @@ userData:[
     id: 1,
     first_name: "Mila",
     last_name: "Müller",
-    email: "kugeucrayoija-5761@yopmail.com",
+    email: "milamuller2024@yahoo.com",
     gender: "Female",
     password: "Password1",
     confirm_password: "Password1" ,
