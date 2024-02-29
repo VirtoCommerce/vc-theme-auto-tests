@@ -1,12 +1,17 @@
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import userData from "../../Variables/userData";
+import TestData from "../../Variables/TestData";
 
 
 describe('Add/remove products to Lists', ()=> {
    
 const catalogPage = new CatalogPage();
-const loginPage = new LoginPage();    
+const productPage = new ProductPage();
+const loginPage = new LoginPage();
+
+const PDP = '/bolts/carriage-bolts/1-steel-carriage-bolt-grade-5-zinc-plated-finish-14-20-diathread-size-100-pk-fastener-length-1-thread-size-14-20';
 
 beforeEach(() => {
 cy.clearCookies();
@@ -21,14 +26,18 @@ it('Star is grey > Add product anonymously', ()=> {
 catalogPage.visit('catalog');
 cy.get('h2').should('be.visible');
 catalogPage.addToListAnonim();
+productPage.visit(PDP);
+catalogPage.addToListAnonimProductPage();
 
 });
 
-it('Star is orange > Add product to the wish list from List view', () => {
+it.only('Star is orange > Add product to the wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
 catalogPage.addToList();
+productPage.visit(TestData.defaultProductPage);
+catalogPage.addToListFromProductPage();
 
 })
 

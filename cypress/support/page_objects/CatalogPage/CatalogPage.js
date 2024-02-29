@@ -5,6 +5,7 @@ class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
     cy.log('Step: Visited Catalog Page');
+
   }
   purchaseAll() {
 
@@ -83,8 +84,27 @@ cy.get('button[type="button"][class="flex"]')
 .should('be.disabled');
 
 ProductCard.isStarGrey();
+
 }
 
+addToListAnonimProductPage(){
+
+  cy.get('[aria-describedby="popover-213"] > .w-full')
+  .should('be.visible')
+  .and('be.disabled')  
+  
+}
+
+addToListFromProductPage(){
+
+cy.get('[aria-describedby="popover-212"] > .w-full')
+.should('be.visible')
+.and('be.enabled')
+.click();
+cy.addProductToList();
+ProductCard.isStarOrange();
+
+}
 
 addToList(){
 
@@ -99,21 +119,7 @@ addToList(){
   .eq(0)
   .click();
   
-  cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
-  cy.contains('button', " Add new list").click();
-  cy.get('input[type="checkbox"]').should('be.checked');
-  cy.get('button[type="button"]')
-  .eq(76)
-  .should('have.text', "Save")
-  .and('be.enabled')
-  .click();
-
- // Check the notification banner
-  cy.get('.vc-notifications'). should('be.visible').and('have.text', "Your lists were successfully updated");
-  cy.log('Banner is presented');
-  cy.get('.vc-notifications__close-button').click();
-  cy.get('.vc-notifications'). should('not.be.visible');
-  cy.log('Banner is disappeared');
+  cy.addProductToList();
   
   ProductCard.isStarOrange();
 
