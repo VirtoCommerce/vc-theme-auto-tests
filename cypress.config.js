@@ -23,10 +23,10 @@ module.exports = defineConfig({
   return require('./cypress/plugins/index')(on, config)
     },
   },  
-  "testrail": {
-  "domain": "virtowayqa.testrail.io",
-  "apikey": "sWC5LzaMIvE.wfPoOeiC-VbDQ9Y1gsGS5O8/i8L7J",
-  "runId": "R13618",
-  "screenshots": false    
+  testrail: {
+  domain: "virtowayqa.testrail.io",
+  apikey: "sWC5LzaMIvE.wfPoOeiC-VbDQ9Y1gsGS5O8/i8L7J",
+  runId: "R13618",
+  screenshots: false    
 }
 });
