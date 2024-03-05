@@ -1,3 +1,4 @@
+import Lists_data from "../Account/Lists/Lists_data";
 import ProductCard from "./ProductCard";
 
 
@@ -101,7 +102,7 @@ cy.get('[aria-describedby="popover-212"] > .w-full')
 .should('be.visible')
 .and('be.enabled')
 .click();
-cy.addProductToList();
+cy.addProductToNewList();
 ProductCard.isStarOrange();
 
 }
@@ -119,7 +120,7 @@ addToList(){
   .eq(0)
   .click();
   
-  cy.addProductToList();
+  cy.addProductToNewList();
   
   ProductCard.isStarOrange();
 
@@ -134,6 +135,28 @@ addToList(){
   .should('have.css', 'color')
   .and('eq', 'rgb(240, 173, 78)');
   cy.log('The product was added to the list. The color of star is orange')
+
+}
+
+addToExistList(){
+
+this.activeStateView('Grid');
+this.inActiveStateView('List')
+//ProductCard.isStarGrey();
+
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.click();
+
+cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
+cy.contains('span', Lists_data.lists[0].name1).click();
+cy.contains('span', Lists_data.lists[1].name2).click(); 
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+.should('be.enabled')
+.click();
+
+// Check the notification banner
+cy.checkNotificationBanner('Your lists were successfully updated');
 
 }
 
