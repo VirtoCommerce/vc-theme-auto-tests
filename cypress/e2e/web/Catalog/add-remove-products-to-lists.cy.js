@@ -3,6 +3,7 @@ import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import userData from "../../Variables/userData";
 import TestData from "../../Variables/TestData";
+import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 
 
 describe('Add/remove products to Lists', ()=> {
@@ -10,8 +11,9 @@ describe('Add/remove products to Lists', ()=> {
 const catalogPage = new CatalogPage();
 const productPage = new ProductPage();
 const loginPage = new LoginPage();
+const listsPage = new Lists();
 
-const PDP = '/bolts/carriage-bolts/1-steel-carriage-bolt-grade-5-zinc-plated-finish-14-20-diathread-size-100-pk-fastener-length-1-thread-size-14-20';
+const PDP = 'bolts/carriage-bolts/1-steel-carriage-bolt-grade-5-zinc-plated-finish-14-20-diathread-size-100-pk-fastener-length-1-thread-size-14-20';
 
 beforeEach(() => {
 cy.clearCookies();
@@ -31,7 +33,7 @@ catalogPage.addToListAnonimProductPage();
 
 });
 
-it.only('Star is orange > Add product to the wish list from List view', () => {
+it('Star is orange > Add product to the wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
@@ -48,5 +50,15 @@ cy.get('h2').should('be.visible');
 catalogPage.visit('soft-drinks/soda')
 catalogPage.addToList();
     
+})
+
+it.only('Lists tab > Lists > create new list', () => {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+listsPage.goToListTab();
+listsPage.emptyListsPageView();
+listsPage.createPersonalList();
+listsPage.emptyListDetailPage();
+
 })
 })
