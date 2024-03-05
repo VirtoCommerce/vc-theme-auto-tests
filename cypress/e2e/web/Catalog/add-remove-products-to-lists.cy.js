@@ -4,6 +4,7 @@ import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import userData from "../../Variables/userData";
 import TestData from "../../Variables/TestData";
 import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
+import Lists_data from "../../../support/page_objects/Account/Lists/Lists_data";
 
 
 describe('Add/remove products to Lists', ()=> {
@@ -43,22 +44,30 @@ catalogPage.addToListFromProductPage();
 
 })
 
-it.skip('Star is orange > Add product to existing wish list', () => {
-
-loginPage.login(userData.userData[0].email, userData.userData[0].password);
-cy.get('h2').should('be.visible');
-catalogPage.visit('soft-drinks/soda')
-catalogPage.addToList();
-    
-})
-
-it.only('Lists tab > Lists > create new list', () => {
+it('Lists tab > Lists > create new list', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
 listsPage.emptyListsPageView();
-listsPage.createPersonalList();
-listsPage.emptyListDetailPage();
+listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+listsPage.emptyListDetailPage(Lists_data.lists[0].name1);
+listsPage.compareListsNames();
 
+cy.log('Create one more lists')
+listsPage.clickToListsRouter();
+listsPage.createPersonalList(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
+listsPage.emptyListDetailPage(Lists_data.lists[1].name2);
+listsPage.compareListsNames();
+
+
+})
+
+it.only('Star is orange > Add product to existing wish list', () => {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+cy.get('h2').should('be.visible');
+catalogPage.visit('soft-drinks/soda')
+catalogPage.addToExistList();
+        
 })
 })
