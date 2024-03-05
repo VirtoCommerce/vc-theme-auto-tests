@@ -98,7 +98,7 @@ addToListAnonimProductPage(){
 
 addToListFromProductPage(){
 
-cy.get('[aria-describedby="popover-212"] > .w-full')
+cy.get('[aria-describedby="popover-220"] > .w-full')
 .should('be.visible')
 .and('be.enabled')
 .click();

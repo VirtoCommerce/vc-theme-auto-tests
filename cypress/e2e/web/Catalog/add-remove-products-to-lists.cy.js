@@ -34,35 +34,38 @@ catalogPage.addToListAnonimProductPage();
 
 });
 
-it('Star is orange > Add product to the wish list from List view', () => {
+it('Lists tab > Lists > create new list', () => {
+
+    loginPage.login(userData.userData[0].email, userData.userData[0].password);
+    listsPage.goToListTab();
+    listsPage.emptyListsPageView();
+    listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+    listsPage.emptyListDetailPage(Lists_data.lists[0].name1);
+    listsPage.compareListsNames();
+    
+    cy.log('Create one more lists')
+    listsPage.clickToListsRouter();
+    listsPage.createPersonalList(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
+    listsPage.emptyListDetailPage(Lists_data.lists[1].name2);
+    listsPage.compareListsNames();
+    
+    
+})
+
+it.only('Star is orange > Add product to the wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
 catalogPage.addToList();
 productPage.visit(TestData.defaultProductPage);
 catalogPage.addToListFromProductPage();
-
-})
-
-it('Lists tab > Lists > create new list', () => {
-
-loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
-listsPage.emptyListsPageView();
-listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
-listsPage.emptyListDetailPage(Lists_data.lists[0].name1);
-listsPage.compareListsNames();
-
-cy.log('Create one more lists')
-listsPage.clickToListsRouter();
-listsPage.createPersonalList(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
-listsPage.emptyListDetailPage(Lists_data.lists[1].name2);
-listsPage.compareListsNames();
-
+listsPage.checkListsAfterCreated();
 
 })
 
-it.only('Star is orange > Add product to existing wish list', () => {
+
+it('Star is orange > Add product to existing wish list', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');

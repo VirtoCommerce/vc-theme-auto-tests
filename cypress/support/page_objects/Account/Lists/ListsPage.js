@@ -38,6 +38,15 @@ cy.contains('a', list_name);
 
 }
 
+checkListsAfterCreated(){
+
+cy.log('Check created list')
+cy.get('.text-xl')
+.should('not.exist')
+
+
+}
+
 emptyListDetailPage(list_name){
 
 cy.contains('a', list_name).click();
