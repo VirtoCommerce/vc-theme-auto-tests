@@ -63,7 +63,7 @@ cy.get('.space-x-2 > .text-primary')
 .click();
 })
 
-Cypress.Commands.add('addProductToList', ()=>{
+Cypress.Commands.add('addProductToNewList', ()=>{
   
   cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
   cy.contains('button', " Add new list").click();
@@ -71,9 +71,12 @@ Cypress.Commands.add('addProductToList', ()=>{
   cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
   .should('be.enabled')
   .click();
-  
-  // Check the notification banner
-  cy.get('.vc-notifications'). should('be.visible').and('have.text', "Your lists were successfully updated");
+})
+
+Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
+ 
+  cy.log('Check the notification banner');
+  cy.get('.vc-notifications'). should('be.visible').and('have.text', bannerText);
   cy.log('Banner is presented');
   cy.get('.vc-notifications__close-button').click();
   cy.get('.vc-notifications'). should('not.be.visible');
