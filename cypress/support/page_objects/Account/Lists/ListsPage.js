@@ -1,5 +1,5 @@
 import { ListsLocators } from "../ListsLocators";
-//import Lists_data from "./Lists_data";
+import Lists_data from "./Lists_data";
 
 
 class Lists{
@@ -34,6 +34,64 @@ cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create li
 
 cy.log('Check created list')
 cy.contains('a', list_name);
+
+
+}
+
+createLists(){
+
+// Generate a random number between 0 and 100
+cy.then(() => {
+const randomNumber = Math.floor(Math.random() * 100);
+// You can use this random number in your test
+cy.log(`Random Number: ${randomNumber}`);
+
+// Generate a random word
+const randomWord = Lists_data.getRandomWord();
+cy.log(`Random Word: ${randomWord}`);
+
+cy.wait(1000);
+cy.contains('button', 'Create list')
+.if('enabled')
+.then(() => {
+cy.contains('button', 'Create list').should('be.visible').click();
+cy.get('h3').should('be.visible').and('have.text', 'New List');
+cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
+cy.get('textarea').type(Lists_data.lists[0].description1);
+cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+      
+})
+.else('disabled')
+.then(() => {
+cy.get('.justify-between > .vc-button').should('be.disabled')
+cy.log('Create list button is disabled')  
+})
+}); 
+}
+
+
+createMultipleLists(){
+
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+this.createLists();
+
+}
+
+
+checkListsAfterCreated(){
+
+cy.log('Check created list')
+cy.get('.text-xl')
+.should('not.exist')
 
 
 }
