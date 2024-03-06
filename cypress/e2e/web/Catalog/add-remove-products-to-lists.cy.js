@@ -52,7 +52,16 @@ it('Lists tab > Lists > create new list', () => {
     
 })
 
-it.only('Star is orange > Add product to the wish list from List view', () => {
+it.only('Lists tab > Lists > create bunch of list', () => {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+listsPage.goToListTab();    
+listsPage.createMultipleLists();    
+
+    
+})
+
+it('Star is orange > Add product to the wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
