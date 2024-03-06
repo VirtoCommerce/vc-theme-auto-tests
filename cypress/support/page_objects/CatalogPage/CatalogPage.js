@@ -96,6 +96,16 @@ addToListAnonimProductPage(){
   
 }
 
+addProductToNewList(){
+  
+  cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
+  cy.contains('button', " Add new list").click();
+  cy.get('input[type="checkbox"]').should('be.checked');   
+  cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+  .should('be.enabled')
+  .click();
+}
+
 addToListFromProductPage(){
 
 cy.get('[aria-describedby="popover-220"] > .w-full')
@@ -122,6 +132,7 @@ addToList(){
   .click();
   
   cy.addProductToNewList();
+  cy.checkNotificationBanner('Your lists were successfully updated');
   
   ProductCard.isStarOrange();
 
