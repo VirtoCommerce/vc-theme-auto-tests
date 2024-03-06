@@ -104,6 +104,7 @@ cy.get('[aria-describedby="popover-220"] > .w-full')
 .click();
 cy.addProductToNewList();
 ProductCard.isStarOrange();
+cy.checkNotificationBanner('Your lists were successfully updated');
 
 }
 

@@ -76,10 +76,10 @@ Cypress.Commands.add('addProductToNewList', ()=>{
 Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
  
   cy.log('Check the notification banner');
-  cy.get('.vc-notifications'). should('be.visible').and('have.text', bannerText);
+  cy.get('.notifications-host__item'). should('be.visible').and('have.text', bannerText);
   cy.log('Banner is presented');
-  cy.get('.vc-notifications__close-button').click();
-  cy.get('.vc-notifications'). should('not.be.visible');
+  cy.get('.notifications-host__close-button').click();
+  cy.get('.notifications-host__item'). should('not.be.visible');
   cy.log('Banner is disappeared');
 })
   
