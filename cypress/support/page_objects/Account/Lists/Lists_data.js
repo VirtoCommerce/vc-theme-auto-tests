@@ -3,15 +3,21 @@ export default {
 lists:[
 {
 name1: 'Cypress_test',
-description1: 'Cypress_test1. My first personal list'
+description1: 'Cypress_test. My personal list. '
 },
-
 {
 name2: 'Cypress_test2',
-description2: 'Cypress_test2. My second personal list'
+description2: 'Cypress_test. My personal list. '
 }
 
 ],
+
+getRandomNumber(){
+
+const randomNumber = Math.floor(Math.random() * 100);
+return randomNumber;
+
+},
 
 getRandomWord() {
 const words =  [

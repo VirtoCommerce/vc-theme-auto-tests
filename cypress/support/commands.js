@@ -1,5 +1,5 @@
 import AuthLogin from "./navigation/AuthLogin";
-import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
+//import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
 
 
 
@@ -26,6 +26,11 @@ Cypress.Commands.add('login', (email, password) => {
       validate: () => {
         cy.getCookie('XSRF-TOKEN').should('exist')
         cy.getCookie('INGRESSCOOKIE').should('exist')
+        cy.window().then((win) => {
+          const storedValue = win.localStorage.getItem('auth');
+          cy.log(storedValue); // Log the retrieved value
+        });        
+      
       },
     }
   )
@@ -35,6 +40,7 @@ Cypress.Commands.add('checkLoading', (locator, timeout = 10000) => {
   cy.get(locator, {timeout}).should('exist');
   cy.get(locator, {timeout}).should('not.exist');
 })
+
 
 Cypress.Commands.add('proceedButtonDisabled', locator =>{
   cy.get(locator).should('be.disabled').invoke('prop', 'disabled', false);

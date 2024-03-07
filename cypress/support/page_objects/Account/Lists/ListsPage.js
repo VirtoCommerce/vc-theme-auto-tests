@@ -31,7 +31,6 @@ cy.get('h3').should('be.visible').and('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
 cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
-
 cy.log('Check created list')
 cy.contains('a', list_name);
 
@@ -41,14 +40,9 @@ cy.contains('a', list_name);
 createLists(){
 
 // Generate a random number between 0 and 100
-cy.then(() => {
-const randomNumber = Math.floor(Math.random() * 100);
-// You can use this random number in your test
-cy.log(`Random Number: ${randomNumber}`);
-
+const randomNumber = Lists_data.getRandomNumber();
 // Generate a random word
 const randomWord = Lists_data.getRandomWord();
-cy.log(`Random Word: ${randomWord}`);
 
 cy.wait(1000);
 cy.contains('button', 'Create list')
@@ -57,7 +51,7 @@ cy.contains('button', 'Create list')
 cy.contains('button', 'Create list').should('be.visible').click();
 cy.get('h3').should('be.visible').and('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
-cy.get('textarea').type(Lists_data.lists[0].description1);
+cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
 cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
       
 })
@@ -65,7 +59,7 @@ cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create li
 .then(() => {
 cy.get('.justify-between > .vc-button').should('be.disabled')
 cy.log('Create list button is disabled')  
-})
+
 }); 
 }
 
@@ -82,7 +76,7 @@ this.createLists();
 this.createLists();
 this.createLists();
 this.createLists();
-this.createLists();
+
 
 }
 
@@ -102,6 +96,9 @@ cy.contains('a', list_name).click();
 cy.get('h2').should('have.text', list_name);
 cy.get('.text-xl').should('have.text', 'Your list is empty');
 cy.contains('a', 'Continue browsing');
+cy.contains('button','Add all to cart').should('be.disabled');
+cy.contains('button', 'Save Changes').should('be.disabled');
+cy.contains('button', 'List settings').should('be.enabled');
 
 }
 
@@ -119,8 +116,47 @@ cy.log('The lists title are equal');
 
 clickToListsRouter(){
 cy.get(ListsLocators.ROUTER_LINK).click();
+cy.location('pathname').should('eq', "/account/lists");
 }
 
+deleteList(){
+
+cy.get('.text-xl')
+.if('not.exist')
+.then(()=> {
+cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
+cy.get(ListsLocators.DROP_DOWN).should('be.visible');
+cy.get('.vc-menu-item').contains('Delete').click();
+cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
+cy.contains('.vc-button--color--danger', "Delete").click();
+cy.log('The list was deleted');
+cy.wait(1000);
+
+})
+.else()
+.then(() => {
+this.emptyListsPageView();
+cy.log('All lists were deleted')  
+})
+
+}
+
+deleteMultipleLists() {
+
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+this.deleteList();
+
+
+}
 }
 
 export default Lists;
