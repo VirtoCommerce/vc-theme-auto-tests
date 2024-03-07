@@ -79,11 +79,15 @@ class LoginPage {
     cy.log('Verifying successful login');
     cy.url().should('include', '/catalog');
     cy.get('div[class="grow"]').should('be.visible').and('contain.text', 'Catalog');    
-    cy.log('Catalog page is loaded');
+    cy.log('Check token in LocalStorage')
+    cy.window().then((win) => {
+    const storedValue = win.localStorage.getItem('auth');
+    cy.log(storedValue);
+    cy.log('The token is saved')
+    });   
   }
 
-
-  checkEmailVerification(email, password) {
+checkEmailVerification(email, password) {
     cy.log('Starting Login Phase');
     this.visit();
     this.fillEmail(email);
