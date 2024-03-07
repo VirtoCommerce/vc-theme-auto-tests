@@ -18,7 +18,7 @@ emptyListsPageView(){
 cy.log('Check empty Lists view')
 cy.contains('h2', 'Lists').should('be.visible');
 cy.get('.mx-5 > img').should('be.visible');
-cy.get('.text-xl').should('have.text', "You have not created any lists yet")
+cy.get('.text-xl').should('have.text', "You have not created any lists yet");
 cy.get('.mx-5 > .vc-button').contains('Create list');
 
 }
@@ -121,8 +121,8 @@ cy.location('pathname').should('eq', "/account/lists");
 
 deleteList(){
 
-cy.get('.justify-between > .vc-button')
-.if('exist')
+cy.get('.text-xl')
+.if('not.exist')
 .then(()=> {
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');

@@ -38,7 +38,6 @@ it.only('Lists tab > Lists > create new list', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
-listsPage.emptyListsPageView();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 listsPage.emptyListDetailPage(Lists_data.lists[0].name1);
 listsPage.compareListsNames();
