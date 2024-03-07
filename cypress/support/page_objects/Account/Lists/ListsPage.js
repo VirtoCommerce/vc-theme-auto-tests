@@ -121,8 +121,8 @@ cy.location('pathname').should('eq', "/account/lists");
 
 deleteList(){
 
-cy.get('.text-xl')
-.if('not.exist')
+cy.get('.justify-between > .vc-button')
+.if('exist')
 .then(()=> {
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
