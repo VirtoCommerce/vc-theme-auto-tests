@@ -90,7 +90,8 @@ ProductCard.isStarGrey();
 
 addToListAnonimProductPage(){
 
-  cy.get('[aria-describedby="popover-213"] > .w-full')
+  //cy.get('[aria-describedby="popover-213"] > .w-full')
+  cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
   .should('be.visible')
   .and('be.disabled')  
   
@@ -98,21 +99,21 @@ addToListAnonimProductPage(){
 
 addProductToNewList(){
   
-  cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
-  cy.contains('button', " Add new list").click();
-  cy.get('input[type="checkbox"]').should('be.checked');   
-  cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
-  .should('be.enabled')
-  .click();
+cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
+cy.contains('button', " Add new list").click();
+cy.get('input[type="checkbox"]').should('be.checked');   
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+.should('be.enabled')
+.click();
 }
 
 addToListFromProductPage(){
 
-cy.get('[aria-describedby="popover-220"] > .w-full')
+cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
 .should('be.visible')
 .and('be.enabled')
 .click();
-cy.addProductToNewList();
+this.addProductToNewList();
 ProductCard.isStarOrange();
 cy.checkNotificationBanner('Your lists were successfully updated');
 
@@ -120,21 +121,21 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 
 addToList(){
 
-  cy.log('add product to list from List view')
-  this.inActiveStateView('List');
-  cy.switchProductView('List');
-  this.activeStateView('List');
+cy.log('add product to list from List view')
+this.inActiveStateView('List');
+cy.switchProductView('List');
+this.activeStateView('List');
 
-  ProductCard.isStarGrey();
+ProductCard.isStarGrey();
   
-  cy.get('button[type="button"][class="flex"]')
-  .eq(0)
-  .click();
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.click();
   
-  cy.addProductToNewList();
-  cy.checkNotificationBanner('Your lists were successfully updated');
+this.addProductToNewList();
+cy.checkNotificationBanner('Your lists were successfully updated');
   
-  ProductCard.isStarOrange();
+ProductCard.isStarOrange();
 
   this.inActiveStateView('Grid')
   cy.switchProductView('Grid')
@@ -161,8 +162,7 @@ cy.get('button[type="button"][class="flex"]')
 .click();
 
 cy.get('#headlessui-dialog-title-6 > .grow').should('be.visible').and('have.text', "Please select list");
-cy.contains('span', Lists_data.lists[0].name1).click();
-cy.contains('span', Lists_data.lists[1].name2).click(); 
+this.clickOnAllCheckbox();
 cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
 .should('be.enabled')
 .click();
@@ -170,6 +170,36 @@ cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
 // Check the notification banner
 cy.checkNotificationBanner('Your lists were successfully updated');
 
+}
+
+checkAlreadyInList(){
+  
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.click(); 
+cy.contains('h3', "Please select list").should('be.visible');
+cy.get('div[class="bg-[color:var(--color-add-wishlist-modal-subtitle-bg)] px-6 py-3 text-15 font-bold leading-5 sm:py-2.5"]')
+.should('have.text', "Already in the lists");
+cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
+cy.wrap($checkbox).should('be.checked');
+});
+
+cy.contains('button', "Cancel").click();
+
+}
+
+clickOnAllCheckbox(){
+
+cy.get('ul.pt-2 li label input[type="checkbox"]').each(($checkbox) => {
+// Check if the checkbox is not already checked
+if (!$checkbox.prop('checked')) {
+// Click the checkbox
+cy.wrap($checkbox).click();
+
+// Assert that the checkbox is checked after clicking
+cy.wrap($checkbox).should('be.checked');
+}
+});
 }
 
 }
