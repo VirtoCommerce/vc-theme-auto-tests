@@ -15,7 +15,7 @@ cy.location('pathname').should('eq', "/account/lists");
 
 emptyListsPageView(){
 
-cy.log('Check empty Lists view')
+cy.log('Check empty Lists view');
 cy.contains('h2', 'Lists').should('be.visible');
 cy.get('.mx-5 > img').should('be.visible');
 cy.get('.text-xl').should('have.text', "You have not created any lists yet");
@@ -102,9 +102,11 @@ this.createLists();
 
 checkListsAfterCreated(){
 
-cy.log('Check created list')
+cy.log('Check created lists')
 cy.get('.text-xl')
 .should('not.exist')
+cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 2);
+cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
 
 }
 
@@ -161,8 +163,26 @@ cy.get(ListsLocators.ROUTER_LINK).click();
 cy.location('pathname').should('eq', "/account/lists");
 }
 
+switchBetweenLists(){
+
+cy.get('div[class="ml-4 flex items-center space-x-2 overflow-hidden text-ellipsis px-3 text-sm"]').last().click();
+this.compareListsNames();
+}
+
+checkListDetailsPage(){
+
+cy.log('check List Details Page');
+cy.get('.text-xl').should('not.exist');
+cy.contains('button','Add all to cart').should('be.enabled');
+cy.contains('button', 'Save Changes').should('be.disabled');
+cy.contains('button', 'List settings').should('be.enabled');
+cy.get('.vc-line-item').should('exist');
+
+}
+
 deleteList(){
 
+cy.log('Delete list')
 cy.get('.text-xl')
 .if('not.exist')
 .then(()=> {
@@ -173,8 +193,8 @@ cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
 cy.contains('.vc-button--color--danger', "Delete").click();
 cy.contains('h3', 'Confirm Delete').should('not.exist');
 cy.log('The list was deleted');
-
 })
+
 .else()
 .then(() => {
 this.emptyListsPageView();
@@ -185,18 +205,19 @@ cy.log('All lists were deleted')
 
 deleteMultipleLists() {
 
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
-this.deleteList();
+let elementsLength;
+
+cy.get(ListsLocators.LISTS_TITLE)
+.should('have.length.gte', 1)
+.then((elements) => {
+elementsLength = elements.length;
+    
+elements.each((element, index) => {
+console.log(index + 1);
 this.deleteList();
 
+});
+});   
 
 }
 }
