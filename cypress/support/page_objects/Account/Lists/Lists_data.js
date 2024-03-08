@@ -6,10 +6,13 @@ name1: 'Cypress_test',
 description1: 'Cypress_test. My personal list. '
 },
 {
-name2: 'Cypress_test2',
-description2: 'Cypress_test. My personal list. '
+name2: 'Updated list',
+description2: 'Updated Cypress list. '
+},
+{
+name3: 'List page',
+description3: 'List page updated by Cypress test. '
 }
-
 ],
 
 getRandomNumber(){

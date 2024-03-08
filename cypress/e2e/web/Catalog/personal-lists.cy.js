@@ -7,7 +7,7 @@ import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import Lists_data from "../../../support/page_objects/Account/Lists/Lists_data";
 
 
-describe('Add/remove products to Lists', ()=> {
+describe('Personal Lists', ()=> {
    
 const catalogPage = new CatalogPage();
 const productPage = new ProductPage();
@@ -40,6 +40,12 @@ loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 listsPage.emptyListDetailPage(Lists_data.lists[0].name1);
+listsPage.compareListsNames();
+listsPage.clickToListsRouter();
+listsPage.editListFromSettings(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
+listsPage.goToListDetailsPage(Lists_data.lists[1].name2);
+listsPage.compareListsNames();
+listsPage.editListFromDetailsPage(Lists_data.lists[2].name3, Lists_data.lists[2].description3)
 listsPage.compareListsNames();
 listsPage.clickToListsRouter();
     

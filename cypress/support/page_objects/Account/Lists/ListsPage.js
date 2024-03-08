@@ -23,6 +23,24 @@ cy.get('.mx-5 > .vc-button').contains('Create list');
 
 }
 
+emptyListDetailPage(list_name){
+
+this.goToListDetailsPage(list_name);
+cy.get('.text-xl').should('have.text', 'Your list is empty');
+cy.contains('a', 'Continue browsing');
+cy.contains('button','Add all to cart').should('be.disabled');
+cy.contains('button', 'Save Changes').should('be.disabled');
+cy.contains('button', 'List settings').should('be.enabled');
+    
+}
+
+goToListDetailsPage(list_name){
+
+cy.log('Open list details page');
+cy.contains('a', list_name).click();
+cy.get('h2').should('have.text', list_name);
+}
+
 createPersonalList(list_name, list_description){
 
 cy.log('Create a new list')
@@ -31,6 +49,7 @@ cy.get('h3').should('be.visible').and('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
 cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.contains('h3', 'New List').should('not.exist');
 cy.log('Check created list')
 cy.contains('a', list_name);
 
@@ -44,7 +63,6 @@ const randomNumber = Lists_data.getRandomNumber();
 // Generate a random word
 const randomWord = Lists_data.getRandomWord();
 
-cy.wait(1000);
 cy.contains('button', 'Create list')
 .if('enabled')
 .then(() => {
@@ -53,6 +71,7 @@ cy.get('h3').should('be.visible').and('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
 cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
 cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.contains('h3', 'New List').should('not.exist');
       
 })
 .else('disabled')
@@ -87,20 +106,43 @@ cy.log('Check created list')
 cy.get('.text-xl')
 .should('not.exist')
 
+}
+
+editListFromSettings(list_name, list_description){
+
+cy.log('Edit list name');
+cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
+cy.get(ListsLocators.DROP_DOWN).should('be.visible');
+cy.get('.vc-menu-item').contains('Edit').click();
+cy.get('h3').should('be.visible').and('have.text', "List Settings");
+cy.contains('button', 'Save').should('be.disabled');
+cy.get('input[type="text"]').eq(1).clear();
+cy.get('input[type="text"]').eq(1).type(list_name);
+cy.get('textarea').clear();
+cy.get('textarea').type(list_description);
+cy.contains('button', 'Save').should('be.enabled').click();
+cy.contains('h3', "List Settings").should('not.exist');
+cy.log('The name of list is updated');
+
 
 }
 
-emptyListDetailPage(list_name){
+editListFromDetailsPage(list_name, list_description){
 
-cy.contains('a', list_name).click();
-cy.get('h2').should('have.text', list_name);
-cy.get('.text-xl').should('have.text', 'Your list is empty');
-cy.contains('a', 'Continue browsing');
-cy.contains('button','Add all to cart').should('be.disabled');
-cy.contains('button', 'Save Changes').should('be.disabled');
-cy.contains('button', 'List settings').should('be.enabled');
-
+cy.log('Edit list from details page');
+cy.contains('button', 'List settings').should('be.enabled').click();
+cy.get('h3').should('be.visible').and('have.text', "List Settings");
+cy.contains('button', 'Save').should('be.disabled');
+cy.get('input[type="text"]').eq(1).clear();
+cy.get('input[type="text"]').eq(1).type(list_name);
+cy.get('textarea').clear();
+cy.get('textarea').type(list_description);
+cy.get('.inline-block > .flex-wrap > .vc-button--color--primary').should('be.enabled').click();
+cy.contains('h3', "List Settings").should('not.exist');
+cy.log('The name of list is updated');
+    
 }
+
 
 compareListsNames(){
 
@@ -129,8 +171,8 @@ cy.get(ListsLocators.DROP_DOWN).should('be.visible');
 cy.get('.vc-menu-item').contains('Delete').click();
 cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
 cy.contains('.vc-button--color--danger', "Delete").click();
+cy.contains('h3', 'Confirm Delete').should('not.exist');
 cy.log('The list was deleted');
-cy.wait(1000);
 
 })
 .else()
