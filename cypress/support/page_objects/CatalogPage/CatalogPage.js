@@ -163,16 +163,16 @@ this.addProductToNewList();
   
 ProductCard.isStarOrange();
 
-  this.inActiveStateView('Grid')
-  cy.switchProductView('Grid')
-  this.activeStateView('Grid')
+this.inActiveStateView('Grid')
+cy.switchProductView('Grid')
+this.activeStateView('Grid')
 
-  cy.log('Check star from Grid View')
-  cy.get('.flex > .vc-icon > use')
-  .eq(7)
-  .should('have.css', 'color')
-  .and('eq', 'rgb(240, 173, 78)');
-  cy.log('The product was added to the list. The color of star is orange')
+cy.log('Check star from Grid View')  
+cy.get(CatalogPageLocators.STAR)
+.eq(0)
+.should('have.css', 'color')
+.and('eq', 'rgb(240, 173, 78)');
+cy.log('The product was added to the list. The color of star is orange')
 
 }
 
