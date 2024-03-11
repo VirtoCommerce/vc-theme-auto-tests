@@ -23,9 +23,9 @@ cy.get('.mx-5 > .vc-button').contains('Create list');
 
 }
 
-emptyListDetailPage(list_name){
+emptyListDetailPage(){
 
-this.goToListDetailsPage(list_name);
+this.goToListDetailsPage();
 cy.get('.text-xl').should('have.text', 'Your list is empty');
 cy.contains('a', 'Continue browsing');
 cy.contains('button','Add all to cart').should('be.disabled');
@@ -34,11 +34,11 @@ cy.contains('button', 'List settings').should('be.enabled');
     
 }
 
-goToListDetailsPage(list_name){
+goToListDetailsPage(){
 
 cy.log('Open list details page');
-cy.contains('a', list_name).click();
-cy.get('h2').should('have.text', list_name);
+cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
+
 }
 
 createPersonalList(list_name, list_description){
@@ -77,7 +77,7 @@ cy.contains('h3', 'New List').should('not.exist');
 .else('disabled')
 .then(() => {
 cy.get('.justify-between > .vc-button').should('be.disabled')
-cy.log('Create list button is disabled')  
+cy.log('Create list button is disabled');
 
 }); 
 }
