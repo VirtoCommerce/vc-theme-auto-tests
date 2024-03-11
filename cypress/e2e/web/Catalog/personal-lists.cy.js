@@ -5,6 +5,7 @@ import userData from "../../Variables/userData";
 import TestData from "../../Variables/TestData";
 import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import Lists_data from "../../../support/page_objects/Account/Lists/Lists_data";
+import ProductCard from "../../../support/page_objects/CatalogPage/ProductCard";
 
 
 describe('Personal Lists', ()=> {
@@ -24,7 +25,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
        
 });
 
-it.skip('Star is grey > Add product anonymously', ()=> {
+it('Star is grey > Add product anonymously', ()=> {
 
 catalogPage.visit('catalog');
 cy.get('h2').should('be.visible');
@@ -34,7 +35,7 @@ catalogPage.addToListAnonimProductPage();
 
 });
 
-it('Star is orange > Add product to the wish list from List view', () => {
+it.only('Star is orange > Add product to the wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
@@ -50,25 +51,27 @@ listsPage.clickToListsRouter();
     
 })
 
-it.skip('Star is orange > Add product to existing wish list', () => {
+it('Star is orange > Add product to existing wish list', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
-catalogPage.visit('soft-drinks/soda')
+catalogPage.visit('soft-drinks/soda');
+catalogPage.clickOnSingleStar();
 catalogPage.addToExistList();
+catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.checkListsAfterCreated();
 listsPage.checkListDetailsPage();
 listsPage.clickToListsRouter();
-listsPage.goToListDetailsPage('New list 3/8/2024');
+listsPage.goToListDetailsPage();
 listsPage.checkListDetailsPage();
 listsPage.clickToListsRouter();
 listsPage.deleteMultipleLists();
                 
 })
 
-it.only('Lists tab > Lists > create new list', () => {
+it('Lists tab > Lists > create new list', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
@@ -87,8 +90,12 @@ listsPage.clickToListsRouter();
     
 listsPage.createMultipleLists();
 
-catalogPage.visit('soft-drinks/soda')
+catalogPage.visit('juice');
+catalogPage.clickOnSingleStar();
+catalogPage.allUnchecked();
+catalogPage.clickOnSingleStar();
 catalogPage.addToExistList();
+catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.checkListsAfterCreated();
@@ -97,6 +104,30 @@ listsPage.clickToListsRouter();
 
 listsPage.deleteMultipleLists(); 
 
+})
+
+it('click', () => {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+cy.get('h2').should('be.visible');
+catalogPage.visit('soft-drinks/soda');
+catalogPage.clickOnStars();
+catalogPage.openProductPage();
+ProductCard.isStarOrangePDP();
+catalogPage.clickOnStarFromPDP();
+catalogPage.checkAlreadyInList();
+catalogPage.clickOnStarFromPDP();
+catalogPage.removeProductFromLists();
+ProductCard.isStarGreyPDP();
+cy.go('back');
+cy.log('Back to soft-drinks-soda');
+ProductCard.isStarGrey();
+catalogPage.clickOnSingleStar();
+catalogPage.allUnchecked();
+listsPage.goToListTab();
+listsPage.deleteMultipleLists();
+
+                    
 })
 
 })

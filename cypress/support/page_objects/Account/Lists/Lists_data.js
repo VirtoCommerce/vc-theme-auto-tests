@@ -38,7 +38,8 @@ const words =  [
     "Presidents' Day",
     "Good Friday",
     "Hanukkah",
-    "Diwali"
+    "Diwali",
+    "Women's Day"
 ];
 
 const randomIndex = Math.floor(Math.random() * words.length);
