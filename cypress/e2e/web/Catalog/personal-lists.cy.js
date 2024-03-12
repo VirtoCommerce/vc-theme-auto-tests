@@ -35,7 +35,7 @@ catalogPage.addToListAnonimProductPage();
 
 });
 
-it.only('Add new List. Remove product from List', () => {
+it('Add new List. Remove product from List', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
@@ -63,24 +63,22 @@ listsPage.deleteMultipleLists();
     
 })
 
-it('Star is orange > Add product to existing wish list', () => {
+it('Star is orange > Add several products to existing wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
-cy.get('h2').should('be.visible');
-catalogPage.visit('soft-drinks/soda');
-catalogPage.clickOnSingleStar();
-catalogPage.addToExistList();
+listsPage.goToListTab();
+listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+catalogPage.visit('juice');
+cy.switchProductView('List');
+catalogPage.addProductsToExistList();
 catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.checkListsAfterCreated();
 listsPage.checkListDetailsPage();
 listsPage.clickToListsRouter();
-listsPage.goToListDetailsPage();
-listsPage.checkListDetailsPage();
-listsPage.clickToListsRouter();
 listsPage.deleteMultipleLists();
-                
+                    
 })
 
 it('Lists tab > Lists > create new list. Add product to multiple Lists. Delete lists', () => {

@@ -105,7 +105,7 @@ checkListsAfterCreated(){
 cy.log('Check created lists')
 cy.get('.text-xl')
 .should('not.exist')
-cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 2);
+cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 1);
 cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
 
 }

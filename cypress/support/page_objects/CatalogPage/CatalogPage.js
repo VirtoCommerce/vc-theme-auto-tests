@@ -174,6 +174,17 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 
 }
 
+addProductsToExistList(){
+
+cy.get(CatalogPageLocators.STAR).each(($star) => {
+
+cy.wrap($star).click();
+this.addToExistList();
+    
+})
+
+}
+
 checkAlreadyInList(){
   
 cy.contains('h3', "Please select list").should('be.visible');
