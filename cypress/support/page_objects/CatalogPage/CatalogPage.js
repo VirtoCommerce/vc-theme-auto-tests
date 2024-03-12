@@ -136,19 +136,7 @@ cy.log('Add new list and Save buttons are disabled');
 
 }
 
-addToListFromProductPage(){
-
-ProductCard.isStarGreyPDP();
-cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
-.should('be.visible')
-.and('be.enabled')
-.click();
-this.addProductToNewList();
-ProductCard.isStarOrangePDP();
-
-}
-
-addToList(){
+addToListFromListView(){
 
 cy.log('add product to list from List view')
 this.inActiveStateView('List');
@@ -167,12 +155,8 @@ this.inActiveStateView('Grid')
 cy.switchProductView('Grid')
 this.activeStateView('Grid')
 
-cy.log('Check star from Grid View')  
-cy.get(CatalogPageLocators.STAR)
-.eq(0)
-.should('have.css', 'color')
-.and('eq', 'rgb(240, 173, 78)');
-cy.log('The product was added to the list. The color of star is orange')
+cy.log('Check star from Grid View') 
+ProductCard.isStarOrange();
 
 }
 
