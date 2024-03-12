@@ -30,20 +30,36 @@ catalogPage.visit('catalog');
 cy.get('h2').should('be.visible');
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
+catalogPage.clickOnStarFromPDP();
 catalogPage.addToListAnonimProductPage();
 
 });
 
-it('Star is orange > Add product to the wish list from List view', () => {
+it.only('Add new List. Remove product from List', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cy.get('h2').should('be.visible');
-catalogPage.addToList();
-productPage.visit(TestData.defaultProductPage);
-catalogPage.addToListFromProductPage();
+catalogPage.addToListFromListView();
+catalogPage.clickOnSingleStar();
+catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
-listsPage.checkListsAfterCreated();
-listsPage.clickToListsRouter();
+listsPage.deleteMultipleLists();
+catalogPage.visit('soft-drinks/soda');
+catalogPage.clickOnStars();
+catalogPage.openProductPage();
+ProductCard.isStarOrangePDP();
+catalogPage.clickOnStarFromPDP();
+catalogPage.checkAlreadyInList();
+catalogPage.clickOnStarFromPDP();
+catalogPage.removeProductFromLists();
+ProductCard.isStarGreyPDP();
+cy.go('back');
+cy.log('Back to soft-drinks-soda');
+ProductCard.isStarGrey();
+catalogPage.clickOnSingleStar();
+catalogPage.allUnchecked();
+listsPage.goToListTab();
+listsPage.deleteMultipleLists();
     
 })
 
@@ -102,28 +118,6 @@ listsPage.deleteMultipleLists();
 
 })
 
-it('Remove product from List', () => {
 
-loginPage.login(userData.userData[0].email, userData.userData[0].password);
-cy.get('h2').should('be.visible');
-catalogPage.visit('soft-drinks/soda');
-catalogPage.clickOnStars();
-catalogPage.openProductPage();
-ProductCard.isStarOrangePDP();
-catalogPage.clickOnStarFromPDP();
-catalogPage.checkAlreadyInList();
-catalogPage.clickOnStarFromPDP();
-catalogPage.removeProductFromLists();
-ProductCard.isStarGreyPDP();
-cy.go('back');
-cy.log('Back to soft-drinks-soda');
-ProductCard.isStarGrey();
-catalogPage.clickOnSingleStar();
-catalogPage.allUnchecked();
-listsPage.goToListTab();
-listsPage.deleteMultipleLists();
-
-                    
-})
 
 })

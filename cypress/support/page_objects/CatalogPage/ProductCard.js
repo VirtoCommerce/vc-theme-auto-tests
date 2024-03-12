@@ -22,8 +22,8 @@ cy.log('The color of star is grey');
 isStarOrange(){
     
 cy.log('Check the color of a star after adding it to the list')
-cy.get('.flex > .vc-icon > use')
-.eq(5)
+cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]')
+.eq(0)
 .should('have.css', 'color')
 .and('eq', 'rgb(240, 173, 78)');
 cy.log('The product was added to the list. The color of star is orange')
