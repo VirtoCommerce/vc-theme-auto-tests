@@ -1,8 +1,6 @@
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
-import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import userData from "../../Variables/userData";
-import TestData from "../../Variables/TestData";
 import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import Lists_data from "../../../support/page_objects/Account/Lists/Lists_data";
 import ProductCard from "../../../support/page_objects/CatalogPage/ProductCard";
@@ -11,7 +9,6 @@ import ProductCard from "../../../support/page_objects/CatalogPage/ProductCard";
 describe('Personal Lists', ()=> {
    
 const catalogPage = new CatalogPage();
-const productPage = new ProductPage();
 const loginPage = new LoginPage();
 const listsPage = new Lists();
 
