@@ -257,6 +257,15 @@ cy.wrap($checkbox)
 });
 cy.contains('button', "Cancel").click();
 }
+
+clickShowInStock(){
+
+cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
+
+
+}
+
+
 }
 
 export default CatalogPage;
