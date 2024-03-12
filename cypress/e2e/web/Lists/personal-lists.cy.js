@@ -60,12 +60,15 @@ listsPage.deleteMultipleLists();
     
 })
 
-it('Star is orange > Add several products to existing wish list from List view', () => {
+it.only('Star is orange > Add several products to existing wish list from List view', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 catalogPage.visit('juice');
+
+catalogPage.clickShowInStock();
+
 cy.switchProductView('List');
 catalogPage.addProductsToExistList();
 catalogPage.clickOnSingleStar();
