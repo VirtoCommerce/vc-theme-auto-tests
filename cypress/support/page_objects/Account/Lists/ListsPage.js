@@ -218,30 +218,57 @@ this.deleteList();
 }
 
 removeSingleProduct(){
+cy.wait(1000);
+cy.get(ListsLocators.REMOVE_BUTTON)
+.if('exist')
+.then(() => {
 cy.get(ListsLocators.REMOVE_BUTTON)
 .first()
 .click();
 cy.confirmDelete();
+})
+.else('not.exist')
+.then(() => {
+cy.get(ListsLocators.REMOVE_BUTTON).should('have.length', 0);
+cy.log('All items were removed from list');
+})
 }
 
-removeMultipleProducts(){
+testRemove(){
+
+let batchCount = 0;
+
+// Delete elements in batches of 6 until none are left
+do {
+this.removeSingleProduct();
+batchCount++;
+} 
+while (batchCount < 6);
+}
+
+removeProductsFromAllPages(){
 
 let elementsLength;
 
-cy.get(ListsLocators.REMOVE_BUTTON)
-.should('have.length.gte', 6)
-.then((removeButtons) => {
-elementsLength = removeButtons.length;
+cy.get('.vc-pagination__page')
+.should('have.length.gte', 1)
+.then((elements) => {
+elementsLength = elements.length;          
+cy.log(`Number of elements: ${elementsLength}`);
 
-removeButtons.each((button, index) => {
-cy.wrap(button)
-console.log(index);
-this.removeSingleProduct();
-})
-})
-this.removeSingleProduct();
+for (let page = 1; page <= elementsLength ; page++) {
+// Delete elements in batches on the current page
+this.testRemove();
+
+}
+
+});
+
+
 }
 
 }
+
+
 
 export default Lists;
