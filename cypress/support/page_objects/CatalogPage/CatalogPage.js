@@ -193,8 +193,16 @@ cy.get('div[class="bg-[color:var(--color-add-wishlist-modal-subtitle-bg)] px-6 p
 cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
 cy.wrap($checkbox).should('be.checked');
 });
-
+cy.contains('button', "Save").should('be.disabled');
+cy.log('The product has already in List and Save button is disabled');
 cy.contains('button', "Cancel").click();
+
+}
+
+checkAddNewList() {
+
+cy.contains('button', " Add new list").should('be.disabled');
+cy.log('Add new list is disabled');
 
 }
 
@@ -214,10 +222,13 @@ cy.wrap($checkbox).should('be.checked');
 
 clickOnStars(){
 
+cy.get(CatalogPageLocators.STAR).its('length').if('gte', 11)
+.then(() => {
 cy.get(CatalogPageLocators.STAR).each(($star) => {
-
 cy.wrap($star).click();
 this.addProductToNewList();
+  
+})
 
 })
 
@@ -254,14 +265,13 @@ allUnchecked(){
 cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
 cy.wrap($checkbox)
 .should('not.be.checked');
+cy.log('Product not added to any list')
 });
-cy.contains('button', "Cancel").click();
 }
 
 clickShowInStock(){
 
 cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
-
 
 }
 
