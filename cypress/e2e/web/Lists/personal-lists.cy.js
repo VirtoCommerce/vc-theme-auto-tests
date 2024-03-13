@@ -145,7 +145,7 @@ catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.checkListsAfterCreated();
 listsPage.checkListDetailsPage();
-listsPage.removeMultipleProducts();
+listsPage.removeProductsFromAllPages();
 listsPage.emptyListDetailPage();
     
 });
