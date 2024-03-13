@@ -69,6 +69,28 @@ cy.get('.space-x-2 > .text-primary')
 .click();
 })
 
+Cypress.Commands.add('clickOnButton', (buttonName) => {
+
+cy.contains('button', buttonName).click();
+
+})
+
+Cypress.Commands.add('clickOnContinue', (buttonName) => {
+
+cy.contains('a', buttonName).click();
+cy.location('pathname').should('eq', "/catalog");
+  
+})
+
+Cypress.Commands.add('confirmDelete', () => {
+
+cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
+cy.contains('.vc-button--color--danger', "Delete").click();
+cy.contains('h3', 'Confirm Delete').should('not.exist');
+cy.log('The deletion completed');
+    
+})
+
 
 Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
  

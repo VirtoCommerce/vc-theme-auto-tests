@@ -25,7 +25,6 @@ cy.get('.mx-5 > .vc-button').contains('Create list');
 
 emptyListDetailPage(){
 
-this.goToListDetailsPage();
 cy.get('.text-xl').should('have.text', 'Your list is empty');
 cy.contains('a', 'Continue browsing');
 cy.contains('button','Add all to cart').should('be.disabled');
@@ -189,10 +188,7 @@ cy.get('.text-xl')
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
 cy.get('.vc-menu-item').contains('Delete').click();
-cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
-cy.contains('.vc-button--color--danger', "Delete").click();
-cy.contains('h3', 'Confirm Delete').should('not.exist');
-cy.log('The list was deleted');
+cy.confirmDelete();
 })
 
 .else()
@@ -216,10 +212,36 @@ elements.each((element, index) => {
 console.log(index + 1);
 this.deleteList();
 
-});
-});   
+})
+})   
 
 }
+
+removeSingleProduct(){
+cy.get(ListsLocators.REMOVE_BUTTON)
+.first()
+.click();
+cy.confirmDelete();
+}
+
+removeMultipleProducts(){
+
+let elementsLength;
+
+cy.get(ListsLocators.REMOVE_BUTTON)
+.should('have.length.gte', 6)
+.then((removeButtons) => {
+elementsLength = removeButtons.length;
+
+removeButtons.each((button, index) => {
+cy.wrap(button)
+console.log(index);
+this.removeSingleProduct();
+})
+})
+this.removeSingleProduct();
+}
+
 }
 
 export default Lists;
