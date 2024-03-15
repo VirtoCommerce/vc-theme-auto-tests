@@ -70,7 +70,7 @@ cy.get(CatalogPageLocators.STAR)
 
 clickOnStarFromPDP(){
  
-cy.get(CatalogPageLocators.STAR).click();
+cy.get(CatalogPageLocators.STAR).last().click();
 
 }
 

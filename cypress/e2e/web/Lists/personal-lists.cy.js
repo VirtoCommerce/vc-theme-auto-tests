@@ -70,6 +70,7 @@ it('Star is orange > Add several products to existing list from List view.', () 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+listsPage.goToListDetailsPage();
 listsPage.emptyListDetailPage();
 cy.clickOnContinue("Continue browsing");
 catalogPage.visit('juice');
@@ -130,7 +131,7 @@ listsPage.deleteMultipleLists();
 })
 
 
-it.only('Lists tab > List with Products > remove product', ()=> {
+it('Lists tab > List with Products > remove product', ()=> {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.goToListTab();
