@@ -101,5 +101,15 @@ Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
   cy.get('.notifications-host__item'). should('not.be.visible');
   cy.log('Banner is disappeared');
 })
+
+Cypress.Commands.add('checkAddingProductsToCart', () => {
+
+cy.log('Check Adding products to cart result pop-up');
+cy.get('h3').should('have.text', "Adding products to cart result").and('be.visible');
+cy.get('a[href="/cart"]').should('contain.text', "View cart");
+cy.contains('button', "Print").should('be.enabled');
+cy.contains('button', "OK").should('be.enabled');
+
+})
   
 

@@ -13,6 +13,24 @@ cy.location('pathname').should('eq', "/account/lists");
 
 }
 
+isListsPageEmpty(){
+   
+cy.log("Verify lists page is empty");
+this.goToListTab();
+cy.wait(1000);
+cy.get(ListsLocators.LISTS_TITLE)
+.if('visible')
+.then(()=>{
+this.deleteMultipleLists();
+})
+.else()
+.then(()=>{
+this.emptyListsPageView();
+
+})
+
+}
+
 emptyListsPageView(){
 
 cy.log('Check empty Lists view');
@@ -20,6 +38,7 @@ cy.contains('h2', 'Lists').should('be.visible');
 cy.get('.mx-5 > img').should('be.visible');
 cy.get('.text-xl').should('have.text', "You have not created any lists yet");
 cy.get('.mx-5 > .vc-button').contains('Create list');
+cy.log('The lists page is empty');
 
 }
 
@@ -264,6 +283,29 @@ this.testRemove();
 
 });
 
+
+}
+
+clickOnAddAllToCart(){
+
+cy.contains('button','Add all to cart').click();
+
+
+}
+
+clickOnAddToCart(){
+
+cy.contains('button','Add to cart').eq(0).click();
+
+    
+}
+
+clickOnViewCart(){
+
+cy.checkAddingProductsToCart();
+cy.contains('button', "Successfully added").should('be.visible');
+cy.contains('a', "View cart").click();
+cy.location('pathname').should('eq', "/cart");
 
 }
 

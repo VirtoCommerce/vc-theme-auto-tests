@@ -5,6 +5,8 @@ import TestData from "../../Variables/TestData";
 import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import Lists_data from "../../../support/page_objects/Account/Lists/Lists_data";
 import ProductCard from "../../../support/page_objects/CatalogPage/ProductCard";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 
 
 describe('Personal Lists', ()=> {
@@ -12,12 +14,16 @@ describe('Personal Lists', ()=> {
 const catalogPage = new CatalogPage();
 const loginPage = new LoginPage();
 const listsPage = new Lists();
+const cartPage = new CartPage();
+const selectForCheckout = new SelectForCheckout();
 
 
 beforeEach(() => {
 cy.clearCookies();
 cy.clearLocalStorage(); 
 cy.viewport(Cypress.env('DEVICE_NAME'));
+
+ 
 
        
 });
@@ -36,8 +42,7 @@ catalogPage.addToListAnonimProductPage();
 it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
-listsPage.goToListTab();
-listsPage.emptyListsPageView();
+listsPage.isListsPageEmpty();
 catalogPage.visit('catalog');
 cy.get('h2').should('be.visible');
 catalogPage.addToListFromListView();
@@ -68,7 +73,7 @@ listsPage.deleteMultipleLists();
 it('Star is orange > Add several products to existing list from List view.', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
-listsPage.goToListTab();
+listsPage.isListsPageEmpty();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 listsPage.goToListDetailsPage();
 listsPage.emptyListDetailPage();
@@ -90,7 +95,7 @@ it('Lists tab > create new lists. Add product to several Lists from Grid and fro
 () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
-listsPage.goToListTab();
+listsPage.isListsPageEmpty();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 listsPage.goToListDetailsPage();
 listsPage.emptyListDetailPage(Lists_data.lists[0].name1);
@@ -130,11 +135,50 @@ listsPage.deleteMultipleLists();
 
 })
 
+it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+cartPage.emptyOrNot();
+listsPage.isListsPageEmpty();
+listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+listsPage.goToListDetailsPage();
+listsPage.emptyListDetailPage();
+cy.clickOnContinue("Continue browsing");
+catalogPage.visit('soda');
+catalogPage.addProductsToExistList();
+catalogPage.clickOnSingleStar();
+catalogPage.checkAlreadyInList();
+listsPage.goToListTab();
+listsPage.checkListsAfterCreated();
+listsPage.checkListDetailsPage();
+listsPage.clickOnAddToCart();
+listsPage.clickOnViewCart();
+cy.log('Check added product to cart');
+cy.checkLoading('.vc-loader-overlay__spinner');        
+cartPage.cartLineItemsCheck();
+selectForCheckout.SelectedState();
+cartPage.clearCart();
+cartPage.confirmClearCart();
+listsPage.goToListTab();
+listsPage.goToListDetailsPage();
+listsPage.clickOnAddAllToCart();
+listsPage.clickOnViewCart();
+cy.log('Check products in cart');
+cy.checkLoading('.vc-loader-overlay__spinner');        
+cartPage.cartLineItemsCheck();
+selectForCheckout.SelectedState();
+cartPage.clearCart();
+cartPage.confirmClearCart();
+listsPage.goToListTab();
+listsPage.deleteMultipleLists(); 
+        
+});
 
 it('Lists tab > List with Products > remove product', ()=> {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
-listsPage.goToListTab();
+cartPage.emptyOrNot();
+listsPage.isListsPageEmpty();
 listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 listsPage.goToListDetailsPage();
 listsPage.emptyListDetailPage();

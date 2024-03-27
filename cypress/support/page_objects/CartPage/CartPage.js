@@ -25,10 +25,10 @@ cy.get('.vc-line-items').should('exist');
     cy.get('button').contains('Clear cart').click();   
   }
 
-  confirmClearCart(){
+confirmClearCart(){
 cy.contains('.grow', 'Clear cart').should('exist');
 cy.get('button').contains('Yes').click();
-  }
+}
 
   isCleared() {
     cy.contains('h2', 'Your cart is empty').should('be.visible');
@@ -56,7 +56,8 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
   this.cartLineItemsCheck();
   cy.scrollTo('bottom');
   cy.contains('button', 'Clear cart').click();
-  cy.get('button').contains('Yes').click(); 
+  cy.contains('h3', "Clear cart").should('be.visible');
+  cy.clickOnButton('Yes');  
   cy.contains('h2', 'Your cart is empty').should('be.visible');
 })
 .else()
