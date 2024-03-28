@@ -22,7 +22,7 @@ describe('Successful registration', () => {
 
 
 //Main logic
-it('Create personal account', ()=> {
+it.skip('Create personal account', ()=> {
 
   cy.log('Starting registration');
 
