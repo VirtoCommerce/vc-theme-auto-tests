@@ -6,6 +6,7 @@ class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
     cy.log('Step: Visited Catalog Page');
+    cy.get('.vc-typography--variant--h1').contains('Catalog'); 
 
   }
   purchaseAll() {
