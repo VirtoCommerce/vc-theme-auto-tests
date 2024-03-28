@@ -188,10 +188,11 @@ cy.contains('Billing');
   }
 
   fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
-    cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
-    cy.contains('div', 'Security Code').find('input').type(cvv);
-    cy.contains('div', 'Cardholder name').find('input').type(name);
-    cy.contains('div', 'Expiration date').find('input').type(date);
+  cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
+  cy.get('input[class="vc-input__input"]').eq(1).type(name);
+  cy.get('input[class="vc-input__input"]').eq(2).type(date);
+  cy.contains('div', 'Security Code').find('input').type(cvv);     
+   
   }
 
   pay() {
