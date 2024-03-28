@@ -26,8 +26,7 @@ describe('Select for checkout', () => {
         cy.clearLocalStorage(); 
         cy.viewport(Cypress.env('DEVICE_NAME'));
         loginPage.login(userData.userData[0].email, userData.userData[0].password);
-        cy.get('h2').should('be.visible'); 
-        cartPage.emptyOrNot();        
+        cartPage.emptyOrNot();      
 
     });         
 

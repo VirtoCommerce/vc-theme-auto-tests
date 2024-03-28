@@ -30,8 +30,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 
 it('Star is grey > Add product anonymously', ()=> {
 
-catalogPage.visit('catalog');
-cy.get('h2').should('be.visible');
+catalogPage.visit('catalog'); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
 catalogPage.clickOnStarFromPDP();
@@ -44,7 +43,6 @@ it('Add new List. Remove the product from the list in the Grid view and PDP', ()
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 listsPage.isListsPageEmpty();
 catalogPage.visit('catalog');
-cy.get('h2').should('be.visible');
 catalogPage.addToListFromListView();
 catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
@@ -192,6 +190,9 @@ listsPage.checkListsAfterCreated();
 listsPage.checkListDetailsPage();
 listsPage.removeProductsFromAllPages();
 listsPage.emptyListDetailPage();
+listsPage.clickToListsRouter();
+listsPage.deleteMultipleLists(); 
+
     
 });
 

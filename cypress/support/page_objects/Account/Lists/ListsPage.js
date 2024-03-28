@@ -34,7 +34,7 @@ this.emptyListsPageView();
 emptyListsPageView(){
 
 cy.log('Check empty Lists view');
-cy.contains('h2', 'Lists').should('be.visible');
+cy.get('.vc-typography--variant--h1').contains('Lists');
 cy.get('.mx-5 > img').should('be.visible');
 cy.get('.text-xl').should('have.text', "You have not created any lists yet");
 cy.get('.mx-5 > .vc-button').contains('Create list');
@@ -168,7 +168,7 @@ compareListsNames(){
 
 cy.log('Compare list name in the left menue and current list title')
 cy.get('a[aria-current="page"]').last().invoke('text').then((text1) => {
-cy.get('.truncate').invoke('text').then((text2) => {
+cy.get('.vc-typography').invoke('text').then((text2) => {
 expect(text1).to.equal(text2)
 cy.log('The lists title are equal');
 });
