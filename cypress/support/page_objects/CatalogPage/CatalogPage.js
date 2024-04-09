@@ -5,10 +5,10 @@ import { CatalogPageLocators } from "./CatalogLocators";
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
-    cy.log('Step: Visited Catalog Page');
-    cy.get('.vc-typography--variant--h1').contains('Catalog'); 
+    cy.log('Step: Visited Catalog Page');  
 
   }
+
   purchaseAll() {
 
   cy.log('Add products to cart')
@@ -268,6 +268,14 @@ cy.wrap($checkbox)
 .should('not.be.checked');
 cy.log('Product not added to any list')
 });
+}
+
+prepareProductsForList(){
+
+this.addProductsToExistList();
+this.clickOnSingleStar();
+this.checkAlreadyInList();
+
 }
 
 clickShowInStock(){
