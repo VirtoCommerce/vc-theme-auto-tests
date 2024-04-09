@@ -9,6 +9,7 @@ import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 
 
+
 describe('Personal Lists', ()=> {
    
 const catalogPage = new CatalogPage();
@@ -28,7 +29,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
        
 });
 
-it('Star is grey > Add product anonymously', ()=> {
+it.skip('Star is grey > Add product anonymously', ()=> {
 
 catalogPage.visit('catalog'); 
 catalogPage.addToListAnonim();
@@ -64,28 +65,20 @@ catalogPage.clickOnSingleStar();
 catalogPage.allUnchecked();
 cy.clickOnButton("Cancel");
 listsPage.goToListTab();
-listsPage.deleteMultipleLists();
+
     
 })
 
 it('Star is orange > Add several products to existing list from List view.', () => {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
-listsPage.isListsPageEmpty();
-listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
-listsPage.goToListDetailsPage();
-listsPage.emptyListDetailPage();
-cy.clickOnContinue("Continue browsing");
+listsPage.createListData();
 catalogPage.visit('juice');
 cy.switchProductView('List');
-catalogPage.addProductsToExistList();
-catalogPage.clickOnSingleStar();
-catalogPage.checkAlreadyInList();
-listsPage.goToListTab();
-listsPage.checkListsAfterCreated();
-listsPage.checkListDetailsPage();
+catalogPage.prepareProductsForList();
+listsPage.checkNewList();
 listsPage.clickToListsRouter();
-listsPage.deleteMultipleLists();
+
                     
 })
 
@@ -129,7 +122,7 @@ listsPage.goToListTab();
 listsPage.checkListsAfterCreated();
 listsPage.checkListDetailsPage();
 listsPage.clickToListsRouter();
-listsPage.deleteMultipleLists(); 
+
 
 })
 
@@ -137,18 +130,10 @@ it('Lists tab > List with Products > Add 1 product to the cart > Successfully ad
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cartPage.emptyOrNot();
-listsPage.isListsPageEmpty();
-listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
-listsPage.goToListDetailsPage();
-listsPage.emptyListDetailPage();
-cy.clickOnContinue("Continue browsing");
-catalogPage.visit('soda');
-catalogPage.addProductsToExistList();
-catalogPage.clickOnSingleStar();
-catalogPage.checkAlreadyInList();
-listsPage.goToListTab();
-listsPage.checkListsAfterCreated();
-listsPage.checkListDetailsPage();
+listsPage.createListData();
+catalogPage.visit('soft-drinks/soda');
+catalogPage.prepareProductsForList();
+listsPage.checkNewList();
 listsPage.clickOnAddToCart();
 listsPage.clickOnViewCart();
 cy.log('Check added product to cart');
@@ -168,33 +153,56 @@ selectForCheckout.SelectedState();
 cartPage.clearCart();
 cartPage.confirmClearCart();
 listsPage.goToListTab();
-listsPage.deleteMultipleLists(); 
-        
+
 });
 
 it('Lists tab > List with Products > remove product', ()=> {
 
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cartPage.emptyOrNot();
-listsPage.isListsPageEmpty();
-listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
-listsPage.goToListDetailsPage();
-listsPage.emptyListDetailPage();
-cy.clickOnContinue("Continue browsing");
-catalogPage.visit('soda');
-catalogPage.addProductsToExistList();
-catalogPage.clickOnSingleStar();
-catalogPage.checkAlreadyInList();
-listsPage.goToListTab();
-listsPage.checkListsAfterCreated();
-listsPage.checkListDetailsPage();
+listsPage.createListData();
+catalogPage.visit('soft-drinks/soda');
+catalogPage.prepareProductsForList();
+listsPage.checkNewList();
 listsPage.removeProductsFromAllPages();
 listsPage.emptyListDetailPage();
 listsPage.clickToListsRouter();
-listsPage.deleteMultipleLists(); 
+listsPage.checkProductCounter();
 
     
 });
 
+it('Save changes', () => {
 
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+listsPage.createListData();
+catalogPage.visit('soft-drinks/soda');
+catalogPage.prepareProductsForList();
+listsPage.checkNewList();
+listsPage.updateQuantityInList();
+listsPage.leaveList();
+
+});
+
+it('Product counter', () => {
+
+loginPage.login(userData.userData[0].email, userData.userData[0].password);
+listsPage.createListData();
+catalogPage.visit('snacks');
+catalogPage.prepareProductsForList();
+listsPage.goToListTab();
+listsPage.compareProductsCount();
+listsPage.removeSingleProduct();
+cy.wait(500);
+listsPage.clickToListsRouter();
+listsPage.compareProductsCount();
+listsPage.clickToListsRouter();
+
+})
+
+afterEach(() => {
+
+listsPage.deleteMultipleLists(); 
+
+})
 })

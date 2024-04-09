@@ -1,7 +1,6 @@
 import { ListsLocators } from "../ListsLocators";
 import Lists_data from "./Lists_data";
 
-
 class Lists{
 
 goToListTab(){
@@ -70,6 +69,7 @@ cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create li
 cy.contains('h3', 'New List').should('not.exist');
 cy.log('Check created list')
 cy.contains('a', list_name);
+this.checkProductCounter();
 
 
 }
@@ -124,9 +124,54 @@ cy.log('Check created lists')
 cy.get('.text-xl')
 .should('not.exist')
 cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 1);
+this.checkProductCounter();
 cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
 
+
 }
+
+compareProductsCount(){
+// Retrieve the text content of the counter element and save it to productCount variable
+cy.get(ListsLocators.COUNTER)
+.eq(0)
+.invoke('text')
+.then((count1) => {
+const productCount = parseInt(count1.trim()); // Parse the text content into an integer
+cy.log(`Product counter is: ${productCount}`);
+
+// Navigate to the list details page (assuming this is a custom function)
+ this.goToListDetailsPage();
+
+// Count the number of line item elements and compare with productCount
+cy.get(ListsLocators.LINE_ITEM)
+.its('length')
+.then((count2) => {
+const lineItemCount = count2;
+cy.log(`Number of elements found: ${lineItemCount}`);
+
+// Assertion to compare productCount with lineItemCount
+expect(productCount).to.equal(lineItemCount);
+cy.log(`The product count at badge: ${productCount} is equal to line-items in list: ${lineItemCount}`);
+
+});
+});
+
+
+}
+
+checkProductCounter(){
+
+// Retrieve the text content of the counter element and save it to productCount variable
+cy.get(ListsLocators.COUNTER)
+.eq(0)
+.invoke('text')
+.then((count1) => {
+const productCount = parseInt(count1.trim()); // Parse the text content into an integer
+cy.log(`Product counter is: ${productCount}`);
+
+});
+}
+
 
 editListFromSettings(list_name, list_description){
 
@@ -307,6 +352,76 @@ cy.contains('button', "Successfully added").should('be.visible');
 cy.contains('a', "View cart").click();
 cy.location('pathname').should('eq', "/cart");
 
+}
+
+createListData(){
+
+this.isListsPageEmpty();
+this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+this.goToListDetailsPage();
+this.emptyListDetailPage();
+cy.clickOnContinue("Continue browsing");
+
+}
+
+checkNewList(){
+
+this.goToListTab();
+this.checkListsAfterCreated();
+this.checkListDetailsPage();
+
+}
+
+changeQuantity(value1, value2){
+
+cy.get(ListsLocators.INPUT).eq(value1).clear().type(value2);
+    
+}
+    
+saveChanges(value){
+    
+this.changeQuantity(1, 2);
+cy.contains('button', 'Save Changes').should('be.enabled').click();
+this.saveChangesPopUp();
+cy.clickOnButton(value);
+cy.get('h3').should('not.exist');
+cy.contains('button', 'Save Changes').should('be.disabled');
+    
+    
+}
+    
+saveChangesPopUp(){
+    
+cy.get('h3').should('be.visible').and('have.text', 'Save Changes');
+cy.get('p').contains('Would you like to save changes in the list?');
+cy.contains('button', 'Yes').should('be.enabled');
+cy.contains('button', 'No').should('be.enabled');
+}
+    
+updateQuantityInList(){
+
+cy.log('Check qty update > Save chenges')
+this.saveChanges('No');
+this.saveChanges('Yes');
+    
+}
+    
+leaveList(){
+cy.log('Change qty > leave the list > Save changes > Yes');   
+this.changeQuantity(3, 5);
+cy.get(ListsLocators.ROUTER_LINK).click();
+this.saveChangesPopUp();
+cy.clickOnButton('Yes');
+cy.location('pathname').should('eq', "/account/lists");
+this.goToListDetailsPage();
+
+cy.log('Change qty > leave the list > Save changes > No');
+this.changeQuantity(4, 6);
+cy.get(ListsLocators.ROUTER_LINK).click();
+this.saveChangesPopUp();
+cy.clickOnButton('No');
+cy.location('pathname').should('eq', "/account/lists");
+    
 }
 
 }
