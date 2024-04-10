@@ -6,7 +6,7 @@ class Lists{
 goToListTab(){
 
 cy.log('Go to Lists tab')
-cy.get(ListsLocators.LISTS_TAB).click();
+cy.get(ListsLocators.LISTS_TAB).last().click();
 cy.location('pathname').should('eq', "/account/lists");
 
 
@@ -139,7 +139,7 @@ cy.get(ListsLocators.COUNTER)
 const productCount = parseInt(count1.trim()); // Parse the text content into an integer
 cy.log(`Product counter is: ${productCount}`);
 
-// Navigate to the list details page (assuming this is a custom function)
+// Navigate to the list details page
  this.goToListDetailsPage();
 
 // Count the number of line item elements and compare with productCount
@@ -218,6 +218,21 @@ expect(text1).to.equal(text2)
 cy.log('The lists title are equal');
 });
 });
+
+}
+
+editList() {
+
+this.compareListsNames();
+this.clickToListsRouter();
+    
+this.editListFromSettings(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
+this.goToListDetailsPage(Lists_data.lists[1].name2);
+this.compareListsNames();
+    
+this.editListFromDetailsPage(Lists_data.lists[2].name3, Lists_data.lists[2].description3)
+this.compareListsNames();
+this.clickToListsRouter();
 
 }
 
@@ -356,7 +371,6 @@ cy.location('pathname').should('eq', "/cart");
 
 createListData(){
 
-this.isListsPageEmpty();
 this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 this.goToListDetailsPage();
 this.emptyListDetailPage();

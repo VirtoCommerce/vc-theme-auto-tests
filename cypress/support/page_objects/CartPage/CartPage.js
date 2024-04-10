@@ -12,8 +12,9 @@ class CartPage {
 
 cartLineItemsCheck(){
 
-cy.get('.vc-line-items').should('be.visible');
-cy.get('.vc-line-items').should('exist');
+cy.get(CartPageLocators.CART_LINE_ITEMS).should('be.visible');
+cy.get(CartPageLocators.CART_LINE_ITEMS).should('exist');
+cy.get(CartPageLocators.CART_LINE_ITEMS).its('length').should('be.greaterThan', 0);
 
   }
 
