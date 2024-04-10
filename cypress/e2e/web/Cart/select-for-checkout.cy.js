@@ -8,7 +8,8 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 
 
-const SUBCATEGORY = 'new-home/bedroom-furniture';
+//const SUBCATEGORY = 'new-home/bedroom-furniture';
+const SUBCATEGORY = 'courses-and-digital-products/digital-products';
 const NEWCATEGORY = 'soft-drinks/soda';
 
 describe('Select for checkout', () => {
@@ -22,11 +23,11 @@ describe('Select for checkout', () => {
     
 
     beforeEach(() => {
-        cy.clearCookies();
-        cy.clearLocalStorage(); 
-        cy.viewport(Cypress.env('DEVICE_NAME'));
-        loginPage.login(userData.userData[0].email, userData.userData[0].password);
-        cartPage.emptyOrNot();      
+    cy.clearCookies();
+    cy.clearLocalStorage(); 
+    cy.viewport(Cypress.env('DEVICE_NAME'));
+    loginPage.login(userData.userData[0].email, userData.userData[0].password);
+    cartPage.emptyOrNot();      
 
     });         
 
@@ -125,86 +126,85 @@ describe('Select for checkout', () => {
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
 
-    cy.checkLoading('.vc-loader-overlay__spinner');
+cy.checkLoading('.vc-loader-overlay__spinner');
 
-    //Payment page
-
-    personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
-    personalCheckout.pay();    
+//Payment page
+personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
+personalCheckout.pay();    
     
-    personalCheckout.isPayed();
-    personalCheckout.checkOrder();
+personalCheckout.isPayed();
+personalCheckout.checkOrder();
 
-    //check cart after order creation
-    cartPage.visitByCartClick();    
-    cy.intercept('/cart').as('GetFullCart');    
-    cartPage.cartLineItemsCheck();    
-    selectForCheckout.SelectedState();
-    cy.digitalLabel('.vc-chip__content');
+//check cart after order creation
+cartPage.visitByCartClick();    
+cy.intercept('/cart').as('GetFullCart');    
+cartPage.cartLineItemsCheck();    
+selectForCheckout.SelectedState();
+cy.digitalLabel('.vc-chip__content');
 
-    //Clear cart
-    cartPage.clearCart();
-    cartPage.confirmClearCart();
-    cy.log('The test is comleted');
+//Clear cart
+cartPage.clearCart();
+cartPage.confirmClearCart();
+cy.log('The test is comleted');
     
-    //log out
-    cy.log('click on the user name and log out')
-    logOut.signOut(userData.userData[0].user_name);
-    cy.log('Logging out completed') 
+//log out
+cy.log('click on the user name and log out')
+logOut.signOut(userData.userData[0].user_name);
+cy.log('Logging out completed') 
 
-    });
+});
     
 
 it('C367723: select All items > create an order', () => {
 
-        catalogPage.visit(NEWCATEGORY);           
-        catalogPage.purchaseAll();     
-        cartPage.visitByCartClick();    
-        cy.checkLoading('.vc-loader-overlay__spinner');         
-        cartPage.cartLineItemsCheck();
+catalogPage.visit(NEWCATEGORY);           
+catalogPage.purchaseAll();     
+cartPage.visitByCartClick();    
+cy.checkLoading('.vc-loader-overlay__spinner');         
+cartPage.cartLineItemsCheck();
         
-        selectForCheckout.SelectedState();
+selectForCheckout.SelectedState();
     
-    //Select for checkout > Mixed order
+//Select for checkout > Mixed order
 
-    cy.checkLoading('.vc-loader-overlay__spinner');
-    cartPage.proceedButtonActive();  
-    selectForCheckout.totalSubtotal();
+cy.checkLoading('.vc-loader-overlay__spinner');
+cartPage.proceedButtonActive();  
+selectForCheckout.totalSubtotal();
 
-    //Checkout
-    cartPage.checkout();
-    cy.checkLoading('.vc-loader-overlay__spinner');
+//Checkout
+cartPage.checkout();
+cy.checkLoading('.vc-loader-overlay__spinner');
 
-    personalCheckout.checkShippingPage();    
-    personalCheckout.selectShippingAddress();
-    personalCheckout.selectDelivery('Fixed Rate (Air)');
-    personalCheckout.leaveComment('place-order.cy test');
-    personalCheckout.proceedToBilling();
+personalCheckout.checkShippingPage();    
+personalCheckout.selectShippingAddress();
+personalCheckout.selectDelivery('Fixed Rate (Air)');
+personalCheckout.leaveComment('place-order.cy test');
+personalCheckout.proceedToBilling();
     
-    cy.log('Select manual payment')
-    personalCheckout.selectPaymentMethod('Manual');
-    cy.checkLoading('.vc-loader-overlay__spinner');
-    personalCheckout.checkBillingPage();
-    personalCheckout.reviewOrder();
-    personalCheckout.placeOrder();
+cy.log('Select manual payment')
+personalCheckout.selectPaymentMethod('Manual');
+cy.checkLoading('.vc-loader-overlay__spinner');
+personalCheckout.checkBillingPage();
+personalCheckout.reviewOrder();
+personalCheckout.placeOrder();
 
-    cy.checkLoading('.vc-loader-overlay__spinner');
+cy.checkLoading('.vc-loader-overlay__spinner');
 
-    //Completed page page
+//Completed page page
+personalCheckout.checkCompletePage();    
 
-    personalCheckout.checkCompletePage();    
+//check cart after order creation
+cartPage.visitByCartClick();    
+cy.intercept('/cart').as('GetFullCart');
+cartPage.isCleared();    
 
-    //check cart after order creation
-    cartPage.visitByCartClick();    
-    cy.intercept('/cart').as('GetFullCart');
-    cartPage.isCleared();    
-
-    cy.log('The test is comleted');
+cy.log('The test is comleted');
     
-    //log out
-    cy.log('click on the user name and log out')
-    logOut.signOut(userData.userData[0].user_name);
-    cy.log('Logging out completed')
+//log out
+cy.log('click on the user name and log out')
+logOut.signOut(userData.userData[0].user_name);
+cy.log('Logging out completed')
+
  });
 
 });

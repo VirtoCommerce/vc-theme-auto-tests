@@ -26,7 +26,6 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cartPage.emptyOrNot();
 listsPage.isListsPageEmpty();
-
        
 });
 
@@ -168,7 +167,6 @@ afterEach(() => {
 
 listsPage.goToListTab();
 listsPage.deleteMultipleLists(); 
-
 })
 });
 
