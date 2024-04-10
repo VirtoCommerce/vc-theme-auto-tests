@@ -111,5 +111,11 @@ cy.contains('button', "Print").should('be.enabled');
 cy.contains('button', "OK").should('be.enabled');
 
 })
+
+Cypress.Commands.add('checkLabel', (labelName) => {
+
+cy.contains('span', labelName);
+  
+})
   
 

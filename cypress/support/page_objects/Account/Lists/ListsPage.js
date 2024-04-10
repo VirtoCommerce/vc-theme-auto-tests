@@ -6,7 +6,7 @@ class Lists{
 goToListTab(){
 
 cy.log('Go to Lists tab')
-cy.get(ListsLocators.LISTS_TAB).last().click();
+cy.get(ListsLocators.LISTS_TAB).click();
 cy.location('pathname').should('eq', "/account/lists");
 
 
@@ -178,7 +178,7 @@ editListFromSettings(list_name, list_description){
 cy.log('Edit list name');
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
-cy.get('.vc-menu-item').contains('Edit').click();
+cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
 cy.get('h3').should('be.visible').and('have.text', "List Settings");
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
@@ -237,7 +237,7 @@ this.clickToListsRouter();
 }
 
 clickToListsRouter(){
-cy.get(ListsLocators.ROUTER_LINK).click();
+cy.get(ListsLocators.ROUTER_LINK).last().click();
 cy.location('pathname').should('eq', "/account/lists");
 }
 
@@ -266,7 +266,7 @@ cy.get('.text-xl')
 .then(()=> {
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
-cy.get('.vc-menu-item').contains('Delete').click();
+cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Delete').click();
 cy.confirmDelete();
 })
 
