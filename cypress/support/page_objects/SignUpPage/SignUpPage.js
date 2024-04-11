@@ -76,7 +76,8 @@ personalRegistration(){
         cy.get('[type="password"]').eq(0).type(userData.userData[0].password);
         cy.get('[placeholder="Confirm your password"]').type(userData.userData[0].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
-        cy.get('[type="submit"]').contains('Sign up').click();   
+        cy.get('[type="submit"]').contains('Sign up').click();
+        cy.get('.vc-typography--variant--h1').should('be.visible'); 
         cy.get('.vc-typography--variant--h1').contains('Registration completed');
         cy.location('pathname').should('eq', "/successful-registration");        
         cy.get('.flex > .vc-button').should('be.exist');
@@ -98,6 +99,7 @@ companyRegistration(){
         cy.get('[placeholder="Confirm your password"]').type(userData.userData[1].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();   
+        cy.get('.vc-typography--variant--h1').should('be.visible'); 
         cy.get('.vc-typography--variant--h1').contains('Registration completed');
         cy.location('pathname').should('eq', "/successful-registration");        
         cy.get('.flex > .vc-button').should('be.exist');
