@@ -6,7 +6,7 @@ class Lists{
 goToListTab(){
 
 cy.log('Go to Lists tab')
-cy.get(ListsLocators.LISTS_TAB).click();
+cy.get(ListsLocators.LISTS_TAB).last().click();
 cy.location('pathname').should('eq', "/account/lists");
 
 
@@ -375,6 +375,7 @@ this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].descripti
 this.goToListDetailsPage();
 this.emptyListDetailPage();
 cy.clickOnContinue("Continue browsing");
+cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
 
 }
 
