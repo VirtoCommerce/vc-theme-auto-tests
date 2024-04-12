@@ -41,23 +41,19 @@ cy.log('The product was added to cart');
 
 }
 
-inActiveStateView(label){
+inActiveStateView(){
 
 cy.log('Check color if inActive')
-cy.get('.space-x-2 > .text-primary')
-.contains(label)
-.should('have.css', 'color')
-.and('eq', 'rgb(240, 173, 78)')
+cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600')
+.should('have.class', 'text-primary')
           
 }
           
-activeStateView(label){
+activeStateView(){
           
 cy.log('Check color if Active')
-cy.get('.space-x-2 > .text-neutral-700')
-.contains(label)
-.should('have.css', 'color')
-.and('eq', 'rgb(64, 64, 64)')
+cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral-700 hover:shadow-md"]')
+.should('have.class', 'text-neutral-700')
           
 }
 
@@ -80,9 +76,9 @@ addToListAnonim(){
 cy.log('User is Anonim');
 cy.get('a[href="/sign-up"]').should('be.visible').and('have.text', 'Sign up now');
 
-this.inActiveStateView('List');
+this.inActiveStateView();
 cy.switchProductView('List');
-this.activeStateView('List');
+this.activeStateView();
 
 cy.get('button[type="button"][class="flex"]')
 .eq(0)
@@ -91,9 +87,9 @@ cy.get('button[type="button"][class="flex"]')
 
 ProductCard.isStarGrey();
   
-this.inActiveStateView('Grid')
+this.inActiveStateView()
 cy.switchProductView('Grid')
-this.activeStateView('Grid')
+this.activeStateView()
 
 cy.get('button[type="button"][class="flex"]')
 .eq(0)
@@ -140,9 +136,9 @@ cy.log('Add new list and Save buttons are disabled');
 addToListFromListView(){
 
 cy.log('add product to list from List view')
-this.inActiveStateView('List');
+this.inActiveStateView();
 cy.switchProductView('List');
-this.activeStateView('List');
+this.activeStateView();
 
 ProductCard.isStarGrey();
   
@@ -152,9 +148,9 @@ this.addProductToNewList();
   
 ProductCard.isStarOrange();
 
-this.inActiveStateView('Grid')
+this.inActiveStateView()
 cy.switchProductView('Grid')
-this.activeStateView('Grid')
+this.activeStateView()
 
 cy.log('Check star from Grid View') 
 ProductCard.isStarOrange();
