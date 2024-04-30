@@ -8,8 +8,8 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 
 
-const SUBCATEGORY = 'new-home/bedroom-furniture';
-//const SUBCATEGORY = 'courses-and-digital-products/digital-products';
+//const SUBCATEGORY = 'new-home/bedroom-furniture';
+const SUBCATEGORY = 'courses-and-digital-products/digital-products';
 const NEWCATEGORY = 'soft-drinks/soda';
 
 describe('Select for checkout', () => {
@@ -157,7 +157,7 @@ cy.log('Logging out completed')
 
 it('C367723: select All items > create an order', () => {
 
-catalogPage.visit(NEWCATEGORY);           
+catalogPage.visit(SUBCATEGORY);           
 catalogPage.purchaseAll();     
 cartPage.visitByCartClick();    
 cy.checkLoading('.vc-loader-overlay__spinner');         
