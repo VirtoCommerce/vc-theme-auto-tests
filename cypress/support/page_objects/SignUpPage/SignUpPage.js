@@ -10,7 +10,7 @@ startFromHome(){
 
        
         AuthLogin.visitHomePage();
-        cy.get('[href="/sign-up"]').click();
+        cy.get('[href="/sign-up"]').eq(1).click();
         cy.get('h1').should('be.visible').contains('Registration');
         cy.location("pathname").should('eq', "/sign-up");        
         cy.get('form').should('be.visible');
