@@ -8,8 +8,8 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 
 
-//const SUBCATEGORY = 'new-home/bedroom-furniture';
-const SUBCATEGORY = 'courses-and-digital-products/digital-products';
+const SUBCATEGORY = 'new-home/bedroom-furniture';
+//const SUBCATEGORY = 'courses-and-digital-products/digital-products';
 const NEWCATEGORY = 'soft-drinks/soda';
 
 describe('Select for checkout', () => {
