@@ -66,6 +66,7 @@ cy.get('h3').should('be.visible').and('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
 cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.wait(500);
 cy.contains('h3', 'New List').should('not.exist');
 cy.log('Check created list')
 cy.contains('a', list_name);
@@ -396,10 +397,12 @@ cy.get(ListsLocators.INPUT).eq(value1).clear().type(value2);
 saveChanges(value){
     
 this.changeQuantity(1, 2);
+cy.wait(500);
 cy.contains('button', 'Save Changes').should('be.enabled').click();
 this.saveChangesPopUp();
 cy.clickOnButton(value);
 cy.get('h3').should('not.exist');
+cy.wait(500);
 cy.contains('button', 'Save Changes').should('be.disabled');
     
     
@@ -424,15 +427,17 @@ this.saveChanges('Yes');
 leaveList(){
 cy.log('Change qty > leave the list > Save changes > Yes');   
 this.changeQuantity(3, 5);
-cy.get(ListsLocators.ROUTER_LINK).click();
+cy.get('a[class="router-link-active icon flex items-center p-2.5 list-icon pb-2"]').click();
+cy.wait(500);
 this.saveChangesPopUp();
 cy.clickOnButton('Yes');
+cy.wait(500);
 cy.location('pathname').should('eq', "/account/lists");
 this.goToListDetailsPage();
 
 cy.log('Change qty > leave the list > Save changes > No');
 this.changeQuantity(4, 6);
-cy.get(ListsLocators.ROUTER_LINK).click();
+cy.get('a[class="router-link-active icon flex items-center p-2.5 list-icon pb-2"]').click();
 this.saveChangesPopUp();
 cy.clickOnButton('No');
 cy.location('pathname').should('eq', "/account/lists");

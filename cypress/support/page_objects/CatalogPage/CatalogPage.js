@@ -161,6 +161,7 @@ addToExistList(){
 
 cy.contains('h3', "Please select list").should('exist');
 this.clickOnAllCheckbox();
+cy.wait(500);
 cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
 .should('be.enabled')
 .click();
@@ -174,7 +175,6 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 addProductsToExistList(){
 
 cy.get(CatalogPageLocators.STAR).each(($star) => {
-
 cy.wrap($star).click();
 this.addToExistList();
     
@@ -205,7 +205,7 @@ cy.log('Add new list is disabled');
 
 clickOnAllCheckbox(){
 
-cy.get('ul.pt-2 li label input[type="checkbox"]').each(($checkbox) => {
+cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
 // Check if the checkbox is not already checked
 if (!$checkbox.prop('checked')) {
 // Click the checkbox
