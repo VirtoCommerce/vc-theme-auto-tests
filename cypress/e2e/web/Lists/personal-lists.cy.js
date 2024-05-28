@@ -163,11 +163,7 @@ listsPage.compareProductsCount();
 
 })
 
-afterEach(() => {
 
-listsPage.goToListTab();
-listsPage.deleteMultipleLists(); 
-})
 });
 
 describe('Anonymous', ()=> {
