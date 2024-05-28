@@ -185,7 +185,7 @@ this.addToExistList();
 checkAlreadyInList(){
   
 cy.contains('h3', "Please select list").should('be.visible');
-cy.get('div[class="bg-[color:var(--color-add-wishlist-modal-subtitle-bg)] px-6 py-3 text-15 font-bold leading-5 sm:py-2.5"]')
+cy.get('div[class="bg-neutral-100 px-6 py-3 text-base font-bold leading-5 sm:py-2.5"]')
 .should('have.text', "Already in the lists");
 cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
 cy.wrap($checkbox).should('be.checked');
