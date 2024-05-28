@@ -95,10 +95,12 @@ cy.log('The deletion completed');
 Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
  
   cy.log('Check the notification banner');
-  cy.get('.notifications-host__item'). should('be.visible').and('have.text', bannerText);
+  cy.scrollTo('top');
+  cy.get('.notifications-host__item').should('be.visible').and('have.text', bannerText);
   cy.log('Banner is presented');
   cy.get('.notifications-host__close-button').click();
-  cy.get('.notifications-host__item'). should('not.be.visible');
+  cy.wait(500);
+  cy.get('.notifications-host__item').should('not.exist');
   cy.log('Banner is disappeared');
 })
 
