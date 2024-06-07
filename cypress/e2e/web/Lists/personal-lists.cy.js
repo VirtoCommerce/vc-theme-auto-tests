@@ -149,7 +149,7 @@ listsPage.leaveList();
 
 });
 
-it.only('Product counter', () => {
+it('Product counter', () => {
 
 listsPage.createListData();
 catalogPage.visit('snacks');

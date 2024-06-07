@@ -16,7 +16,7 @@ isListsPageEmpty(){
    
 cy.log("Verify lists page is empty");
 this.goToListTab();
-cy.wait(1000);
+cy.wait(2000);
 cy.get(ListsLocators.LISTS_TITLE)
 .if('visible')
 .then(()=>{
