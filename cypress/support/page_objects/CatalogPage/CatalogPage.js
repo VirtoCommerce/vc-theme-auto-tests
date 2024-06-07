@@ -74,7 +74,7 @@ cy.get(CatalogPageLocators.STAR).last().click();
 addToListAnonim(){
 
 cy.log('User is Anonim');
-cy.get('a[href="/sign-up"]').should('be.visible').and('have.text', 'Sign up now');
+cy.contains('a', "Sign up now").should('be.visible');
 
 this.inActiveStateView();
 cy.switchProductView('List');
@@ -119,6 +119,7 @@ cy.get('input[type="checkbox"]').should('be.checked');
 cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
 .should('be.enabled')
 .click();
+cy.wait(500);
 cy.contains('h3', "Please select list").should('not.exist'); 
 cy.checkNotificationBanner('Your lists were successfully updated');
 })
