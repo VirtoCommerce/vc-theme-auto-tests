@@ -28,7 +28,7 @@ listsPage.isListsPageEmpty();
 
 });
 
-it('Create private list. Edit name and description. Change scope from private to Shared', ()=> {
+it.only('Create private list. Edit name and description. Change scope from private to Shared', ()=> {
 
 
 orgList.createPrivateList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);

@@ -220,7 +220,7 @@ cy.wrap($checkbox).should('be.checked');
 
 clickOnStars(){
 
-cy.get(CatalogPageLocators.STAR).its('length').if('gte', 11)
+cy.get(CatalogPageLocators.STAR).its('length').if('gte', 10)
 .then(() => {
 cy.get(CatalogPageLocators.STAR).each(($star) => {
 cy.wrap($star).click();
