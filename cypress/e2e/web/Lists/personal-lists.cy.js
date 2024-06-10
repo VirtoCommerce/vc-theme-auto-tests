@@ -138,7 +138,7 @@ listsPage.checkProductCounter();
     
 });
 
-it.only('Save changes', () => {
+it('Save changes', () => {
 
 listsPage.createListData();
 catalogPage.visit('soft-drinks');
@@ -149,7 +149,7 @@ listsPage.leaveList();
 
 });
 
-it.only('Product counter', () => {
+it('Product counter', () => {
 
 listsPage.createListData();
 catalogPage.visit('snacks');
