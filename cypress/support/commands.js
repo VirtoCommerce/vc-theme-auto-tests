@@ -86,6 +86,7 @@ Cypress.Commands.add('confirmDelete', () => {
 
 cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
 cy.contains('.vc-button--color--danger', "Delete").click();
+cy.wait(500);
 cy.contains('h3', 'Confirm Delete').should('not.exist');
 cy.log('The deletion completed');
     

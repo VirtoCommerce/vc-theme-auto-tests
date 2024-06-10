@@ -37,7 +37,7 @@ catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.deleteMultipleLists();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit('soft-drinks');
 catalogPage.clickOnStars();
 catalogPage.openProductPage();
 ProductCard.isStarOrangePDP();
@@ -59,7 +59,7 @@ cy.clickOnButton("Cancel");
 it('Star is orange > Add several products to existing list from List view.', () => {
 
 listsPage.createListData();
-catalogPage.visit('juice');
+catalogPage.visit('printers/multifunction-printers');
 cy.switchProductView('List');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
@@ -77,7 +77,7 @@ listsPage.compareListsNames();
 listsPage.clickToListsRouter();
 listsPage.editList();    
 listsPage.createMultipleLists();
-catalogPage.visit('juice');
+catalogPage.visit('printers/multifunction-printers');
 catalogPage.clickOnSingleStar();
 catalogPage.checkAddNewList();
 catalogPage.allUnchecked();
@@ -100,7 +100,7 @@ listsPage.checkNewList();
 it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit('soft-drinks');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.clickOnAddToCart();
@@ -127,7 +127,7 @@ cartPage.confirmClearCart();
 it('Lists tab > List with Products > remove product', ()=> {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit('soft-drinks');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.removeProductsFromAllPages();
@@ -138,10 +138,10 @@ listsPage.checkProductCounter();
     
 });
 
-it('Save changes', () => {
+it.only('Save changes', () => {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit('soft-drinks');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
@@ -149,7 +149,7 @@ listsPage.leaveList();
 
 });
 
-it('Product counter', () => {
+it.only('Product counter', () => {
 
 listsPage.createListData();
 catalogPage.visit('snacks');

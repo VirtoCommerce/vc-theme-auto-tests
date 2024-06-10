@@ -8,10 +8,9 @@ createPrivateList(list_name, list_description){
 cy.log('Create a new list');
 cy.contains('button', 'Create list').click();
 
-// Verify that the new list form is displayed with the expected heading and checkbox state
 cy.get('h3').should('be.visible').and('have.text', 'New List');
-cy.get('input[aria-checked="true"]').should('exist'); // Verify checkbox state
-cy.get('input[type="checkbox"]').should('be.checked'); // Ensure checkbox is checked
+cy.get('input[aria-checked="false"]').should('exist'); // Verify switcher state
+cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure switcher is checked
 
 // Fill in the list name and description
 cy.get('input[type="text"]').eq(1).type(list_name);
@@ -63,14 +62,14 @@ const randomWord = Lists_data.getRandomWord();
 
 cy.log('Edit list');
 cy.get('h3').should('be.visible').and('have.text', "List Settings");
-cy.get('input[aria-checked]').should('exist'); // Verify checkbox state
-cy.contains('span', 'Private list');
+cy.get('input[aria-checked="false"]').should('have.value', 'false');
+cy.contains('button', 'Make shared');
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description + ' ' + randomWord + randomNumber);
-this.clickOnCheckbox();
+this.toggleSwitcher();
 cy.get('.inline-block > .flex-wrap > .vc-button--color--primary').should('be.enabled').click();
 cy.contains('h3', "List Settings").should('not.exist');
 cy.log('The name of list is updated');
@@ -79,18 +78,18 @@ cy.log('The name of list is updated');
     
     
 
-clickOnCheckbox(){
+toggleSwitcher(){
 
-cy.get('input[type="checkbox"]')
-.if('checked')
+cy.get('input[aria-checked]')
+.if('not.be.checked')
 .then(() => {
-cy.get('input[type="checkbox"]').uncheck();
-cy.get('input[type="checkbox"]').should('not.be.checked');
+cy.get('.border-b > .vc-switch > .vc-switch__bg').click();
+cy.get('[aria-checked="true"]').should('be.checked');
 })
 .else()
 .then(() => {
-cy.get('input[type="checkbox"]').check();
-cy.get('input[type="checkbox"]').should('be.checked');
+cy.get('.border-b > .vc-switch > .vc-switch__bg').click();
+cy.get('[aria-checked="false"]').should('not.be.checked');
 
 })
 
