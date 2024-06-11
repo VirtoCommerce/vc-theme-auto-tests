@@ -47,7 +47,7 @@ catalogPage.clickOnStarFromPDP();
 catalogPage.removeProductFromLists();
 ProductCard.isStarGreyPDP();
 cy.go('back');
-cy.log('Back to soft-drinks-soda');
+cy.log('Backward');
 ProductCard.isStarGrey();
 catalogPage.clickOnSingleStar();
 catalogPage.allUnchecked();

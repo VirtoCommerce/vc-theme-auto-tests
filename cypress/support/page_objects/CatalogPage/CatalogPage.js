@@ -218,22 +218,31 @@ cy.wrap($checkbox).should('be.checked');
 });
 }
 
-clickOnStars(){
+clickOnStars() {
+let count;
 
-cy.get(CatalogPageLocators.STAR).its('length').if('gte', 10)
-.then(() => {
-cy.get(CatalogPageLocators.STAR).each(($star) => {
+cy.get('b[class="font-extrabold"]')
+.invoke('text')
+.then((text) => {
+count = parseInt(text, 10); // Convert text to integer
+cy.log(count);
+cy.get(CatalogPageLocators.STAR).its('length').then((length) => {
+if (length >= count) {
+cy.get(CatalogPageLocators.STAR).each(($star, index) => {
+if (index < count) {
 cy.wrap($star).click();
 this.addProductToNewList();
-  
-})
-
-})
-
-cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]').its('length')
-.should('eql', 10);
-
 }
+});
+}
+});
+
+cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]')
+.its('length')
+.should('eql', count);
+});
+}
+
 
 openProductPage(){
 
