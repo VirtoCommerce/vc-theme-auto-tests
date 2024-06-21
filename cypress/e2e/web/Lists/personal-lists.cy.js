@@ -31,13 +31,13 @@ listsPage.isListsPageEmpty();
 
 it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
-catalogPage.visit('catalog');
+catalogPage.visit('alcoholic-drinks');
 catalogPage.addToListFromListView();
 catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.deleteMultipleLists();
-catalogPage.visit('soft-drinks');
+catalogPage.visit('soft-drinks/soda');
 catalogPage.clickOnStars();
 catalogPage.openProductPage();
 ProductCard.isStarOrangePDP();
@@ -100,7 +100,7 @@ listsPage.checkNewList();
 it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks');
+catalogPage.visit('soft-drinks/soda');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.clickOnAddToCart();
@@ -127,7 +127,7 @@ cartPage.confirmClearCart();
 it('Lists tab > List with Products > remove product', ()=> {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks');
+catalogPage.visit('soft-drinks/soda');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.removeProductsFromAllPages();
@@ -141,7 +141,7 @@ listsPage.checkProductCounter();
 it('Save changes', () => {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks');
+catalogPage.visit('soft-drinks/soda');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
@@ -180,7 +180,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 
 it('Star is grey > Add product anonymously', ()=> {
 
-catalogPage.visit('catalog'); 
+catalogPage.visit('alcoholic-drinks'); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
 catalogPage.clickOnStarFromPDP();

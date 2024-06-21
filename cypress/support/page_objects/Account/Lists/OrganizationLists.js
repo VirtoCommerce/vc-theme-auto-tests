@@ -27,7 +27,7 @@ cy.checkLabel('Private');
 }
 
 checkMenuDropDown(scope){
-   
+
 cy.log('Check menue drop-down');
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');

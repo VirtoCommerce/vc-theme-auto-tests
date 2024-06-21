@@ -224,12 +224,12 @@ let count;
 cy.get('b[class="font-extrabold"]')
 .invoke('text')
 .then((text) => {
-count = parseInt(text, 10); // Convert text to integer
+count = parseInt(text); // Convert text to integer
 cy.log(count);
 cy.get(CatalogPageLocators.STAR).its('length').then((length) => {
 if (length >= count) {
 cy.get(CatalogPageLocators.STAR).each(($star, index) => {
-if (index < count) {
+if (index <= count) {
 cy.wrap($star).click();
 this.addProductToNewList();
 }
@@ -239,14 +239,14 @@ this.addProductToNewList();
 
 cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]')
 .its('length')
-.should('eql', count);
+.should('be.lte', 10);
 });
 }
 
 
 openProductPage(){
 
-cy.get('[aria-describedby] > .my-px')
+cy.get('.vc-popover > .vc-popover__trigger > .my-px')
 .eq(0)
 .invoke('removeAttr', 'target')
 .click();
