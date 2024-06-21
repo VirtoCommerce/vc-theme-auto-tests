@@ -31,7 +31,7 @@ listsPage.isListsPageEmpty();
 
 it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
-catalogPage.visit('catalog');
+catalogPage.visit('alcoholic-drinks');
 catalogPage.addToListFromListView();
 catalogPage.clickOnSingleStar();
 catalogPage.checkAlreadyInList();
@@ -180,7 +180,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 
 it('Star is grey > Add product anonymously', ()=> {
 
-catalogPage.visit('catalog'); 
+catalogPage.visit('alcoholic-drinks'); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
 catalogPage.clickOnStarFromPDP();
