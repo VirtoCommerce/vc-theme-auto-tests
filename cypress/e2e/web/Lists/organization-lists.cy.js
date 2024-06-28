@@ -10,7 +10,7 @@ import OrganizationLists from "../../../support/page_objects/Account/Lists/Organ
 
 
 
-describe('Private lists', ()=> {
+describe('Private/Shared lists', ()=> {
 
 const catalogPage = new CatalogPage();
 const loginPage = new LoginPage();
@@ -103,5 +103,15 @@ listsPage.compareProductsCount();
 
 })
 
+it('Create lists. Switch between lists', () => {
+
+orgList.createList(Lists_data.lists[3].name4, Lists_data.lists[3].description4);
+listsPage.createMultipleLists();
+listsPage.goToListDetailsPage();
+listsPage.compareListsNames();
+listsPage.listCounter();
+listsPage.listSwitcher();
+
+})
 })
 
