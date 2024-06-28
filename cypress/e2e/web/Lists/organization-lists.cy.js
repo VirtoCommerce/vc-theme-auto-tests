@@ -31,7 +31,7 @@ listsPage.isListsPageEmpty();
 it('Create private list. Edit name and description. Change scope from private to Shared', ()=> {
 
 
-orgList.createPrivateList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+orgList.createList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 listsPage.checkProductCounter();
 orgList.checkMenuDropDown('Share');
 orgList.clickOnDropDownBtn('Edit');
@@ -64,6 +64,43 @@ listsPage.editList();
 cy.checkLabel('Private');
 orgList.checkMenuDropDown('Share');
     
+})
+
+it('Create a Shared list. Edit name and description. Change scope from Shared to Private', () => {
+
+orgList.createList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+cy.checkLabel('Shared');
+listsPage.checkProductCounter();
+orgList.checkMenuDropDown('Make private');
+orgList.clickOnDropDownBtn('Edit');
+orgList.editOrgList(Lists_data.lists[1].description2)
+cy.checkLabel('Private');
+orgList.checkMenuDropDown('Share');
+listsPage.goToListDetailsPage();
+orgList.clickOnListSettingsBtn();
+orgList.editOrgList();
+listsPage.emptyListDetailPage();
+listsPage.clickToListsRouter();
+cy.checkLabel('Shared');
+orgList.checkMenuDropDown('Make private');
+
+})
+
+it('Add products to Shared list', () => {
+
+orgList.createList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+cy.checkLabel('Shared');
+orgList.checkMenuDropDown('Make private');
+catalogPage.visit('snacks/chips');
+cy.scrollTo('top');
+catalogPage.prepareProductsForList();
+cy.wait(500);
+listsPage.goToListTab();
+cy.checkLabel('Shared');
+orgList.checkMenuDropDown('Make private');
+listsPage.checkProductCounter();
+listsPage.compareProductsCount();
+
 })
 
 

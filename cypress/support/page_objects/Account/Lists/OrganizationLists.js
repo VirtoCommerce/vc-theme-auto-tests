@@ -3,7 +3,7 @@ import Lists_data from "./Lists_data";
 
 class OrganizationLists {
 
-createPrivateList(list_name, list_description){
+createList(list_name, list_description){
 
 cy.log('Create a new list');
 cy.contains('button', 'Create list').click();
@@ -15,6 +15,7 @@ cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure s
 // Fill in the list name and description
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
+this.toggleSwitcher();
 
 cy.contains('.flex-wrap > .vc-button--color--primary', 'Create list').click();
 cy.contains('h3', 'New List').should('not.exist');
@@ -22,7 +23,6 @@ cy.log('Check created list');
 
 // Verify that the newly created list name is visible
 cy.contains('a', list_name).should('be.visible');
-cy.checkLabel('Private');
       
 }
 
