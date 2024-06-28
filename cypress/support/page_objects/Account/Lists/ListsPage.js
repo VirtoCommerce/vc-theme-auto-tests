@@ -90,6 +90,7 @@ cy.get('h3').should('be.visible').and('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
 cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
 cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.wait(500);
 cy.contains('h3', 'New List').should('not.exist');
       
 })
@@ -102,21 +103,13 @@ cy.log('Create list button is disabled');
 }
 
 
-createMultipleLists(){
+createMultipleLists() {
 
+for (let i = 0; i <= 10; i++) {
 this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-this.createLists();
-
-
 }
+}
+  
 
 
 checkListsAfterCreated(){
@@ -213,7 +206,8 @@ cy.log('The name of list is updated');
 compareListsNames(){
 
 cy.log('Compare list name in the left menue and current list title')
-cy.get('a[aria-current="page"]').eq(0).invoke('text').then((text1) => {
+cy.get(ListsLocators.CURRENT_PAGE)
+.invoke('text').then((text1) => {
 cy.get('.vc-typography').invoke('text').then((text2) => {
 expect(text1).to.equal(text2)
 cy.log('The lists title are equal');
@@ -442,6 +436,29 @@ this.saveChangesPopUp();
 cy.clickOnButton('No');
 cy.location('pathname').should('eq', "/account/lists");
     
+}
+
+listCounter() {
+  
+cy.get(ListsLocators.LIST_OF_LISTS).its('length')
+.then((length) => {
+cy.log('The length of lists is:', length);
+
+})
+
+}
+
+
+listSwitcher() {
+
+for (let i = 7; i <= 15; i++) {
+
+cy.get(`:nth-child(${i}) > .line-clamp-2`).click();
+cy.wait(500);
+this.compareListsNames();
+cy.wait(500);
+}
+
 }
 
 }

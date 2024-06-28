@@ -12,6 +12,10 @@ description2: 'Updated Cypress list. '
 {
 name3: 'List page',
 description3: 'List page updated by Cypress test. '
+},
+{
+name4: 'Cypress_Shared_List',
+description4: 'Cypress_test. Organization list. '
 }
 ],
 
