@@ -1,9 +1,10 @@
 const { defineConfig } = require("cypress");
 
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = defineConfig({
-  projectId: '4qfpp4', 
+  projectId: "4qfpp4",
+
   env: {
     LOGIN_PERSONAL_EMAIL: process.env.LOGIN_PERSONAL_EMAIL,
     LOGIN_PERSONAL_PASSWORD: process.env.LOGIN_PERSONAL_PASSWORD,
@@ -18,15 +19,24 @@ module.exports = defineConfig({
     PLATFORM_URL: process.env.PLATFORM_URL,
     DEVICE_NAME: process.env.DEVICE_NAME,
   },
+
   e2e: {
     setupNodeEvents(on, config) {
-  return require('./cypress/plugins/index')(on, config)
+      return require("./cypress/plugins/index")(on, config);
     },
-  },  
+  },
+
   testrail: {
-  domain: "virtowayqa.testrail.io",
-  apikey: "sWC5LzaMIvE.wfPoOeiC-VbDQ9Y1gsGS5O8/i8L7J",
-  runId: "R13618",
-  screenshots: false    
-}
+    domain: "virtowayqa.testrail.io",
+    apikey: "sWC5LzaMIvE.wfPoOeiC-VbDQ9Y1gsGS5O8/i8L7J",
+    runId: "R13618",
+    screenshots: false,
+  },
+
+  component: {
+    devServer: {
+      framework: "vue",
+      bundler: "vite",
+    },
+  },
 });
