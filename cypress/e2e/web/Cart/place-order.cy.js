@@ -59,7 +59,7 @@ describe('place order', () => {
     anonymousCheckout.isCompleted();
   });
 
-  it.only('places order as Personal user', () => {
+  it('places order as Personal user', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cy.wait('@GetShortCartQuery')
