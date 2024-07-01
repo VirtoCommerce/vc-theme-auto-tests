@@ -19,7 +19,7 @@ cy.get(CartPageLocators.CART_LINE_ITEMS).its('length').should('be.greaterThan', 
   }
 
   checkout() {
-    cy.get(CartPageLocators.CHECKOUT_BUTTON).click();
+  cy.get(CartPageLocators.CHECKOUT_BUTTON).click();
   }
 
   clearCart() {

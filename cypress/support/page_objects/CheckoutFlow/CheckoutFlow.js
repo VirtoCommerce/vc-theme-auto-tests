@@ -7,11 +7,12 @@ export class AnonymousCheckout {
 
   checkShippingPage(){
 
-    cy.location('pathname').should('eq', "/checkout/shipping");
-    cy.get('.vc-steps__item').should('have.length', 5);
-    cy.contains('Shipping')
+  cy.contains('h1', 'Shipping').should('be.visible'); 
+  cy.location('pathname').should('eq', "/checkout/shipping");
+  cy.get('.vc-steps__item').should('have.length', 5);
+  cy.contains('Shipping');
     
-    }
+  }
 
  fillShippingAddress() {
     cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
@@ -50,7 +51,9 @@ export class AnonymousCheckout {
   }
 
   proceedToBilling() {
-    cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
+  cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
+  cy.contains('h1', 'Billing').should('be.visible'); 
+  
   }
 
   selectPaymentMethod(method) {
@@ -62,7 +65,8 @@ export class AnonymousCheckout {
   }
 
   reviewOrder() {
-    cy.get(CheckoutFlowLocators.REVIEW_ORDER).click();
+  cy.get(CheckoutFlowLocators.REVIEW_ORDER).click();
+  cy.contains('h1', 'Order review').should('be.visible'); 
   }
 
   placeOrder() {
@@ -88,8 +92,8 @@ export class PersonalCheckout {
 
     addNewShippingAddress(){
 
-      cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();      
-      //cy.get('.mx-auto').should('be.visible');      
+      cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();     
+      
       //cy.contains('button', 'Add new address').click();
       cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
       cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
@@ -107,11 +111,11 @@ export class PersonalCheckout {
   // Select shipping address if address has already added
 
   selectShippingAddress() {    
-    cy.contains('button', 'select a shipping address').click();
-    cy.get('.mx-auto').should('be.visible'); 
-    cy.contains('button', 'Select').first().click();
-    cy.contains('button', 'OK').click();   
-    } 
+  cy.contains('button', 'select a shipping address').click();
+  cy.contains('h3', 'New address').should('be.visible'); 
+  cy.contains('button', 'Select').first().click();
+  cy.contains('button', 'OK').click();   
+  } 
   
 
   selectDelivery(method) {
@@ -184,7 +188,10 @@ cy.contains('Billing');
   }
 
   placeOrder() {
-    cy.contains('button', 'Place order').click();
+  cy.contains('button', 'Place order').click();
+  cy.checkLoading('.vc-loader-overlay__spinner');
+  cy.contains('h1', 'Payment').should('be.visible');
+
   }
 
   fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
