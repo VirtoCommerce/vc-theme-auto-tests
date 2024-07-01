@@ -132,7 +132,7 @@ export class PersonalCheckout {
   }
 
   leaveComment(text) {
-    cy.get('textarea').type(text);
+  cy.get('textarea').type(text);
   }
 
 checkBillingPage(){
@@ -184,7 +184,9 @@ cy.contains('Billing');
   }
 
   reviewOrder() {
-    cy.get(CheckoutFlowLocators.REVIEW_ORDER).click();
+  cy.get(CheckoutFlowLocators.REVIEW_ORDER).click();
+  cy.contains('h1', 'Order review').should('be.visible'); 
+
   }
 
   placeOrder() {
@@ -203,7 +205,7 @@ cy.contains('Billing');
   }
 
   pay() {
-    cy.contains('button', 'Pay Now').click();
+  cy.contains('button', 'Pay Now').click();
   }
 
 isPayed() {
