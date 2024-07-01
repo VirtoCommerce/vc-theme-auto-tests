@@ -6,7 +6,7 @@ class ProductPage {
   }
 
   purchase() {
-    cy.get(ProductPageLocators.ADD_TO_CART_BUTTON).should('be.visible').click();
+  cy.get(ProductPageLocators.ADD_TO_CART_BUTTON).should('be.visible').click();
   }
 }
 

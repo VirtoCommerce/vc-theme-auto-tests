@@ -1,5 +1,7 @@
 import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
+import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
@@ -10,10 +12,13 @@ const PRODUCT_URL = TestData.defaultProductPage;
 
 describe('place order', () => {
   const productPage = new ProductPage();
+  const catalogPage = new CatalogPage();
   const cartPage = new CartPage();
+  const selectForCheckout = new SelectForCheckout();
   const anonymousCheckout = new AnonymousCheckout();
   const personalCheckout = new PersonalCheckout();
   const loginPage = new LoginPage();
+
 
   beforeEach(() => {
     cy.log('Clearing cookies and local storage');
@@ -28,38 +33,46 @@ describe('place order', () => {
 
   it('places order created by Anonymous user', () => {
     productPage.visit(PRODUCT_URL);
-    productPage.purchase();
-    cy.checkLoading('.vc-button__loader');
+    catalogPage.addToCart();   
     cartPage.visitByCartClick();
-    cy.checkLoading('.vc-loader-overlay__spinner');
+    cy.checkLoading('.vc-loader-overlay__spinner');           
+    cartPage.cartLineItemsCheck();    
+    selectForCheckout.SelectedState();  
+    cartPage.proceedButtonActive();
     cartPage.checkout();
-
     cy.checkLoading('.vc-loader-overlay__spinner');
-
+    anonymousCheckout.checkShippingPage();
+       
     anonymousCheckout.fillShippingAddress();
     anonymousCheckout.selectDelivery('Fixed Rate (Ground)');
+    cy.checkLoading('.vc-loader-overlay__spinner'); 
+       
     anonymousCheckout.proceedToBilling();
+    
+
     anonymousCheckout.selectPaymentMethod('Manual');
-    anonymousCheckout.reviewOrder();
-    anonymousCheckout.placeOrder();
-
     cy.checkLoading('.vc-loader-overlay__spinner');
+    anonymousCheckout.reviewOrder();   
 
+    anonymousCheckout.placeOrder();    
+    cy.checkLoading('.vc-loader-overlay__spinner');
     anonymousCheckout.isCompleted();
   });
 
-  it('places order as Personal user', () => {
+  it.only('places order as Personal user', () => {
+
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cy.wait('@GetShortCartQuery')
-      .wait('@GetShortCartQuery')
-      .then((interception) => {
-      if(interception.response.body.data.cart.itemsQuantity) {
-        cy.log('Clearing cart');
-        cartPage.visit();
-        cartPage.clearCart();
-        cartPage.confirmClearCart();
-        cy.checkLoading('.vc-loader-overlay__spinner');
-      }
+    .wait('@GetShortCartQuery')
+    .then((interception) => {
+    if(interception.response.body.data.cart.itemsQuantity) {
+    cy.log('Clearing cart');
+    cartPage.visit();
+    cartPage.clearCart();
+    cartPage.confirmClearCart();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
+    }
 
       productPage.visit(PRODUCT_URL);
 
@@ -79,19 +92,22 @@ describe('place order', () => {
 
       cy.wait(500);
 
-      personalCheckout.selectShippingAddress();
+      personalCheckout.addNewShippingAddress();
       personalCheckout.selectDelivery('Fixed Rate (Ground)');
+      cy.checkLoading('.vc-loader-overlay__spinner');
       personalCheckout.leaveComment('place-order.cy test');
+      cy.checkLoading('.vc-loader-overlay__spinner');
       personalCheckout.proceedToBilling();
+      
       personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+      cy.checkLoading('.vc-loader-overlay__spinner');
       personalCheckout.reviewOrder();
       personalCheckout.placeOrder();
-
-      cy.checkLoading('.vc-loader-overlay__spinner');
 
       personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
       personalCheckout.pay();
       personalCheckout.isPayed();
-    })
+})
+
   });
 });
