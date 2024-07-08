@@ -20,7 +20,7 @@ userData:[
     gender: "Male",
     password: "Password1",
     confirm_password: "Password1",
-    company_name: "Andrew Corporate Kft.",
+    company_name: "Cypress-Corporate Kft.",
     user_name: "Andrew Cook" 
   },
   {

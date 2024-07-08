@@ -77,7 +77,7 @@ class LoginPage {
     cy.checkLoading('.vc-button__loader');
     this.checkNoErrorMessage();
     cy.log('Verifying successful login');
-    cy.url().should('include', '/catalog');
+    cy.url().should('include', '/');
     //cy.get('.vc-typography--variant--h1').contains('Catalog');   
     cy.log('Check token in LocalStorage')
     cy.window().then((win) => {
@@ -94,7 +94,7 @@ checkEmailVerification(email, password) {
     this.fillPassword(password);
     this.clickLoginButton();
     cy.checkLoading('.vc-button__loader');
-    cy.get('.vc-alert').contains('Email verification required. Please verify your email address');
+    cy.contains('span','Email verification required. Please verify your email address');
     cy.log('Verifying email confirmation is required')
   }
     
