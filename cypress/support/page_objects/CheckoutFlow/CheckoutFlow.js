@@ -112,7 +112,7 @@ export class PersonalCheckout {
 
   selectShippingAddress() {    
   cy.contains('button', 'select a shipping address').click();
-  cy.contains('h3', 'New address').should('be.visible'); 
+  cy.contains('h3', 'Select address').should('be.visible'); 
   cy.contains('button', 'Select').first().click();
   cy.contains('button', 'OK').click();   
   } 
@@ -184,7 +184,7 @@ cy.contains('Billing');
   }
 
   reviewOrder() {
-  cy.get(CheckoutFlowLocators.REVIEW_ORDER).click();
+  cy.contains('a', 'Review order').click();
   cy.contains('h1', 'Order review').should('be.visible'); 
 
   }

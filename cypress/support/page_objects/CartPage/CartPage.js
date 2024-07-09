@@ -11,7 +11,7 @@ class CartPage {
   }
 
 cartLineItemsCheck(){
-
+cy.wait(1000);
 cy.get(CartPageLocators.CART_LINE_ITEMS).should('be.visible');
 cy.get(CartPageLocators.CART_LINE_ITEMS).should('exist');
 cy.get(CartPageLocators.CART_LINE_ITEMS).its('length').should('be.greaterThan', 0);
@@ -37,7 +37,8 @@ cy.get('button').contains('Yes').click();
   }
 
   proceedButtonInactive(){
-    cy.proceedButtonDisabled(CartPageLocators.CHECKOUT_BUTTON_DISABLED);
+    
+  cy.proceedButtonDisabled(CartPageLocators.CHECKOUT_BUTTON_DISABLED);
   }
 
   proceedButtonActive(){

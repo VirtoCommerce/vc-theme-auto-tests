@@ -19,7 +19,8 @@ unselectedState(){
 
 uncheckAll(){
 
-cy.get(CartPageLocators.CHECKBOX).first().uncheck();
+cy.scrollTo('top');
+cy.get(CartPageLocators.CHECKBOX).eq(1).uncheck();
 
 }
 
@@ -82,8 +83,18 @@ selectOnlyPysical(){
     if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
       cy.wrap($mainElement)
         .find('input[type="checkbox"]')
-        .uncheck()
-        .should('not.be.checked')
+        .uncheck();
+       
+}
+})
+
+cy.get('.vc-line-item__main').each(($mainElement) => {
+  // Check if the current element contains the chip with text "Digital product"
+  if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
+    cy.wrap($mainElement)
+      .find('input[type="checkbox"]')
+      .should('be.not.checked');
+     
 }
 })
     
@@ -100,17 +111,23 @@ totalSubtotalAfterUncheckALL(){
    //check section subTotal
 
     cy.get('.vc-line-items__subtotal').contains('0.00');
+    cy.log('The line-item subtotal is empty');
 
     //check Order Summary > Subtotal
 
     cy.get('.mb-4 > :nth-child(2) > span').contains('0.00');
+    cy.log('Order Summary > Subtotal is empty');
 
     //check Order summary > Total
-    cy.get('.text-green-700 > span').contains('0.00');
+    cy.scrollTo('top');
+    cy.get('.relative > .mt-4').should('be.visible').and('contain.text', '0.00');  
+    //cy.get('.text-\[--price-color\] > span').should('be.visible').and('contain.text', '0.00');   
+    cy.log('Order summary > Total is empty');
 
     //check discount
 
     cy.get('.border-y > :nth-child(1) > :nth-child(2) > span').contains('0.00');
+    cy.log('Order Summary > discount is empty');
 
 
 }
@@ -124,7 +141,7 @@ totalSubtotal(){
     cy.get('.mb-4 > :nth-child(2) > span').should('not.have.text', '0.00');
  
     //check Order summary > Total
-    cy.get('.text-green-700 > span').should('not.have.text', '0.00');  
+    cy.get('.relative > .mt-4').should('not.have.text', '0.00');  
  
  
  }

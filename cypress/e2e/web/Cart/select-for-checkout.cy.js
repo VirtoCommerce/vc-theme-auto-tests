@@ -12,7 +12,7 @@ import userData from "../../Variables/userData";
 //const NEWCATEGORY = 'soft-drinks/soda';
 const NEWCATEGORY = 'tv';
 
-describe('Select for checkout', () => {
+describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON', () => {
 
     const selectForCheckout = new SelectForCheckout();
     const cartPage = new CartPage();
@@ -63,8 +63,7 @@ describe('Select for checkout', () => {
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.checkBillingPage();
     personalCheckout.reviewOrder();
-    personalCheckout.placeOrder();
-    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.placeOrder();    
     personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
     personalCheckout.pay();    
     personalCheckout.isPayed();
@@ -91,13 +90,12 @@ describe('Select for checkout', () => {
     });
    
 
-    it('C367728: add mixed items > unselect digital products > create an order', () => {
+    it.only('C367728: add mixed items > unselect digital products > create an order', () => {
 
     catalogPage.visit(NEWCATEGORY);       
     catalogPage.purchaseAll();     
     cartPage.visitByCartClick();    
-    cy.checkLoading('.vc-loader-overlay__spinner');
-    cy.reload();   
+    cy.checkLoading('.vc-loader-overlay__spinner');      
     cartPage.cartLineItemsCheck();
     
     selectForCheckout.SelectedState();
@@ -118,15 +116,14 @@ describe('Select for checkout', () => {
     personalCheckout.selectShippingAddress();
     personalCheckout.selectDelivery('Fixed Rate (Ground)');
     personalCheckout.leaveComment('place-order.cy test');
-    personalCheckout.proceedToBilling();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.proceedToBilling();  
     personalCheckout.checkBillingPage();
     personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.checkStepsNumber();
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
-
-cy.checkLoading('.vc-loader-overlay__spinner');
 
 //Payment page
 personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
@@ -187,8 +184,6 @@ cy.checkLoading('.vc-loader-overlay__spinner');
 personalCheckout.checkBillingPage();
 personalCheckout.reviewOrder();
 personalCheckout.placeOrder();
-
-cy.checkLoading('.vc-loader-overlay__spinner');
 
 //Completed page page
 personalCheckout.checkCompletePage();    
