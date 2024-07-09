@@ -192,8 +192,18 @@ cy.contains('Billing');
   placeOrder() {
   cy.contains('button', 'Place order').click();
   cy.checkLoading('.vc-loader-overlay__spinner');
-  cy.contains('h1', 'Payment').should('be.visible');
 
+  }
+
+checkPaymentPage(){
+
+cy.location('path').should('include', '/checkout/payment');
+cy.contains('h1', 'Payment').should('be.visible');
+cy.get('.p-5 md:p-6').should('be.visible');
+cy.contains('button', 'Pay now').should('be.visible');
+  
+  
+  
   }
 
   fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
@@ -204,13 +214,13 @@ cy.contains('Billing');
    
   }
 
-  pay() {
-  cy.contains('button', 'Pay Now').click();
-  }
+pay() {
+cy.contains('button', 'Pay Now').click();
+}
 
 isPayed() {
- cy.url().should('include', 'checkout/payment/success');    
-  }
+cy.url().should('include', 'checkout/payment/success');    
+}
 
 checkCompletePage(){
 

@@ -31,10 +31,13 @@ cy.contains('.grow', 'Clear cart').should('exist');
 cy.get('button').contains('Yes').click();
 }
 
-  isCleared() {
-    cy.contains('h2', 'Your cart is empty').should('be.visible');
-    cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge').should('not.exist');   
-  }
+isCleared() {
+
+cy.contains('h2', 'Your cart is empty').should('be.visible');
+cy.contains('a', 'Continue shopping').should('be.visible');
+
+
+}
 
   proceedButtonInactive(){
     
