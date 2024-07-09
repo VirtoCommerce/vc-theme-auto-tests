@@ -8,9 +8,9 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 
 
-const SUBCATEGORY = 'new-home/bedroom-furniture';
 //const SUBCATEGORY = 'courses-and-digital-products/digital-products';
-const NEWCATEGORY = 'soft-drinks/soda';
+//const NEWCATEGORY = 'soft-drinks/soda';
+const NEWCATEGORY = 'tv';
 
 describe('Select for checkout', () => {
 
@@ -26,7 +26,7 @@ describe('Select for checkout', () => {
     cy.clearCookies();
     cy.clearLocalStorage(); 
     cy.viewport(Cypress.env('DEVICE_NAME'));
-    loginPage.login(userData.userData[0].email, userData.userData[0].password);
+    loginPage.login(userData.userData[0].email, userData.userData[0].password);    
     cartPage.emptyOrNot();      
 
     });         
@@ -34,7 +34,7 @@ describe('Select for checkout', () => {
     it('C378456: add mixed items > unselect physical products > create an order', () => { 
 
                
-    catalogPage.visit(SUBCATEGORY);   
+    catalogPage.visit(NEWCATEGORY);   
     catalogPage.addToCart();     
     cartPage.visitByCartClick();    
     cy.checkLoading('.vc-loader-overlay__spinner');        
@@ -93,7 +93,7 @@ describe('Select for checkout', () => {
 
     it('C367728: add mixed items > unselect digital products > create an order', () => {
 
-    catalogPage.visit(SUBCATEGORY);       
+    catalogPage.visit(NEWCATEGORY);       
     catalogPage.purchaseAll();     
     cartPage.visitByCartClick();    
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -157,7 +157,7 @@ cy.log('Logging out completed')
 
 it('C367723: select All items > create an order', () => {
 
-catalogPage.visit(SUBCATEGORY);           
+catalogPage.visit(NEWCATEGORY);           
 catalogPage.purchaseAll();     
 cartPage.visitByCartClick();    
 cy.checkLoading('.vc-loader-overlay__spinner');         

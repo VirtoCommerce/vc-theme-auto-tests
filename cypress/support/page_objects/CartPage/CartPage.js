@@ -47,7 +47,7 @@ cy.get('button').contains('Yes').click();
 emptyOrNot(){
 
 cy.log('Verifying cart is empty')
-cy.wait(1000);
+cy.wait(2000);
 cy.get('span[class="relative"]').last().should('be.visible');
 cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
 .if('exist')
@@ -60,6 +60,7 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
   cy.contains('h3', "Clear cart").should('be.visible');
   cy.clickOnButton('Yes');  
   cy.contains('h2', 'Your cart is empty').should('be.visible');
+  cy.log('The cart is cleared');
 })
 .else()
 .then(() => {
