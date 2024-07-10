@@ -155,7 +155,7 @@ cy.log('Logging out completed')
 });
     
 
-it.only('C367723: select All items > create an order', () => {
+it('C367723: select All items > create an order', () => {
 
 catalogPage.visit(NEWCATEGORY);           
 catalogPage.purchaseAll();     

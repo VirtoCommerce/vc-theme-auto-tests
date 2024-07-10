@@ -187,38 +187,39 @@ cy.contains('Billing');
   cy.contains('a', 'Review order').click();
   cy.contains('h1', 'Order review').should('be.visible'); 
 
-  }
+}
 
-  placeOrder() {
-  cy.contains('button', 'Place order').click();
-  cy.checkLoading('.vc-loader-overlay__spinner');
+placeOrder() {
 
-  }
+cy.contains('button', 'Place order').click();
+cy.checkLoading('.vc-loader-overlay__spinner');
+
+}
 
 checkPaymentPage(){
 
-cy.location('path').should('include', '/checkout/payment');
+cy.url().should('include', '/checkout/payment');
 cy.contains('h1', 'Payment').should('be.visible');
 cy.get('.p-5 md:p-6').should('be.visible');
 cy.contains('button', 'Pay now').should('be.visible');
   
-  
-  
-  }
+ 
+}
 
-  fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
-  cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
-  cy.get('input[class="vc-input__input"]').eq(1).type(name);
-  cy.get('input[class="vc-input__input"]').eq(2).type(date);
-  cy.contains('div', 'Security Code').find('input').type(cvv);     
+fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
+cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
+cy.get('input[class="vc-input__input"]').eq(1).type(name);
+cy.get('input[class="vc-input__input"]').eq(2).type(date);
+cy.contains('div', 'Security Code').find('input').type(cvv);     
    
-  }
+}
 
 pay() {
 cy.contains('button', 'Pay Now').click();
 }
 
 isPayed() {
+
 cy.url().should('include', 'checkout/payment/success');    
 }
 
