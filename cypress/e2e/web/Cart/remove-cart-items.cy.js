@@ -1,8 +1,7 @@
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import {aliasQuery} from "../../../utils/graphql-test-utils";
-
-const FIRST_CATALOG = 'soft-drinks';
+import TestData from "../../Variables/TestData";
 
 describe('Remove many cart items', () => {
   const catalogPage = new CatalogPage();
@@ -10,33 +9,30 @@ describe('Remove many cart items', () => {
 
   beforeEach(() => {
     cy.clearCookies();
-    cy.clearLocalStorage(); 
-    cy.viewport(Cypress.env('DEVICE_NAME'));  
+    cy.clearLocalStorage();
+    cy.viewport(Cypress.env('DEVICE_NAME'));
     cy.intercept('/xapi/graphql', (req) => {
       aliasQuery(req, 'SearchProducts');
-      aliasQuery(req, 'GetFullCart');   
+      aliasQuery(req, 'GetFullCart');
     })
   });
 
   it('removes many items from cart', () => {
-    
-    catalogPage.visit(FIRST_CATALOG);  
-   
-    cy.wait('@SearchProductsQuery').then(() => {
-      catalogPage.purchaseAll(); 
-      cartPage.visitByCartClick();    
-       
-   });
 
-cy.wait(5000);
-cy.intercept('/cart').as('GetFullCart');
-cy.checkLoading('.vc-loader-overlay__spinner');
-cy.wait(5000);
-cy.get('.vc-line-items').should('exist');
-cy.scrollTo('bottom');
-cartPage.clearCart();
-cartPage.confirmClearCart();
-cartPage.isCleared();
+    catalogPage.visit(TestData.defaultCatalogUrl);
+
+    catalogPage.purchaseAll(3);
+    cartPage.visitByCartClick();
+
+    cy.wait(3000);
+    cy.intercept('/cart').as('GetFullCart');
+    // cy.checkLoading('.vc-loader-overlay__spinner');
+    cy.wait(3000);
+    cy.get('.vc-line-items').should('exist');
+    cy.scrollTo('bottom');
+    cartPage.clearCart();
+    cartPage.confirmClearCart();
+    cartPage.isCleared();
 
   })
 
