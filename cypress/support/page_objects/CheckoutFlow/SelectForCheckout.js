@@ -1,4 +1,4 @@
-import {CartPageLocators} from '../../../support/page_objects/CartPage/CartPageLocators/CartPageLocators';
+import {CartPageLocators} from '../CartPage/CartPageLocators/CartPageLocators';
 import 'cypress-real-events/support';
 
 
@@ -8,96 +8,99 @@ SelectedState(){
 
 cy.get(CartPageLocators.CHECKBOX).should('be.checked');
 
-          
-          
+
+
  }
 
 unselectedState(){
-   
+
     cy.get(CartPageLocators.CHECKBOX).should('not.be.checked');
 }
 
 uncheckAll(){
-
-cy.scrollTo('top');
-cy.get(CartPageLocators.CHECKBOX).eq(1).uncheck();
-
+  cy.log('uncheckAll start')
+  cy.scrollTo('top');
+  cy.get('.vc-line-items__head').each(($el) => {
+    cy.wrap($el).find('input[aria-label="Toggle vendor select"][checked]').uncheck()
+    cy.checkLoading('.vc-loader-overlay__spinner');
+  })
+  cy.log('uncheckAll end')
 }
 
 checkAllAction(){
 
 cy.get(CartPageLocators.CHECKBOX).first().check();
-  
-    
+
+
 }
 
-checkOne(){    
+checkOne(){
 
     cy.get(CartPageLocators.CHECKBOX).last().check();
 }
 
-selectOnlyDigital(){  
+selectOnlyDigital(){
 
-cy.get('.vc-line-item__main').should('be.visible');  
+cy.get('.vc-line-item__main').should('be.visible');
 
     cy.log('Find and select the element with class .vc-line-item__main and chip "Digital product')
     cy.get('.vc-line-item__main').each(($mainElement) => {
       // Check if the current element contains the chip with text "Digital product"
       if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
-      
+
  cy.wrap($mainElement)
 .find('input[type="checkbox"]')
 .click()
 .should('be.checked');
 }
 })
-  
-    
+
+
 cy.log('Assert that the checkbox is checked')
 cy.get('.vc-line-item__main').each(($mainElement) => {
     // Check if the current element contains the chip with text "Digital product"
-    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
+    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
       cy.wrap($mainElement)
         .find('input[type="checkbox"]')
         .should('be.checked');
 }
-})  
-   
+})
+
 }
 
 checkoutForDigitalProduct(){
 
   cy.get('.vc-steps__item').should('not.have.text', 'Shipping').and('have.length', 4);
   cy.get('input[type="checkbox"]').should('not.exist');
-   
+
 }
 
-selectOnlyPysical(){  
+selectOnlyPysical(){
 
-  cy.get('.vc-line-item__main').should('be.visible');  
-  
+  cy.get('.vc-line-item__main').should('be.visible');
+
   cy.log('Select only Pysical product')
 
   cy.get('.vc-line-item__main').each(($mainElement) => {
     // Check if the current element contains the chip with text "Digital product"
-    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
+    if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
       cy.wrap($mainElement)
         .find('input[type="checkbox"]')
         .uncheck();
-       
+
 }
 })
 
 cy.get('.vc-line-item__main').each(($mainElement) => {
   // Check if the current element contains the chip with text "Digital product"
-  if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {     
+  if ($mainElement.find('.vc-chip__content:contains("Digital product")').length > 0) {
     cy.wrap($mainElement)
       .find('input[type="checkbox"]')
       .should('be.not.checked');
-     
+
 }
 })
-    
+
 }
 
 digitalProductInCart(){
@@ -120,8 +123,8 @@ totalSubtotalAfterUncheckALL(){
 
     //check Order summary > Total
     cy.scrollTo('top');
-    cy.get('.relative > .mt-4').should('be.visible').and('contain.text', '0.00');  
-    //cy.get('.text-\[--price-color\] > span').should('be.visible').and('contain.text', '0.00');   
+    cy.get('.relative > .mt-4').should('be.visible').and('contain.text', '0.00');
+    //cy.get('.text-\[--price-color\] > span').should('be.visible').and('contain.text', '0.00');
     cy.log('Order summary > Total is empty');
 
     //check discount
@@ -134,18 +137,18 @@ totalSubtotalAfterUncheckALL(){
 
 totalSubtotal(){
 
-    cy.log('check section subTotal') 
+    cy.log('check section subTotal')
     cy.get('.vc-line-items__subtotal-sum').should('not.have.text', '0.00');
- 
-    cy.log('check Order Summary') 
+
+    cy.log('check Order Summary')
     cy.get('.mb-4 > :nth-child(2) > span').should('not.have.text', '0.00');
- 
+
     //check Order summary > Total
-    cy.get('.relative > .mt-4').should('not.have.text', '0.00');  
- 
- 
+    cy.get('.relative > .mt-4').should('not.have.text', '0.00');
+
+
  }
-  
+
 }
 
 export default SelectForCheckout;

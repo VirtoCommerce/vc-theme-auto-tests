@@ -5,7 +5,7 @@ import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/Select
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
-import { aliasQuery, aliasMutation } from "../../../utils/graphql-test-utils";
+import { aliasQuery } from "../../../utils/graphql-test-utils";
 import userData from "../../Variables/userData";
 
 const PRODUCT_URL = TestData.defaultProductPage;
@@ -33,28 +33,28 @@ describe('place order', () => {
 
   it('places order created by Anonymous user', () => {
     productPage.visit(PRODUCT_URL);
-    catalogPage.addToCart();   
+    catalogPage.addToCart();
     cartPage.visitByCartClick();
-    cy.checkLoading('.vc-loader-overlay__spinner');           
-    cartPage.cartLineItemsCheck();    
-    selectForCheckout.SelectedState();  
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.cartLineItemsCheck();
+    selectForCheckout.SelectedState();
     cartPage.proceedButtonActive();
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
     anonymousCheckout.checkShippingPage();
-       
+
     anonymousCheckout.fillShippingAddress();
     anonymousCheckout.selectDelivery('Fixed Rate (Ground)');
-    cy.checkLoading('.vc-loader-overlay__spinner'); 
-       
+    cy.checkLoading('.vc-loader-overlay__spinner');
+
     anonymousCheckout.proceedToBilling();
-    
+
 
     anonymousCheckout.selectPaymentMethod('Manual');
     cy.checkLoading('.vc-loader-overlay__spinner');
-    anonymousCheckout.reviewOrder();   
+    anonymousCheckout.reviewOrder();
 
-    anonymousCheckout.placeOrder();    
+    anonymousCheckout.placeOrder();
     cy.checkLoading('.vc-loader-overlay__spinner');
     anonymousCheckout.isCompleted();
   });
@@ -62,17 +62,7 @@ describe('place order', () => {
   it('places order as Personal user', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
-    cy.wait('@GetShortCartQuery')
-    .wait('@GetShortCartQuery')
-    .then((interception) => {
-    if(interception.response.body.data.cart.itemsQuantity) {
-    cy.log('Clearing cart');
-    cartPage.visit();
-    cartPage.clearCart();
-    cartPage.confirmClearCart();
-    cy.checkLoading('.vc-loader-overlay__spinner');
-
-    }
+    cartPage.emptyOrNot();
 
       productPage.visit(PRODUCT_URL);
 
@@ -98,7 +88,7 @@ describe('place order', () => {
       personalCheckout.leaveComment('place-order.cy test');
       cy.checkLoading('.vc-loader-overlay__spinner');
       personalCheckout.proceedToBilling();
-      
+
       personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
       cy.checkLoading('.vc-loader-overlay__spinner');
       personalCheckout.reviewOrder();
@@ -107,7 +97,5 @@ describe('place order', () => {
       personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
       personalCheckout.pay();
       personalCheckout.isPayed();
-})
-
-  });
+    })
 });

@@ -1,33 +1,36 @@
 import ProductCard from "./ProductCard";
 import { CatalogPageLocators } from "./CatalogLocators";
 
+const BUY_BUTTONS = 'button[title="Add to cart"]:not([disabled])'
 
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
-    cy.log('Step: Visited Catalog Page');  
+    cy.log('Step: Visited Catalog Page');
 
   }
 
-  purchaseAll() {
+  purchaseAll(amount = 100) {
+    cy.log('Add products to cart')
+    cy.get(BUY_BUTTONS)
+      .should("not.be.disabled")
+      .invoke("slice", 0, amount)
+      .each(($addToCart) => {
+        cy.wrap($addToCart).click();
+        cy.checkLoading('.vc-button__loader');
+    })
+  }
 
-  cy.log('Add products to cart')
-  cy.get('button[title="Add to cart"]').each(($addToCart) => {
-  cy.wrap($addToCart)
-  .click();
-  
- })
-  
-}
-
-addToCart() {
+addToCart(amount = 100) {
 
 cy.log('Add products to cart')
 
-cy.get('button[title="Add to cart"]').each(($addToCart) => {
-cy.wrap($addToCart)
-.click();
-cy.checkLoading('.vc-button__loader');
+cy.get(BUY_BUTTONS)
+  .should("not.be.disabled")
+  .invoke("slice", 0, amount)
+  .each(($addToCart) => {
+    cy.wrap($addToCart).click();
+    cy.checkLoading('.vc-button__loader');
 });
 
 cy.log('Check button Update cart');
@@ -46,15 +49,15 @@ inActiveStateView(){
 cy.log('Check color if inActive')
 cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600')
 .should('have.class', 'text-primary')
-          
+
 }
-          
+
 activeStateView(){
-          
+
 cy.log('Check color if Active')
 cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral-700 hover:shadow-md"]')
 .should('have.class', 'text-neutral-700')
-          
+
 }
 
 clickOnSingleStar(){
@@ -66,7 +69,7 @@ cy.get(CatalogPageLocators.STAR)
 }
 
 clickOnStarFromPDP(){
- 
+
 cy.get(CatalogPageLocators.STAR).last().click();
 
 }
@@ -86,7 +89,7 @@ cy.get('button[type="button"][class="flex"]')
 
 
 ProductCard.isStarGrey();
-  
+
 this.inActiveStateView()
 cy.switchProductView('Grid')
 this.activeStateView()
@@ -103,29 +106,29 @@ addToListAnonimProductPage(){
 
 cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
 .should('be.visible')
-.and('be.disabled')  
-  
+.and('be.disabled')
+
 }
 
 addProductToNewList(){
-  
+
 cy.contains('h3', "Please select list").should('exist');
 cy.get('.justify-between > .flex').should('be.visible');
 cy.get('.justify-between > .flex')
 .if('enabled')
 .then(() => {
 cy.contains('button', " Add new list").should('be.visible').click();
-cy.get('input[type="checkbox"]').should('be.checked');   
-cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+cy.get('input[type="checkbox"]').should('be.checked');
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
 cy.wait(500);
-cy.contains('h3', "Please select list").should('not.exist'); 
+cy.contains('h3', "Please select list").should('not.exist');
 cy.checkNotificationBanner('Your lists were successfully updated');
 })
 .else('disabled')
 .then(() => {
-cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
 .should('be.disabled');
 cy.contains('button', "Cancel").click();
 cy.log('Add new list and Save buttons are disabled');
@@ -142,18 +145,18 @@ cy.switchProductView('List');
 this.activeStateView();
 
 ProductCard.isStarGrey();
-  
+
 this.clickOnSingleStar();
-  
+
 this.addProductToNewList();
-  
+
 ProductCard.isStarOrange();
 
 this.inActiveStateView()
 cy.switchProductView('Grid')
 this.activeStateView()
 
-cy.log('Check star from Grid View') 
+cy.log('Check star from Grid View')
 ProductCard.isStarOrange();
 
 }
@@ -163,7 +166,7 @@ addToExistList(){
 cy.contains('h3', "Please select list").should('exist');
 this.clickOnAllCheckbox();
 cy.wait(500);
-cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
 cy.wait(500);
@@ -178,13 +181,13 @@ addProductsToExistList(){
 cy.get(CatalogPageLocators.STAR).each(($star) => {
 cy.wrap($star).click();
 this.addToExistList();
-    
+
 })
 
 }
 
 checkAlreadyInList(){
-  
+
 cy.contains('h3', "Please select list").should('be.visible');
 cy.get('div[class="bg-neutral-100 px-6 py-3 text-base font-bold leading-5 sm:py-2.5"]')
 .should('have.text', "Already in the lists");
@@ -294,4 +297,3 @@ cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
 }
 
 export default CatalogPage;
- 
