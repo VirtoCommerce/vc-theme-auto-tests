@@ -18,8 +18,13 @@ unselectedState(){
 }
 
 uncheckAll(){
+  cy.log('uncheckAll start')
   cy.scrollTo('top');
-  cy.get('.vc-line-items__head').each(($el) => cy.wrap($el).find('input[aria-label="Toggle vendor select"][checked]').uncheck())
+  cy.get('.vc-line-items__head').each(($el) => {
+    cy.wrap($el).find('input[aria-label="Toggle vendor select"][checked]').uncheck()
+    cy.checkLoading('.vc-loader-overlay__spinner');
+  })
+  cy.log('uncheckAll end')
 }
 
 checkAllAction(){

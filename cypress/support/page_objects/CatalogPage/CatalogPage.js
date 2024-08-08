@@ -12,20 +12,25 @@ class CatalogPage {
 
   purchaseAll(amount = 100) {
     cy.log('Add products to cart')
-    cy.get(BUY_BUTTONS).should("not.be.disabled").invoke("slice", 0, amount).each(($addToCart) => {
-      cy.wrap($addToCart)
-        .click();
+    cy.get(BUY_BUTTONS)
+      .should("not.be.disabled")
+      .invoke("slice", 0, amount)
+      .each(($addToCart) => {
+        cy.wrap($addToCart).click();
+        cy.checkLoading('.vc-button__loader');
     })
   }
 
-addToCart() {
+addToCart(amount = 100) {
 
 cy.log('Add products to cart')
 
-cy.get(BUY_BUTTONS).each(($addToCart) => {
-cy.wrap($addToCart)
-.click();
-cy.checkLoading('.vc-button__loader');
+cy.get(BUY_BUTTONS)
+  .should("not.be.disabled")
+  .invoke("slice", 0, amount)
+  .each(($addToCart) => {
+    cy.wrap($addToCart).click();
+    cy.checkLoading('.vc-button__loader');
 });
 
 cy.log('Check button Update cart');

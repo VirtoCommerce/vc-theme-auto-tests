@@ -1,5 +1,4 @@
 import {CartPageLocators} from "./CartPageLocators/CartPageLocators";
-import CatalogPage from "../CatalogPage/CatalogPage";
 
 class CartPage {
   visit() {
@@ -23,7 +22,7 @@ cy.get(CartPageLocators.CART_LINE_ITEMS).its('length').should('be.greaterThan', 
   }
 
   clearCart() {
-    cy.get('button').contains('Clear cart').click();   
+    cy.get('button').contains('Clear cart').click();
   }
 
 confirmClearCart(){
@@ -40,7 +39,7 @@ cy.contains('a', 'Continue shopping').should('be.visible');
 }
 
   proceedButtonInactive(){
-    
+
   cy.proceedButtonDisabled(CartPageLocators.CHECKOUT_BUTTON_DISABLED);
   }
 
@@ -53,6 +52,7 @@ emptyOrNot(){
 cy.log('Verifying cart is empty')
 cy.wait(2000);
 cy.get('span[class="relative"]').last().should('be.visible');
+cy.wait(2000);
 cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
 .if('exist')
 .then(() => {
@@ -62,14 +62,14 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
   cy.scrollTo('bottom');
   cy.contains('button', 'Clear cart').click();
   cy.contains('h3', "Clear cart").should('be.visible');
-  cy.clickOnButton('Yes');  
+  cy.clickOnButton('Yes');
   cy.contains('h2', 'Your cart is empty').should('be.visible');
   cy.log('The cart is cleared');
 })
 .else()
 .then(() => {
-  cy.log('Cart is empty')  
-}) 
+  cy.log('Cart is empty')
+})
 }
 
 }

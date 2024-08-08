@@ -10,8 +10,8 @@ import userData from "../../Variables/userData";
 
 //const SUBCATEGORY = 'courses-and-digital-products/digital-products';
 //const NEWCATEGORY = 'soft-drinks/soda';
-// const NEWCATEGORY = 'tv';
-const NEWCATEGORY = 'printers'
+const CATEGORY_WITH_DIGITAL = 'tv';
+// const CATEGORY_WITH_SEVERAL_VENDORS = 'printers'
 
 describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON', () => {
 
@@ -36,22 +36,21 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     it('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
-    catalogPage.visit(NEWCATEGORY);
-    catalogPage.addToCart();
+    catalogPage.visit(CATEGORY_WITH_DIGITAL);
+    catalogPage.addToCart(6);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
 
     selectForCheckout.SelectedState();
     selectForCheckout.uncheckAll();
-    cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.proceedButtonInactive();
     selectForCheckout.totalSubtotalAfterUncheckALL();
     selectForCheckout.unselectedState();
 
     //Select only digital product
     selectForCheckout.selectOnlyDigital();
-    cy.checkLoading('.vc-loader-overlay__spinner');
+    // cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.proceedButtonActive();
     selectForCheckout.totalSubtotal();
 
@@ -95,7 +94,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     it('C367728: add mixed items > unselect digital products > create an order', () => {
 
-    catalogPage.visit(NEWCATEGORY);
+    catalogPage.visit(CATEGORY_WITH_DIGITAL);
     catalogPage.purchaseAll();
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -158,7 +157,7 @@ cy.log('Logging out completed')
 
 it('C367723: select All items > create an order', () => {
 
-catalogPage.visit(NEWCATEGORY);
+catalogPage.visit(CATEGORY_WITH_DIGITAL);
 catalogPage.purchaseAll();
 cartPage.visitByCartClick();
 cy.checkLoading('.vc-loader-overlay__spinner');
