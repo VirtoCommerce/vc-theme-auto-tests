@@ -1,294 +1,297 @@
 import ProductCard from "./ProductCard";
-import {CatalogPageLocators} from "./CatalogLocators";
+import { CatalogPageLocators } from "./CatalogLocators";
 
-const BUY_BUTTONS = 'button[title="Add to cart"]:not([disabled])'
 
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
-    cy.log('Step: Visited Catalog Page');
+    cy.log('Step: Visited Catalog Page');  
 
   }
 
-  purchaseAll(amount = 100) {
-    cy.log('Add products to cart')
-    cy.get(BUY_BUTTONS).should("not.be.disabled").invoke("slice", 0, amount).each(($addToCart) => {
-      cy.wrap($addToCart)
-        .click();
-    })
-  }
+  purchaseAll() {
 
-  addToCart() {
+  cy.log('Add products to cart')
+  cy.get('button[title="Add to cart"]').each(($addToCart) => {
+  cy.wrap($addToCart)
+  .click();
+  
+ })
+  
+}
 
-    cy.log('Add products to cart')
+addToCart() {
 
-    cy.get(BUY_BUTTONS).each(($addToCart) => {
-      cy.wrap($addToCart)
-        .click();
-      cy.checkLoading('.vc-button__loader');
-    });
+cy.log('Add products to cart')
 
-    cy.log('Check button Update cart');
-    cy.get('button[title="Update cart"]').each(($updateCart) => {
-      cy.wrap($updateCart)
-        .should('be.visible')
-        .and('have.text', 'Update cart');
-      cy.log('The product was added to cart');
+cy.get('button[title="Add to cart"]').each(($addToCart) => {
+cy.wrap($addToCart)
+.click();
+cy.checkLoading('.vc-button__loader');
+});
 
-    });
+cy.log('Check button Update cart');
+cy.get('button[title="Update cart"]').each(($updateCart) => {
+cy.wrap($updateCart)
+.should('be.visible')
+.and('have.text', 'Update cart');
+cy.log('The product was added to cart');
 
-  }
+});
 
-  inActiveStateView() {
+}
 
-    cy.log('Check color if inActive')
-    cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600')
-      .should('have.class', 'text-primary')
+inActiveStateView(){
 
-  }
+cy.log('Check color if inActive')
+cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600')
+.should('have.class', 'text-primary')
+          
+}
+          
+activeStateView(){
+          
+cy.log('Check color if Active')
+cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral-700 hover:shadow-md"]')
+.should('have.class', 'text-neutral-700')
+          
+}
 
-  activeStateView() {
+clickOnSingleStar(){
 
-    cy.log('Check color if Active')
-    cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral-700 hover:shadow-md"]')
-      .should('have.class', 'text-neutral-700')
+cy.get(CatalogPageLocators.STAR)
+.eq(0)
+.click();
 
-  }
+}
 
-  clickOnSingleStar() {
+clickOnStarFromPDP(){
+ 
+cy.get(CatalogPageLocators.STAR).last().click();
 
-    cy.get(CatalogPageLocators.STAR)
-      .eq(0)
-      .click();
+}
 
-  }
+addToListAnonim(){
 
-  clickOnStarFromPDP() {
+cy.log('User is Anonim');
+cy.contains('a', "Sign up now").should('be.visible');
 
-    cy.get(CatalogPageLocators.STAR).last().click();
+this.inActiveStateView();
+cy.switchProductView('List');
+this.activeStateView();
 
-  }
-
-  addToListAnonim() {
-
-    cy.log('User is Anonim');
-    cy.contains('a', "Sign up now").should('be.visible');
-
-    this.inActiveStateView();
-    cy.switchProductView('List');
-    this.activeStateView();
-
-    cy.get('button[type="button"][class="flex"]')
-      .eq(0)
-      .should('be.disabled');
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.should('be.disabled');
 
 
-    ProductCard.isStarGrey();
+ProductCard.isStarGrey();
+  
+this.inActiveStateView()
+cy.switchProductView('Grid')
+this.activeStateView()
 
-    this.inActiveStateView()
-    cy.switchProductView('Grid')
-    this.activeStateView()
+cy.get('button[type="button"][class="flex"]')
+.eq(0)
+.should('be.disabled');
 
-    cy.get('button[type="button"][class="flex"]')
-      .eq(0)
-      .should('be.disabled');
+ProductCard.isStarGrey();
 
-    ProductCard.isStarGrey();
+}
 
-  }
+addToListAnonimProductPage(){
 
-  addToListAnonimProductPage() {
+cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
+.should('be.visible')
+.and('be.disabled')  
+  
+}
 
-    cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
-      .should('be.visible')
-      .and('be.disabled')
+addProductToNewList(){
+  
+cy.contains('h3', "Please select list").should('exist');
+cy.get('.justify-between > .flex').should('be.visible');
+cy.get('.justify-between > .flex')
+.if('enabled')
+.then(() => {
+cy.contains('button', " Add new list").should('be.visible').click();
+cy.get('input[type="checkbox"]').should('be.checked');   
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+.should('be.enabled')
+.click();
+cy.wait(500);
+cy.contains('h3', "Please select list").should('not.exist'); 
+cy.checkNotificationBanner('Your lists were successfully updated');
+})
+.else('disabled')
+.then(() => {
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+.should('be.disabled');
+cy.contains('button', "Cancel").click();
+cy.log('Add new list and Save buttons are disabled');
 
-  }
+})
 
-  addProductToNewList() {
+}
 
-    cy.contains('h3', "Please select list").should('exist');
-    cy.get('.justify-between > .flex').should('be.visible');
-    cy.get('.justify-between > .flex')
-      .if('enabled')
-      .then(() => {
-        cy.contains('button', " Add new list").should('be.visible').click();
-        cy.get('input[type="checkbox"]').should('be.checked');
-        cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
-          .should('be.enabled')
-          .click();
-        cy.wait(500);
-        cy.contains('h3', "Please select list").should('not.exist');
-        cy.checkNotificationBanner('Your lists were successfully updated');
-      })
-      .else('disabled')
-      .then(() => {
-        cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
-          .should('be.disabled');
-        cy.contains('button', "Cancel").click();
-        cy.log('Add new list and Save buttons are disabled');
+addToListFromListView(){
 
-      })
+cy.log('add product to list from List view')
+this.inActiveStateView();
+cy.switchProductView('List');
+this.activeStateView();
 
-  }
+ProductCard.isStarGrey();
+  
+this.clickOnSingleStar();
+  
+this.addProductToNewList();
+  
+ProductCard.isStarOrange();
 
-  addToListFromListView() {
+this.inActiveStateView()
+cy.switchProductView('Grid')
+this.activeStateView()
 
-    cy.log('add product to list from List view')
-    this.inActiveStateView();
-    cy.switchProductView('List');
-    this.activeStateView();
+cy.log('Check star from Grid View') 
+ProductCard.isStarOrange();
 
-    ProductCard.isStarGrey();
+}
 
-    this.clickOnSingleStar();
+addToExistList(){
 
-    this.addProductToNewList();
-
-    ProductCard.isStarOrange();
-
-    this.inActiveStateView()
-    cy.switchProductView('Grid')
-    this.activeStateView()
-
-    cy.log('Check star from Grid View')
-    ProductCard.isStarOrange();
-
-  }
-
-  addToExistList() {
-
-    cy.contains('h3', "Please select list").should('exist');
-    this.clickOnAllCheckbox();
-    cy.wait(500);
-    cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
-      .should('be.enabled')
-      .click();
-    cy.wait(500);
-    cy.contains('h3', "Please select list").should('not.exist');
+cy.contains('h3', "Please select list").should('exist');
+this.clickOnAllCheckbox();
+cy.wait(500);
+cy.contains('.flex-wrap > .vc-button--color--primary', "Save")  
+.should('be.enabled')
+.click();
+cy.wait(500);
+cy.contains('h3', "Please select list").should('not.exist');
 // Check the notification banner
-    cy.checkNotificationBanner('Your lists were successfully updated');
+cy.checkNotificationBanner('Your lists were successfully updated');
 
-  }
+}
 
-  addProductsToExistList() {
+addProductsToExistList(){
 
-    cy.get(CatalogPageLocators.STAR).each(($star) => {
-      cy.wrap($star).click();
-      this.addToExistList();
+cy.get(CatalogPageLocators.STAR).each(($star) => {
+cy.wrap($star).click();
+this.addToExistList();
+    
+})
 
-    })
+}
 
-  }
+checkAlreadyInList(){
+  
+cy.contains('h3', "Please select list").should('be.visible');
+cy.get('div[class="bg-neutral-100 px-6 py-3 text-base font-bold leading-5 sm:py-2.5"]')
+.should('have.text', "Already in the lists");
+cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
+cy.wrap($checkbox).should('be.checked');
+});
+cy.contains('button', "Save").should('be.disabled');
+cy.log('The product has already in List and Save button is disabled');
+cy.contains('button', "Cancel").click();
 
-  checkAlreadyInList() {
+}
 
-    cy.contains('h3', "Please select list").should('be.visible');
-    cy.get('div[class="bg-neutral-100 px-6 py-3 text-base font-bold leading-5 sm:py-2.5"]')
-      .should('have.text', "Already in the lists");
-    cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
-      cy.wrap($checkbox).should('be.checked');
-    });
-    cy.contains('button', "Save").should('be.disabled');
-    cy.log('The product has already in List and Save button is disabled');
-    cy.contains('button', "Cancel").click();
+checkAddNewList() {
 
-  }
+cy.contains('button', " Add new list").should('be.disabled');
+cy.log('Add new list is disabled');
 
-  checkAddNewList() {
+}
 
-    cy.contains('button', " Add new list").should('be.disabled');
-    cy.log('Add new list is disabled');
+clickOnAllCheckbox(){
 
-  }
-
-  clickOnAllCheckbox() {
-
-    cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
+cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
 // Check if the checkbox is not already checked
-      if (!$checkbox.prop('checked')) {
+if (!$checkbox.prop('checked')) {
 // Click the checkbox
-        cy.wrap($checkbox).click();
+cy.wrap($checkbox).click();
 
 // Assert that the checkbox is checked after clicking
-        cy.wrap($checkbox).should('be.checked');
-      }
-    });
-  }
+cy.wrap($checkbox).should('be.checked');
+}
+});
+}
 
-  clickOnStars() {
-    let count;
+clickOnStars() {
+let count;
 
-    cy.get('b[class="font-extrabold"]')
-      .invoke('text')
-      .then((text) => {
-        count = parseInt(text); // Convert text to integer
-        cy.log(count);
-        cy.get(CatalogPageLocators.STAR).its('length').then((length) => {
-          if (length >= count) {
-            cy.get(CatalogPageLocators.STAR).each(($star, index) => {
-              if (index <= count) {
-                cy.wrap($star).click();
-                this.addProductToNewList();
-              }
-            });
-          }
-        });
+cy.get('b[class="font-extrabold"]')
+.invoke('text')
+.then((text) => {
+count = parseInt(text); // Convert text to integer
+cy.log(count);
+cy.get(CatalogPageLocators.STAR).its('length').then((length) => {
+if (length >= count) {
+cy.get(CatalogPageLocators.STAR).each(($star, index) => {
+if (index <= count) {
+cy.wrap($star).click();
+this.addProductToNewList();
+}
+});
+}
+});
 
-        cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]')
-          .its('length')
-          .should('be.lte', 10);
-      });
-  }
+cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]')
+.its('length')
+.should('be.lte', 10);
+});
+}
 
 
-  openProductPage() {
+openProductPage(){
 
-    cy.get('.vc-popover > .vc-popover__trigger > .my-px')
-      .eq(0)
-      .invoke('removeAttr', 'target')
-      .click();
+cy.get('.vc-popover > .vc-popover__trigger > .my-px')
+.eq(0)
+.invoke('removeAttr', 'target')
+.click();
 
-  }
+}
 
-  removeProductFromLists() {
+removeProductFromLists(){
 
-    cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
-      cy.wrap($checkbox)
-        .uncheck()
-        .should('not.be.checked');
-    });
+cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
+cy.wrap($checkbox)
+.uncheck()
+.should('not.be.checked');
+});
 
-    cy.contains('button', "Save").should('be.enabled').click();
-    cy.contains('h3', "Please select list").should('not.exist');
-    cy.checkNotificationBanner('Your lists were successfully updated');
+cy.contains('button', "Save").should('be.enabled').click();
+cy.contains('h3', "Please select list").should('not.exist');
+cy.checkNotificationBanner('Your lists were successfully updated');
 
-  }
+}
 
-  allUnchecked() {
+allUnchecked(){
 
-    cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
-      cy.wrap($checkbox)
-        .should('not.be.checked');
-      cy.log('Product not added to any list')
-    });
-  }
+cy.get('ul li label input[type="checkbox"]').each(($checkbox) => {
+cy.wrap($checkbox)
+.should('not.be.checked');
+cy.log('Product not added to any list')
+});
+}
 
-  prepareProductsForList() {
+prepareProductsForList(){
 
-    this.addProductsToExistList();
-    this.clickOnSingleStar();
-    this.checkAlreadyInList();
+this.addProductsToExistList();
+this.clickOnSingleStar();
+this.checkAlreadyInList();
 
-  }
+}
 
-  clickShowInStock() {
+clickShowInStock(){
 
-    cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
+cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
 
-  }
+}
 
 
 }
 
 export default CatalogPage;
+ 
