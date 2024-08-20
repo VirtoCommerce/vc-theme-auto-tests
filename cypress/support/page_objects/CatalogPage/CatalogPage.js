@@ -62,10 +62,21 @@ cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral
 
 clickOnSingleStar(){
 
-cy.get(CatalogPageLocators.STAR)
-.eq(0)
-.click();
 
+cy.get(CatalogPageLocators.ADD_TO_LIST)
+.should('be.visible')
+.eq(0)
+.click()
+
+}
+
+clickInTheList(){
+
+ cy.get(CatalogPageLocators.INN_THE_LIST)
+.should('be.visible')
+.eq(0)
+.click()
+  
 }
 
 clickOnStarFromPDP(){
@@ -178,6 +189,7 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 
 addProductsToExistList(){
 
+cy.get(CatalogPageLocators.ADD_TO_LIST).first().should('be.visible');
 cy.get(CatalogPageLocators.STAR).each(($star) => {
 cy.wrap($star).click();
 this.addToExistList();
@@ -224,7 +236,7 @@ cy.wrap($checkbox).should('be.checked');
 clickOnStars() {
 let count;
 
-cy.get('b[class="font-extrabold"]')
+cy.get('b[class="font-black"]')
 .invoke('text')
 .then((text) => {
 count = parseInt(text); // Convert text to integer
@@ -240,7 +252,7 @@ this.addProductToNewList();
 }
 });
 
-cy.get('svg[class="vc-icon w-5 h-5 lg:w-4 lg:h-4 text-[--color-primary-500]"]')
+cy.get(CatalogPageLocators.ACTIVE_STAR)
 .its('length')
 .should('be.lte', 10);
 });
@@ -282,7 +294,7 @@ cy.log('Product not added to any list')
 prepareProductsForList(){
 
 this.addProductsToExistList();
-this.clickOnSingleStar();
+this.clickInTheList();
 this.checkAlreadyInList();
 
 }

@@ -18,6 +18,11 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
+const SUBCATEGORY = 'art';
+const NEWCATEGORY = 'soft-drinks/soda';
+//const CATEGORY_WITH_DIGITAL = 'tv';
+// const CATEGORY_WITH_SEVERAL_VENDORS = 'printers'
+
 
 beforeEach(() => {
 cy.clearCookies();
@@ -31,13 +36,13 @@ listsPage.isListsPageEmpty();
 
 it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
-catalogPage.visit('alcoholic-drinks');
+catalogPage.visit(SUBCATEGORY);
 catalogPage.addToListFromListView();
-catalogPage.clickOnSingleStar();
+catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.deleteMultipleLists();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit(NEWCATEGORY);
 catalogPage.clickOnStars();
 catalogPage.openProductPage();
 ProductCard.isStarOrangePDP();
@@ -77,12 +82,12 @@ listsPage.compareListsNames();
 listsPage.clickToListsRouter();
 listsPage.editList();    
 listsPage.createMultipleLists();
-catalogPage.visit('printers/multifunction-printers');
+catalogPage.visit(SUBCATEGORY);
 catalogPage.clickOnSingleStar();
 catalogPage.checkAddNewList();
 catalogPage.allUnchecked();
 catalogPage.addToExistList();
-catalogPage.clickOnSingleStar();
+catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
 catalogPage.visit(TestData.defaultProductPage);
 ProductCard.isStarGreyPDP();
@@ -100,7 +105,8 @@ listsPage.checkNewList();
 it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit(NEWCATEGORY);
+cy.get('div[search-params]').should('be.visible');
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.clickOnAddToCart();
@@ -127,7 +133,7 @@ cartPage.confirmClearCart();
 it('Lists tab > List with Products > remove product', ()=> {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit(NEWCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.removeProductsFromAllPages();
@@ -141,7 +147,7 @@ listsPage.checkProductCounter();
 it('Save changes', () => {
 
 listsPage.createListData();
-catalogPage.visit('soft-drinks/soda');
+catalogPage.visit(NEWCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
@@ -152,7 +158,7 @@ listsPage.leaveList();
 it('Product counter', () => {
 
 listsPage.createListData();
-catalogPage.visit('snacks');
+catalogPage.visit(SUBCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.goToListTab();
 listsPage.compareProductsCount();
@@ -169,6 +175,7 @@ listsPage.compareProductsCount();
 describe('Anonymous', ()=> {
 
 const catalogPage = new CatalogPage();
+const CATEGORY = 'alcoholic-drinks';
 
 beforeEach(() => {
 cy.clearCookies();
@@ -180,7 +187,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 
 it('Star is grey > Add product anonymously', ()=> {
 
-catalogPage.visit('alcoholic-drinks'); 
+catalogPage.visit(CATEGORY); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
 catalogPage.clickOnStarFromPDP();

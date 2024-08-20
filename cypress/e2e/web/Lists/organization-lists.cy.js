@@ -52,7 +52,7 @@ orgList.checkMenuDropDown('Share');
 
 it('Create private list from catalog. Edit name and description', ()=> {
 
-catalogPage.visit('juice');
+catalogPage.visit('art');
 catalogPage.clickOnSingleStar();
 catalogPage.addProductToNewList();
 catalogPage.clickOnSingleStar();
@@ -91,7 +91,7 @@ it('Add products to Shared list', () => {
 orgList.createSharedList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 cy.checkLabel('Shared');
 orgList.checkMenuDropDown('Make private');
-catalogPage.visit('snacks/chips');
+catalogPage.visit('art');
 cy.scrollTo('top');
 catalogPage.prepareProductsForList();
 cy.wait(500);

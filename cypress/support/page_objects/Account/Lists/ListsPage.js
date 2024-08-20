@@ -206,7 +206,7 @@ cy.log('The name of list is updated');
 compareListsNames(){
 
 cy.log('Compare list name in the left menue and current list title')
-cy.get(ListsLocators.CURRENT_PAGE)
+cy.get('[aria-current]').eq(0)
 .invoke('text').then((text1) => {
 cy.get('.vc-typography').invoke('text').then((text2) => {
 expect(text1).to.equal(text2)

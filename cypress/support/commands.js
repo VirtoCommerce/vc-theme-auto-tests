@@ -99,7 +99,7 @@ Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
   cy.scrollTo('top');
   cy.get('.notifications-host__item').should('be.visible').and('have.text', bannerText);
   cy.log('Banner is presented');
-  cy.get('.notifications-host__close-button').click();
+  cy.get('.vc-alert__close-button').click();
   cy.wait(1000);
   cy.get('.notifications-host__item').should('not.exist');
   cy.log('Banner is disappeared');
