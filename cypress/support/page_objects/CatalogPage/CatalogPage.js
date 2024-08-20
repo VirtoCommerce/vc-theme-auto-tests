@@ -115,7 +115,7 @@ ProductCard.isStarGrey();
 
 addToListAnonimProductPage(){
 
-cy.get('button[class="w-full py-4 hover:bg-[--color-neutral-50] disabled:bg-transparent text-[--color-neutral-300]"]')
+cy.get(CatalogPageLocators.INACTIVE_STAR_PDP)
 .should('be.visible')
 .and('be.disabled')
 

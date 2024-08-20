@@ -18,6 +18,9 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const orgList = new OrganizationLists();
 
+const SUBCATEGORY = 'art' ;
+//const NEWCATEGORY = 'soft-drinks/soda';
+
 beforeEach(() => {
 cy.clearCookies();
 cy.clearLocalStorage(); 
@@ -52,7 +55,7 @@ orgList.checkMenuDropDown('Share');
 
 it('Create private list from catalog. Edit name and description', ()=> {
 
-catalogPage.visit('art');
+catalogPage.visit(SUBCATEGORY);
 catalogPage.clickOnSingleStar();
 catalogPage.addProductToNewList();
 catalogPage.clickOnSingleStar();
@@ -91,7 +94,7 @@ it('Add products to Shared list', () => {
 orgList.createSharedList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 cy.checkLabel('Shared');
 orgList.checkMenuDropDown('Make private');
-catalogPage.visit('art');
+catalogPage.visit(SUBCATEGORY);
 cy.scrollTo('top');
 catalogPage.prepareProductsForList();
 cy.wait(500);

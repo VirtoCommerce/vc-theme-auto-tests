@@ -20,8 +20,6 @@ const selectForCheckout = new SelectForCheckout();
 
 const SUBCATEGORY = 'art';
 const NEWCATEGORY = 'soft-drinks/soda';
-//const CATEGORY_WITH_DIGITAL = 'tv';
-// const CATEGORY_WITH_SEVERAL_VENDORS = 'printers'
 
 
 beforeEach(() => {
