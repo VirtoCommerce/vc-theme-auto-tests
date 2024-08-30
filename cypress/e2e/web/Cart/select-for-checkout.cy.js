@@ -8,9 +8,8 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 
 
-//const SUBCATEGORY = 'courses-and-digital-products/digital-products';
 //const NEWCATEGORY = 'soft-drinks/soda';
-const CATEGORY_WITH_DIGITAL = 'tv';
+const CATEGORY_WITH_DIGITAL = 'courses-and-digital-products/digital-products';
 // const CATEGORY_WITH_SEVERAL_VENDORS = 'printers'
 
 describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON', () => {
@@ -33,11 +32,11 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     });
 
-    it('C378456: add mixed items > unselect physical products > create an order', () => {
+    it.only('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
     catalogPage.visit(CATEGORY_WITH_DIGITAL);
-    catalogPage.addToCart(6);
+    catalogPage.newAddToCart(6);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();

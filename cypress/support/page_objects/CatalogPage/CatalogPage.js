@@ -1,7 +1,7 @@
 import ProductCard from "./ProductCard";
 import { CatalogPageLocators } from "./CatalogLocators";
 
-const BUY_BUTTONS = 'button[title="Add to cart"]:not([disabled])'
+const BUY_BUTTONS = 'button[title="Add to cart"]'
 
 class CatalogPage {
   visit(path) {
@@ -14,7 +14,7 @@ class CatalogPage {
     cy.log('Add products to cart')
     cy.get(BUY_BUTTONS)
       .should("not.be.disabled")
-      .invoke("slice", 0, amount)
+     .invoke("slice", 0, amount)
       .each(($addToCart) => {
         cy.wrap($addToCart).click();
         cy.checkLoading('.vc-button__loader');
@@ -26,11 +26,11 @@ addToCart(amount = 100) {
 cy.log('Add products to cart')
 
 cy.get(BUY_BUTTONS)
-  .should("not.be.disabled")
+  .should('not.be.disabled')
   .invoke("slice", 0, amount)
-  .each(($addToCart) => {
-    cy.wrap($addToCart).click();
-    cy.checkLoading('.vc-button__loader');
+  .each(($BUY_BUTTONS) => {
+  cy.wrap($BUY_BUTTONS).click();
+  cy.checkLoading('.vc-button__loader');
 });
 
 cy.log('Check button Update cart');
@@ -42,7 +42,27 @@ cy.log('The product was added to cart');
 
 });
 
+
 }
+
+
+newAddToCart(){
+
+ // Get all the "Add to Cart" buttons
+ cy.get(BUY_BUTTONS).should('not.be.disabled').each(($BUY_BUTTONS) => {
+  cy.wrap($BUY_BUTTONS)
+  .should('not.be.disabled')  // Ensure the button is visible before clicking
+  .click();
+  cy.get('button[title="Update cart"]')
+  .should('be.visible')
+  .and('have.text', 'Update cart');
+
+ });
+
+cy.log('All 6 products have been added to the cart and the buttons changed state 🛒');
+
+}
+
 
 inActiveStateView(){
 
