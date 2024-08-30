@@ -18,8 +18,9 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const orgList = new OrganizationLists();
 
-const SUBCATEGORY = 'art' ;
-//const NEWCATEGORY = 'soft-drinks/soda';
+//const SUBCATEGORY = 'art';
+const SUBCATEGORY = '/snacks';
+const NEWCATEGORY = 'soft-drinks/soda';
 
 beforeEach(() => {
 cy.clearCookies();

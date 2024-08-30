@@ -32,7 +32,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     });
 
-    it.only('C378456: add mixed items > unselect physical products > create an order', () => {
+    it('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
     catalogPage.visit(CATEGORY_WITH_DIGITAL);
