@@ -19,7 +19,7 @@ const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
 //const SUBCATEGORY = 'art';
-const SUBCATEGORY = '/snacks';
+const SUBCATEGORY = 'snacks';
 const NEWCATEGORY = 'soft-drinks/soda';
 
 

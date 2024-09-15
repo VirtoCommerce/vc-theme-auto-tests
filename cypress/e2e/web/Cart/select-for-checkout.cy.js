@@ -8,8 +8,8 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 
 
-//const NEWCATEGORY = 'soft-drinks/soda';
-const CATEGORY_WITH_DIGITAL = 'courses-and-digital-products/digital-products';
+const CATEGORY_WITH_DIGITAL= 'soft-drinks/soda';
+//const CATEGORY_WITH_DIGITAL = 'courses-and-digital-products/digital-products';
 // const CATEGORY_WITH_SEVERAL_VENDORS = 'printers'
 
 describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON', () => {
