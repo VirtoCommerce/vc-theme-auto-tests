@@ -34,9 +34,10 @@ emptyListsPageView(){
 
 cy.log('Check empty Lists view');
 cy.get('.vc-typography--variant--h1').contains('Lists');
-cy.get('.mx-5 > img').should('be.visible');
-cy.get('.text-xl').should('have.text', "You have not created any lists yet");
-cy.get('.mx-5 > .vc-button').contains('Create list');
+cy.get(ListsLocators.EMPTY_LIST_VIEW).should('be.visible');
+cy.get(ListsLocators.EMPTY_ICON).should('be.visible');
+cy.contains('div', "You have not created any lists yet");
+cy.contains('span', 'Create list');
 cy.log('The lists page is empty');
 
 }

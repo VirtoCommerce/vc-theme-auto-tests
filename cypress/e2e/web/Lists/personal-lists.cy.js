@@ -19,9 +19,9 @@ const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
 //const SUBCATEGORY = 'art';
-const SUBCATEGORY = 'tv-multimedia';
-//const NEWCATEGORY = 'soft-drinks/soda';
-const NEWCATEGORY = 'tyres';
+const SUBCATEGORY = 'tv';
+const NEWCATEGORY = 'soft-drinks/soda';
+//const NEWCATEGORY = 'tyres';
 
 
 beforeEach(() => {
@@ -175,7 +175,7 @@ listsPage.compareProductsCount();
 describe('Anonymous', ()=> {
 
 const catalogPage = new CatalogPage();
-const CATEGORY = 'alcoholic-drinks';
+const NEWCATEGORY = 'soft-drinks/soda';
 
 beforeEach(() => {
 cy.clearCookies();
@@ -187,7 +187,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 
 it('Star is grey > Add product anonymously', ()=> {
 
-catalogPage.visit(CATEGORY); 
+catalogPage.visit(NEWCATEGORY); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
 catalogPage.clickOnStarFromPDP();
