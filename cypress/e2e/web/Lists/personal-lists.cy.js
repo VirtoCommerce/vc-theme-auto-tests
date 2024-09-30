@@ -19,8 +19,9 @@ const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
 //const SUBCATEGORY = 'art';
-const SUBCATEGORY = 'snacks';
-const NEWCATEGORY = 'soft-drinks/soda';
+const SUBCATEGORY = 'tv-multimedia';
+//const NEWCATEGORY = 'soft-drinks/soda';
+const NEWCATEGORY = 'tyres';
 
 
 beforeEach(() => {
@@ -146,7 +147,7 @@ listsPage.checkProductCounter();
 it('Save changes', () => {
 
 listsPage.createListData();
-catalogPage.visit(NEWCATEGORY);
+catalogPage.visit(SUBCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
