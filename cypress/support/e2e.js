@@ -16,6 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import 'cypress-if'
+import '@shopify/cypress-graphql'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
