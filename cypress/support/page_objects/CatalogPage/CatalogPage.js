@@ -80,7 +80,7 @@ cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral
 
 }
 
-clickOnSingleStar(){
+clickOnSingleHEART(){
 
 
 cy.get(CatalogPageLocators.ADD_TO_LIST)
@@ -99,9 +99,9 @@ clickInTheList(){
   
 }
 
-clickOnStarFromPDP(){
+clickOnHeartTFromPDP(){
 
-cy.get(CatalogPageLocators.STAR).last().click();
+cy.get(CatalogPageLocators.ADD_TO_LIST).last().click();
 
 }
 
@@ -119,7 +119,7 @@ cy.get('button[type="button"][class="flex"]')
 .should('be.disabled');
 
 
-ProductCard.isStarGrey();
+ProductCard.isInactive();
 
 this.inActiveStateView()
 cy.switchProductView('Grid')
@@ -129,21 +129,21 @@ cy.get('button[type="button"][class="flex"]')
 .eq(0)
 .should('be.disabled');
 
-ProductCard.isStarGrey();
+ProductCard.isInactive();
 
 }
 
 addToListAnonimProductPage(){
 
-cy.get(CatalogPageLocators.INACTIVE_STAR_PDP)
+cy.get(CatalogPageLocators.ADD_TO_LIST)
 .should('be.visible')
 .and('be.disabled')
 
 }
-
+//need to refactor this method and locators
 addProductToNewList(){
 
-cy.contains('h3', "Please select list").should('exist');
+cy.contains('h2', "Please select list").should('exist');
 cy.get('.justify-between > .flex').should('be.visible');
 cy.get('.justify-between > .flex')
 .if('enabled')
@@ -154,7 +154,7 @@ cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
 cy.wait(500);
-cy.contains('h3', "Please select list").should('not.exist');
+cy.contains('h2', "Please select list").should('not.exist');
 cy.checkNotificationBanner('Your lists were successfully updated');
 })
 .else('disabled')
@@ -175,33 +175,33 @@ this.inActiveStateView();
 cy.switchProductView('List');
 this.activeStateView();
 
-ProductCard.isStarGrey();
+ProductCard.isInactive();
 
-this.clickOnSingleStar();
+this.clickOnSingleHEART();
 
 this.addProductToNewList();
 
-ProductCard.isStarOrange();
+ProductCard.isActive();
 
 this.inActiveStateView()
 cy.switchProductView('Grid')
 this.activeStateView()
 
-cy.log('Check star from Grid View')
-ProductCard.isStarOrange();
+cy.log('Check heart from Grid View')
+ProductCard.isActive();
 
 }
 
 addToExistList(){
 
-cy.contains('h3', "Please select list").should('exist');
+cy.contains('h2', "Please select list").should('exist');
 this.clickOnAllCheckbox();
 cy.wait(500);
 cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
 cy.wait(500);
-cy.contains('h3', "Please select list").should('not.exist');
+cy.contains('h2', "Please select list").should('not.exist');
 // Check the notification banner
 cy.checkNotificationBanner('Your lists were successfully updated');
 
@@ -210,8 +210,8 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 addProductsToExistList(){
 
 cy.get(CatalogPageLocators.ADD_TO_LIST).first().should('be.visible');
-cy.get(CatalogPageLocators.STAR).each(($star) => {
-cy.wrap($star).click();
+cy.get(CatalogPageLocators.HEART).each(($heart) => {
+cy.wrap($heart).click();
 this.addToExistList();
 
 })
@@ -220,7 +220,7 @@ this.addToExistList();
 
 checkAlreadyInList(){
 
-cy.contains('h3', "Please select list").should('be.visible');
+cy.contains('h2', "Please select list").should('be.visible');
 cy.get('div[class="bg-neutral-100 px-6 py-3 text-base font-bold leading-5 sm:py-2.5"]')
 .should('have.text', "Already in the lists");
 cy.get('ul li label input[type="checkbox"][aria-checked="true"]').each(($checkbox) => {
@@ -253,7 +253,7 @@ cy.wrap($checkbox).should('be.checked');
 });
 }
 
-clickOnStars() {
+clickOnHEARTs() {
 let count;
 
 cy.get('b[class="font-black"]')
@@ -261,18 +261,18 @@ cy.get('b[class="font-black"]')
 .then((text) => {
 count = parseInt(text); // Convert text to integer
 cy.log(count);
-cy.get(CatalogPageLocators.STAR).its('length').then((length) => {
+cy.get(CatalogPageLocators.HEART).its('length').then((length) => {
 if (length >= count) {
-cy.get(CatalogPageLocators.STAR).each(($star, index) => {
+cy.get(CatalogPageLocators.HEART).each(($heart, index) => {
 if (index <= count) {
-cy.wrap($star).click();
+cy.wrap($heart).click();
 this.addProductToNewList();
 }
 });
 }
 });
 
-cy.get(CatalogPageLocators.ACTIVE_STAR)
+cy.get(CatalogPageLocators.ACTIVE_HEART)
 .its('length')
 .should('be.lte', 10);
 });
@@ -297,7 +297,7 @@ cy.wrap($checkbox)
 });
 
 cy.contains('button', "Save").should('be.enabled').click();
-cy.contains('h3', "Please select list").should('not.exist');
+cy.contains('h2', "Please select list").should('not.exist');
 cy.checkNotificationBanner('Your lists were successfully updated');
 
 }

@@ -2,40 +2,24 @@ import { CatalogPageLocators } from "./CatalogLocators";
 
 class ProductCard {
 
-isStarGrey(){
+isInactive(){
 
-cy.get(CatalogPageLocators.INACTIVE_STAR)
+cy.get(CatalogPageLocators.INACTIVE_HEART)
 .eq(0)
-.should('have.class', 'text-neutral-400')
-cy.log('The color of star is grey');
+.should('have.class', '--color-neutral-400')
+cy.log('The product was not added to the list');
             
 }
 
-isStarGreyPDP(){
 
-cy.get(CatalogPageLocators.INACTIVE_STAR_PDP)
-.should('have.class', 'text-neutral-300')
-cy.log('The color of star is grey');
-        
-}
-
-isStarOrange(){
+isActive(){
     
 cy.log('Check the color of a star after adding it to the list')
-cy.get(CatalogPageLocators.ACTIVE_STAR)
+cy.get(CatalogPageLocators.ACTIVE_HEART)
 .eq(0)
-.should('have.class', 'text-primary');
-cy.log('The product was added to the list. The color of star is orange')
+.should('have.class', '--color-danger-500');
+cy.log('The product was added to the list')
         
-}
-    
-isStarOrangePDP(){
-    
-cy.log('Check the color of a star after adding it to the list')
-cy.get(CatalogPageLocators.ACTIVE_STAR_PDP)
-.should('have.class', 'text-primary')
- cy.log('The product was added to the list. The color of star is orange')
-    
 }
 
 }
