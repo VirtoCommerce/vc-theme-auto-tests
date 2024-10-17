@@ -1,4 +1,5 @@
 import { ListsLocators } from "../ListsLocators";
+import { CartPageLocators } from "../../CartPage/CartPageLocators/CartPageLocators";
 import Lists_data from "./Lists_data";
 
 class Lists{
@@ -63,12 +64,12 @@ createPersonalList(list_name, list_description){
 
 cy.log('Create a new list')
 cy.contains('button', 'Create list').click();
-cy.get('.vc-dialog-header__title').should('have.text', 'New List');
+cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
-cy.get('.vc-dialog-footer > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
 cy.wait(500);
-cy.contains('.vc-dialog-header__title', 'New List').should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list')
 cy.contains('a', list_name);
 this.checkProductCounter();
@@ -87,12 +88,12 @@ cy.contains('button', 'Create list')
 .if('enabled')
 .then(() => {
 cy.contains('button', 'Create list').should('be.visible').click();
-cy.get('.vc-dialog-header__title').should('have.text', 'New List');
+cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
 cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
-cy.get('.vc-dialog-footer > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
 cy.wait(500);
-cy.contains('.vc-dialog-header__title', 'New List').should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
       
 })
 .else('disabled')
@@ -174,14 +175,14 @@ cy.log('Edit list name');
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
 cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
-cy.get('.vc-dialog-header__title').should('be.visible').and('have.text', "List Settings");
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', "List Settings");
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.contains('button', 'Save').should('be.enabled').click();
-cy.contains('.vc-dialog-header__title', "List Settings").should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, "List Settings").should('not.exist');
 cy.log('The name of list is updated');
 
 
@@ -191,14 +192,14 @@ editListFromDetailsPage(list_name, list_description){
 
 cy.log('Edit list from details page');
 cy.contains('button', 'List settings').should('be.enabled').click();
-cy.get('.vc-dialog-header__title').should('be.visible').and('have.text', "List Settings");
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', "List Settings");
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.get('.inline-block > .flex-wrap > .vc-button--color--primary').should('be.enabled').click();
-cy.contains('.vc-dialog-header__title', "List Settings").should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, "List Settings").should('not.exist');
 cy.log('The name of list is updated');
     
 }
@@ -396,7 +397,7 @@ cy.wait(500);
 cy.contains('button', 'Save Changes').should('be.enabled').click();
 this.saveChangesPopUp();
 cy.clickOnButton(value);
-cy.get('.vc-dialog-header__title').should('not.exist');
+cy.get(CartPageLocators.DIALOG_TITLE).should('not.exist');
 cy.wait(500);
 cy.contains('button', 'Save Changes').should('be.disabled');
     
@@ -405,8 +406,8 @@ cy.contains('button', 'Save Changes').should('be.disabled');
     
 saveChangesPopUp(){
     
-cy.get('.vc-dialog-header__title').should('be.visible').and('have.text', 'Save Changes');
-cy.get('p').contains('Would you like to save changes in the list?');
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'Save Changes');
+cy.get('.vc-dialog-content').contains('Would you like to save changes in the list?');
 cy.contains('button', 'Yes').should('be.enabled');
 cy.contains('button', 'No').should('be.enabled');
 }
@@ -422,7 +423,7 @@ this.saveChanges('Yes');
 leaveList(){
 cy.log('Change qty > leave the list > Save changes > Yes');   
 this.changeQuantity(3, 5);
-cy.get('a[class="router-link-active icon flex items-center p-2.5 list-icon pb-2"]').click();
+cy.get(ListsLocators.ROUTER_LINK).click();
 cy.wait(500);
 this.saveChangesPopUp();
 cy.clickOnButton('Yes');
@@ -432,7 +433,7 @@ this.goToListDetailsPage();
 
 cy.log('Change qty > leave the list > Save changes > No');
 this.changeQuantity(4, 6);
-cy.get('a[class="router-link-active icon flex items-center p-2.5 list-icon pb-2"]').click();
+cy.get(ListsLocators.ROUTER_LINK).click();
 this.saveChangesPopUp();
 cy.clickOnButton('No');
 cy.location('pathname').should('eq', "/account/lists");

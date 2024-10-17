@@ -5,6 +5,7 @@ export const CartPageLocators = {
   REMOVE_SELECTED_BUTTON: '.vc-line-items__foot > .vc-button--solid--primary',
   CHECKOUT_BUTTON_DISABLED:'#order-summary > .vc-widget__slot-container > .vc-widget__slot > .vc-button--size--md',
   CART_LINE_ITEMS: '.vc-line-items',
-  DIALOG_TITLE: '.vc-dialog-header__title'
+  DIALOG_TITLE: '.vc-dialog-header__title',
+  DIALOG_FOOTER: '.vc-dialog-footer > .vc-button--color--primary'
     
 }

@@ -1,5 +1,6 @@
 import { ListsLocators } from "../ListsLocators";
 import Lists_data from "./Lists_data";
+import { CartPageLocators } from "../../CartPage/CartPageLocators/CartPageLocators";
 
 class OrganizationLists {
 
@@ -8,7 +9,7 @@ createList(list_name, list_description){
 cy.log('Create a new list');
 cy.contains('button', 'Create list').click();
 
-cy.get('h3').should('be.visible').and('have.text', 'New List');
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'New List');
 cy.get('input[aria-checked="false"]').should('exist'); // Verify switcher state
 cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure switcher is checked
 
@@ -16,8 +17,8 @@ cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure s
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
 
-cy.contains('.flex-wrap > .vc-button--color--primary', 'Create list').click();
-cy.contains('h3', 'New List').should('not.exist');
+cy.contains(CartPageLocators.DIALOG_FOOTER, 'Create list').click();
+cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list');
 
 // Verify that the newly created list name is visible
@@ -30,7 +31,7 @@ createSharedList(list_name, list_description){
 cy.log('Create a new list');
 cy.contains('button', 'Create list').click();
     
-cy.get('h3').should('be.visible').and('have.text', 'New List');
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'New List');
 cy.get('input[aria-checked="false"]').should('exist'); // Verify switcher state
 cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure switcher is checked
     
@@ -39,8 +40,8 @@ cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
 this.toggleSwitcher();
     
-cy.contains('.flex-wrap > .vc-button--color--primary', 'Create list').click();
-cy.contains('h3', 'New List').should('not.exist');
+cy.contains(CartPageLocators.DIALOG_FOOTER, 'Create list').click();
+cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list');
     
 // Verify that the newly created list name is visible
@@ -83,7 +84,7 @@ const randomNumber = Lists_data.getRandomNumber();
 const randomWord = Lists_data.getRandomWord();
 
 cy.log('Edit list');
-cy.get('h3').should('be.visible').and('have.text', "List Settings");
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', "List Settings");
 cy.get('input[aria-checked="false"]').should('have.value', 'false');
 cy.contains('button', 'Make shared');
 cy.contains('button', 'Save').should('be.disabled');
@@ -92,8 +93,8 @@ cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description + ' ' + randomWord + randomNumber);
 this.toggleSwitcher();
-cy.get('.inline-block > .flex-wrap > .vc-button--color--primary').should('be.enabled').click();
-cy.contains('h3', "List Settings").should('not.exist');
+cy.get(CartPageLocators.DIALOG_FOOTER).should('be.enabled').click();
+cy.contains(CartPageLocators.DIALOG_TITLE, "List Settings").should('not.exist');
 cy.log('The name of list is updated');
 
 }
@@ -105,12 +106,12 @@ toggleSwitcher(){
 cy.get('input[aria-checked]')
 .if('not.be.checked')
 .then(() => {
-cy.get('.border-b > .vc-switch > .vc-switch__bg').click();
+cy.get(ListsLocators.SWITCHER_LABEL).last().click();
 cy.get('[aria-checked="true"]').should('be.checked');
 })
 .else()
 .then(() => {
-cy.get('.border-b > .vc-switch > .vc-switch__bg').click();
+cy.get(ListsLocators.SWITCHER_LABEL).last().click();
 cy.get('[aria-checked="false"]').should('not.be.checked');
 
 })

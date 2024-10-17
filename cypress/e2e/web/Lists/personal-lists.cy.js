@@ -18,8 +18,8 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
-//const SUBCATEGORY = 'art';
-const SUBCATEGORY = 'drinks-and-food';
+const SUBCATEGORY = 'snacks';
+//const SUBCATEGORY = 'drinks-and-food';
 const NEWCATEGORY = 'soft-drinks/soda';
 //const NEWCATEGORY = 'tyres';
 
@@ -102,7 +102,7 @@ listsPage.checkNewList();
 
 })
 
-it.only('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
+it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
 catalogPage.visit(NEWCATEGORY);
