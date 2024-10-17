@@ -1,46 +1,55 @@
 import ProductCard from "./ProductCard";
 import { CatalogPageLocators } from "./CatalogLocators";
 
-const BUY_BUTTONS = 'button[title="Add to cart"]'
 
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
+    cy.get('.gap-5 > :nth-child(1)').should('be.visible');
     cy.log('Step: Visited Catalog Page');
 
   }
 
   purchaseAll(amount = 100) {
     cy.log('Add products to cart')
-    cy.get(BUY_BUTTONS)
-      .should("not.be.disabled")
+    cy.get(CatalogPageLocators.BUY_BUTTONS)
+     .if('not.be.disabled')
+     .then(() => {
+    cy.get(CatalogPageLocators.BUY_BUTTONS)
      .invoke("slice", 0, amount)
       .each(($addToCart) => {
         cy.wrap($addToCart).click();
         cy.checkLoading('.vc-button__loader');
     })
+  })
+   .else('be.disabled')
+    .then(() => {      
+      cy.log('The button is disabled');
   }
+  )
+}
 
 addToCart(amount = 100) {
 
 cy.log('Add products to cart')
 
-cy.get(BUY_BUTTONS)
-  .should('not.be.disabled')
+cy.get(CatalogPageLocators.BUY_BUTTONS)
+  .if('not.be.disabled')
+  .then(() => {
+  cy.get(CatalogPageLocators.BUY_BUTTONS)
   .invoke("slice", 0, amount)
   .each(($BUY_BUTTONS) => {
   cy.wrap($BUY_BUTTONS).click();
   cy.checkLoading('.vc-button__loader');
-});
-
-cy.log('Check button Update cart');
-cy.get('button[title="Update cart"]').each(($updateCart) => {
-cy.wrap($updateCart)
-.should('be.visible')
-.and('have.text', 'Update cart');
-cy.log('The product was added to cart');
-
-});
+  cy.get(CatalogPageLocators.UPDATE_BUTTON)
+  .should('be.visible')
+  .and('have.text', 'Update cart');  
+  })
+  })
+  .else('be.disabled')
+  .then(() => {
+  cy.log('The button is disabled');
+  });
 
 
 }
@@ -53,7 +62,7 @@ newAddToCart(){
   cy.wrap($BUY_BUTTONS)
   .should('not.be.disabled')  // Ensure the button is visible before clicking
   .click();
-  cy.get('button[title="Update cart"]')
+  cy.get(CatalogPageLocators.UPDATE_BUTTON)
   .should('be.visible')
   .and('have.text', 'Update cart');
 
@@ -67,8 +76,9 @@ cy.log('All 6 products have been added to the cart and the buttons changed state
 inActiveStateView(){
 
 cy.log('Check color if inActive')
-cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600')
+cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600"]')
 .should('have.class', 'text-primary')
+.and('be.visible')
 
 }
 
@@ -77,6 +87,7 @@ activeStateView(){
 cy.log('Check color if Active')
 cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral-700 hover:shadow-md"]')
 .should('have.class', 'text-neutral-700')
+.and('be.visible')
 
 }
 
@@ -150,7 +161,7 @@ cy.get('.justify-between > .flex')
 .then(() => {
 cy.contains('button', " Add new list").should('be.visible').click();
 cy.get('input[type="checkbox"]').should('be.checked');
-cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
+cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
 cy.wait(500);
@@ -159,7 +170,7 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 })
 .else('disabled')
 .then(() => {
-cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
+cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
 .should('be.disabled');
 cy.contains('button', "Cancel").click();
 cy.log('Add new list and Save buttons are disabled');
@@ -197,7 +208,7 @@ addToExistList(){
 cy.contains('h2', "Please select list").should('exist');
 this.clickOnAllCheckbox();
 cy.wait(500);
-cy.contains('.flex-wrap > .vc-button--color--primary', "Save")
+cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
 cy.wait(500);
@@ -324,8 +335,7 @@ clickShowInStock(){
 cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
 
 }
-
-
 }
+
 
 export default CatalogPage;

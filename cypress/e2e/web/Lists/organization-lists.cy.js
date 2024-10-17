@@ -57,9 +57,9 @@ orgList.checkMenuDropDown('Share');
 it('Create private list from catalog. Edit name and description', ()=> {
 
 catalogPage.visit(SUBCATEGORY);
-catalogPage.clickOnSingleStar();
+catalogPage.clickOnSingleHEART();
 catalogPage.addProductToNewList();
-catalogPage.clickOnSingleStar();
+catalogPage.clickOnSingleHEART();
 cy.wait(500);
 cy.checkLabel('Private');
 catalogPage.checkAlreadyInList();

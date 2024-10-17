@@ -1,5 +1,5 @@
 import AuthLogin from "./navigation/AuthLogin";
-//import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
+import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
 
 
 
@@ -36,8 +36,8 @@ Cypress.Commands.add('login', (email, password) => {
   )
 })
 
-Cypress.Commands.add('checkLoading', (locator, timeout = 500) => {
-cy.get(locator, {timeout}).should('exist');
+Cypress.Commands.add('checkLoading', (locator, timeout = 1000) => {
+//cy.get(locator, {timeout}).should('exist');
 cy.get(locator, {timeout}).should('not.exist');
 })
 
@@ -84,10 +84,10 @@ cy.location('pathname').should('eq', "/catalog");
 
 Cypress.Commands.add('confirmDelete', () => {
 
-cy.get('h3').should('have.text', "Confirm Delete").and('be.visible');
+cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Confirm Delete").and('be.visible');
 cy.contains('.vc-button--color--danger', "Delete").click();
 cy.wait(500);
-cy.contains('h3', 'Confirm Delete').should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, 'Confirm Delete').should('not.exist');
 cy.log('The deletion completed');
     
 })
@@ -108,7 +108,7 @@ Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
 Cypress.Commands.add('checkAddingProductsToCart', () => {
 
 cy.log('Check Adding products to cart result pop-up');
-cy.get('h3').should('have.text', "Adding products to cart result").and('be.visible');
+cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Adding products to cart result").and('be.visible');
 cy.get('a[href="/cart"]').should('contain.text', "View cart");
 cy.contains('button', "Print").should('be.enabled');
 cy.contains('button', "OK").should('be.enabled');

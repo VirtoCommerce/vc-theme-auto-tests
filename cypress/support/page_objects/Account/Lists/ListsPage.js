@@ -44,7 +44,7 @@ cy.log('The lists page is empty');
 
 emptyListDetailPage(){
 
-cy.get('.text-xl').should('have.text', 'Your list is empty');
+cy.get('.vc-empty-view__text').should('have.text', 'Your list is empty');
 cy.contains('a', 'Continue browsing');
 cy.contains('button','Add all to cart').should('be.disabled');
 cy.contains('button', 'Save Changes').should('be.disabled');
@@ -63,12 +63,12 @@ createPersonalList(list_name, list_description){
 
 cy.log('Create a new list')
 cy.contains('button', 'Create list').click();
-cy.get('h3').should('be.visible').and('have.text', 'New List');
+cy.get('.vc-dialog-header__title').should('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').type(list_description);
-cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.get('.vc-dialog-footer > .vc-button--color--primary').should('have.text', 'Create list').click();
 cy.wait(500);
-cy.contains('h3', 'New List').should('not.exist');
+cy.contains('.vc-dialog-header__title', 'New List').should('not.exist');
 cy.log('Check created list')
 cy.contains('a', list_name);
 this.checkProductCounter();
@@ -87,12 +87,12 @@ cy.contains('button', 'Create list')
 .if('enabled')
 .then(() => {
 cy.contains('button', 'Create list').should('be.visible').click();
-cy.get('h3').should('be.visible').and('have.text', 'New List');
+cy.get('.vc-dialog-header__title').should('have.text', 'New List');
 cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
 cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
-cy.get('.flex-wrap > .vc-button--color--primary').should('have.text', 'Create list').click();
+cy.get('.vc-dialog-footer > .vc-button--color--primary').should('have.text', 'Create list').click();
 cy.wait(500);
-cy.contains('h3', 'New List').should('not.exist');
+cy.contains('.vc-dialog-header__title', 'New List').should('not.exist');
       
 })
 .else('disabled')
@@ -116,7 +116,7 @@ this.createLists();
 checkListsAfterCreated(){
 
 cy.log('Check created lists')
-cy.get('.text-xl')
+cy.get('.vc-empty-view__text')
 .should('not.exist')
 cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 1);
 this.checkProductCounter();
@@ -174,14 +174,14 @@ cy.log('Edit list name');
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
 cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
-cy.get('h3').should('be.visible').and('have.text', "List Settings");
+cy.get('.vc-dialog-header__title').should('be.visible').and('have.text', "List Settings");
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.contains('button', 'Save').should('be.enabled').click();
-cy.contains('h3', "List Settings").should('not.exist');
+cy.contains('.vc-dialog-header__title', "List Settings").should('not.exist');
 cy.log('The name of list is updated');
 
 
@@ -191,14 +191,14 @@ editListFromDetailsPage(list_name, list_description){
 
 cy.log('Edit list from details page');
 cy.contains('button', 'List settings').should('be.enabled').click();
-cy.get('h3').should('be.visible').and('have.text', "List Settings");
+cy.get('.vc-dialog-header__title').should('be.visible').and('have.text', "List Settings");
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.get('.inline-block > .flex-wrap > .vc-button--color--primary').should('be.enabled').click();
-cy.contains('h3', "List Settings").should('not.exist');
+cy.contains('.vc-dialog-header__title', "List Settings").should('not.exist');
 cy.log('The name of list is updated');
     
 }
@@ -246,7 +246,7 @@ this.compareListsNames();
 checkListDetailsPage(){
 
 cy.log('check List Details Page');
-cy.get('.text-xl').should('not.exist');
+cy.get('.vc-empty-view__text').should('not.exist');
 cy.contains('button','Add all to cart').should('be.enabled');
 cy.contains('button', 'Save Changes').should('be.disabled');
 cy.contains('button', 'List settings').should('be.enabled');
@@ -257,7 +257,7 @@ cy.get('.vc-line-item').should('exist');
 deleteList(){
 
 cy.log('Delete list')
-cy.get('.text-xl')
+cy.get('.vc-empty-view__text')
 .if('not.exist')
 .then(()=> {
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
@@ -396,7 +396,7 @@ cy.wait(500);
 cy.contains('button', 'Save Changes').should('be.enabled').click();
 this.saveChangesPopUp();
 cy.clickOnButton(value);
-cy.get('h3').should('not.exist');
+cy.get('.vc-dialog-header__title').should('not.exist');
 cy.wait(500);
 cy.contains('button', 'Save Changes').should('be.disabled');
     
@@ -405,7 +405,7 @@ cy.contains('button', 'Save Changes').should('be.disabled');
     
 saveChangesPopUp(){
     
-cy.get('h3').should('be.visible').and('have.text', 'Save Changes');
+cy.get('.vc-dialog-header__title').should('be.visible').and('have.text', 'Save Changes');
 cy.get('p').contains('Would you like to save changes in the list?');
 cy.contains('button', 'Yes').should('be.enabled');
 cy.contains('button', 'No').should('be.enabled');

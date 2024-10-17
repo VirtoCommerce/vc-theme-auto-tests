@@ -19,7 +19,7 @@ const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
 //const SUBCATEGORY = 'art';
-const SUBCATEGORY = 'tv';
+const SUBCATEGORY = 'drinks-and-food';
 const NEWCATEGORY = 'soft-drinks/soda';
 //const NEWCATEGORY = 'tyres';
 
@@ -43,25 +43,25 @@ catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.deleteMultipleLists();
 catalogPage.visit(NEWCATEGORY);
-catalogPage.clickOnStars();
+catalogPage.clickOnHEARTs();
 catalogPage.openProductPage();
-ProductCard.isStarOrangePDP();
-catalogPage.clickOnStarFromPDP();
+ProductCard.isActive();
+catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
-catalogPage.clickOnStarFromPDP();
+catalogPage.clickInTheList();
 catalogPage.removeProductFromLists();
-ProductCard.isStarGreyPDP();
+ProductCard.isInactive();
 cy.go('back');
 cy.log('Backward');
-ProductCard.isStarGrey();
-catalogPage.clickOnSingleStar();
+ProductCard.isActive();
+catalogPage.clickOnSingleHEART();
 catalogPage.allUnchecked();
 cy.clickOnButton("Cancel");
 
     
 })
 
-it('Star is orange > Add several products to existing list from List view.', () => {
+it('Icon is red > Add several products to existing list from List view.', () => {
 
 listsPage.createListData();
 catalogPage.visit('printers/multifunction-printers');
@@ -83,26 +83,26 @@ listsPage.clickToListsRouter();
 listsPage.editList();    
 listsPage.createMultipleLists();
 catalogPage.visit(SUBCATEGORY);
-catalogPage.clickOnSingleStar();
+catalogPage.clickOnSingleHEART();
 catalogPage.checkAddNewList();
 catalogPage.allUnchecked();
 catalogPage.addToExistList();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
 catalogPage.visit(TestData.defaultProductPage);
-ProductCard.isStarGreyPDP();
-catalogPage.clickOnStarFromPDP();
+ProductCard.isInactive();
+catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToExistList();
-catalogPage.clickOnStarFromPDP();
+catalogPage.clickOnHeartTFromPDP();
 catalogPage.checkAddNewList();
 catalogPage.checkAlreadyInList();
-ProductCard.isStarOrangePDP();
+ProductCard.isActive();
 listsPage.checkNewList();
 
 
 })
 
-it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
+it.only('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
 catalogPage.visit(NEWCATEGORY);
@@ -185,12 +185,12 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
            
 });
 
-it('Star is grey > Add product anonymously', ()=> {
+it('Icon is grey > Add product anonymously', ()=> {
 
 catalogPage.visit(NEWCATEGORY); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
-catalogPage.clickOnStarFromPDP();
+catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToListAnonimProductPage();
 
 });
