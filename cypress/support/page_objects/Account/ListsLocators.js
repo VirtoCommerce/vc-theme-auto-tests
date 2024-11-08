@@ -3,7 +3,7 @@ export const ListsLocators={
 EMPTY_LIST_VIEW: '.vc-empty-view',
 EMPTY_ICON: '.vc-empty-view__icon',
 LISTS_TAB: 'a[href="/account/lists"]',
-ROUTER_LINK: 'a[class="router-link-active account-navigation-item__link"]',
+ROUTER_LINK: '.router-link-active > .account-navigation-item__text',
 LISTS_TITLE: 'a[class="truncate text-base font-bold text-[--link-color] hover:text-[--link-hover-color]"]',
 SETTINGS_WHEEL: '.vc-dropdown-menu__trigger > .vc-button',
 DROP_DOWN: '.vc-dropdown-menu__list',

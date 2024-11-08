@@ -82,6 +82,12 @@ cy.location('pathname').should('eq', "/catalog");
   
 })
 
+Cypress.Commands.add('clickOnActiveDialogButton', () => {
+
+cy.get('.vc-dialog-footer > .vc-button--color--primary').should('be.enabled').click();
+
+})
+
 Cypress.Commands.add('confirmDelete', () => {
 
 cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Confirm Delete").and('be.visible');

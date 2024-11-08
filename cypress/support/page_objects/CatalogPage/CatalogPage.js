@@ -5,7 +5,7 @@ import { CatalogPageLocators } from "./CatalogLocators";
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
-    cy.get('.gap-5 > :nth-child(1)').should('be.visible');
+    cy.get('.vc-typography').should('be.visible');
     cy.log('Step: Visited Catalog Page');
 
   }
@@ -161,10 +161,7 @@ cy.get('.justify-between > .flex')
 .then(() => {
 cy.contains('button', " Add new list").should('be.visible').click();
 cy.get('input[type="checkbox"]').should('be.checked');
-cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
-.should('be.enabled')
-.click();
-cy.wait(500);
+cy.clickOnActiveDialogButton();
 cy.contains('h2', "Please select list").should('not.exist');
 cy.checkNotificationBanner('Your lists were successfully updated');
 })

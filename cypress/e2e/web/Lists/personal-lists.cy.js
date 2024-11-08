@@ -93,7 +93,7 @@ catalogPage.visit(TestData.defaultProductPage);
 ProductCard.isInactive();
 catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToExistList();
-catalogPage.clickOnHeartTFromPDP();
+catalogPage.clickInTheList();
 catalogPage.checkAddNewList();
 catalogPage.checkAlreadyInList();
 ProductCard.isActive();

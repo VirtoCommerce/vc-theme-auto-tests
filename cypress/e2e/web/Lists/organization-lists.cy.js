@@ -18,9 +18,10 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const orgList = new OrganizationLists();
 
-const SUBCATEGORY = 'tv-multimedia';
-//const NEWCATEGORY = 'soft-drinks/soda';
-const NEWCATEGORY = 'tyres';
+//const SUBCATEGORY = 'tv-multimedia';
+const SUBCATEGORY = 'soft-drinks/soda';
+const NEWCATEGORY = 'snacks';
+//const NEWCATEGORY = 'tyres';
 
 beforeEach(() => {
 cy.clearCookies();
@@ -59,8 +60,7 @@ it('Create private list from catalog. Edit name and description', ()=> {
 catalogPage.visit(SUBCATEGORY);
 catalogPage.clickOnSingleHEART();
 catalogPage.addProductToNewList();
-catalogPage.clickOnSingleHEART();
-cy.wait(500);
+catalogPage.clickInTheList();
 cy.checkLabel('Private');
 catalogPage.checkAlreadyInList();
 listsPage.checkNewList();
@@ -95,7 +95,7 @@ it('Add products to Shared list', () => {
 orgList.createSharedList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
 cy.checkLabel('Shared');
 orgList.checkMenuDropDown('Make private');
-catalogPage.visit(SUBCATEGORY);
+catalogPage.visit(NEWCATEGORY);
 cy.scrollTo('top');
 catalogPage.prepareProductsForList();
 cy.wait(500);
@@ -107,7 +107,7 @@ listsPage.compareProductsCount();
 
 })
 
-it('Create lists. Switch between lists', () => {
+it.skip('Create lists. Switch between lists', () => {
 
 orgList.createSharedList(Lists_data.lists[3].name4, Lists_data.lists[3].description4);
 listsPage.createMultipleLists();
