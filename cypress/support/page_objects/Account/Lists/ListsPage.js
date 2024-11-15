@@ -372,7 +372,8 @@ this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].descripti
 this.goToListDetailsPage();
 this.emptyListDetailPage();
 cy.clickOnContinue("Continue browsing");
-//cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
+cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
+cy.get('.vc-widget__slot').should('be.visible').and('contain', 'catalog');
 
 }
 

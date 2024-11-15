@@ -77,8 +77,7 @@ class LoginPage {
     cy.checkLoading('.vc-button__loader');
     this.checkNoErrorMessage();
     cy.log('Verifying successful login');
-    cy.url().should('include', '/');
-    //cy.get('.vc-typography--variant--h1').contains('Catalog');   
+    cy.url().should('include', '/');      
     cy.log('Check token in LocalStorage')
     cy.window().then((win) => {
     const storedValue = win.localStorage.getItem('auth');

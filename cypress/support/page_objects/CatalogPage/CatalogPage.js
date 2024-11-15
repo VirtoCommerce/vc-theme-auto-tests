@@ -10,6 +10,13 @@ class CatalogPage {
 
   }
 
+  checkCatalogPage() {
+  cy.get('.vc-typography').should('be.visible').and('have.text', 'Catalog');
+  cy.get('.vc-widget__slot').should('be.visible').and('contain', 'catalog')
+  cy.log('Catalog page is visible');
+
+  }
+
   purchaseAll(amount = 100) {
     cy.log('Add products to cart')
     cy.get(CatalogPageLocators.BUY_BUTTONS)
