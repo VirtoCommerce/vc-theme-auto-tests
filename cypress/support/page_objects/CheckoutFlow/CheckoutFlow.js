@@ -192,7 +192,7 @@ cy.contains('Billing');
 placeOrder() {
 
 cy.contains('button', 'Place order').click();
-cy.checkLoading('.vc-loader-overlay__spinner');
+
 
 }
 
@@ -200,8 +200,9 @@ checkPaymentPage(){
 
 cy.url().should('include', '/checkout/payment');
 cy.contains('h1', 'Payment').should('be.visible');
-cy.get('.p-5 md:p-6').should('be.visible');
-cy.contains('button', 'Pay now').should('be.visible');
+cy.checkLoading('.vc-loader-overlay__spinner');
+cy.get('form').should('exist');
+cy.get('button[data-test-id="pay-now-button"]').should('be.disabled');
   
  
 }

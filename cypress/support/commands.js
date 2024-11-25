@@ -98,6 +98,16 @@ cy.log('The deletion completed');
     
 })
 
+Cypress.Commands.add('confirmAction', (text1, text2) => {
+
+  cy.get('.vc-dialog-header__title').should('have.text', text1).and('be.visible');
+  cy.contains('.vc-button--color--danger', text2).click();
+  cy.wait(500);
+  cy.contains('.vc-dialog-header__title', text1).should('not.exist');
+  cy.log('The action completed');
+      
+  })
+
 
 Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
  

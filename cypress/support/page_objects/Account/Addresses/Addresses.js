@@ -1,0 +1,61 @@
+import { AddressesLocators } from "./AddressesLocators";
+
+class Addresses {
+
+openAddressesPage() {
+
+cy.get('[href="/account/dashboard"]').click();
+cy.url().should('include', '/account/dashboard');
+cy.contains('Addresses').should('be.visible');
+cy.get('[href="/account/addresses"]').click();
+cy.url().should('include', '/account/addresses');
+cy.get('h1').contains('Addresses').should('be.visible');
+
+}
+
+removeAddress() {
+
+cy.get('tr[class="even:bg-neutral-50"]').should('have.length', 1);
+cy.get(AddressesLocators.ACTION_BTN).click();
+cy.get(AddressesLocators.DROP_DOWN).should('be.visible');
+cy.get(AddressesLocators.DROP_DOWN_ITEM).contains('Delete').click();
+cy.confirmAction('Delete address', 'OK');
+
+}
+
+emptyAddresses() {
+
+cy.get(AddressesLocators.EMPTY_VIEW_TEXT)
+.should('be.visible')
+.and('have.text', 'You do not have any addresses yet');
+
+}
+
+emtyOrNot() {
+
+this.openAddressesPage();
+cy.get('tr[class="even:bg-neutral-50"]')
+.if($el => $el.length > 0)
+.then(() => {
+this.clearAddresses();
+cy.log('Addresses are empty');
+})
+.else(() => {
+this.emptyAddresses();
+cy.log('Addresses are empty');
+
+})
+
+}
+
+clearAddresses() {
+
+this.removeAddress();
+this.emptyAddresses();
+
+}
+
+
+}
+
+export default Addresses;
