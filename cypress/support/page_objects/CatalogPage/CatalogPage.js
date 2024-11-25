@@ -132,32 +132,32 @@ this.inActiveStateView();
 cy.switchProductView('List');
 this.activeStateView();
 
-cy.get('button[type="button"][class="flex"]')
+cy.get('button[aria-label="Wishlists are available only for authenticated users"]')
 .eq(0)
 .should('be.disabled');
-
-
-ProductCard.isInactive();
 
 this.inActiveStateView()
 cy.switchProductView('Grid')
 this.activeStateView()
 
-cy.get('button[type="button"][class="flex"]')
+cy.get('button[aria-label="Wishlists are available only for authenticated users"]')
 .eq(0)
 .should('be.disabled');
 
-ProductCard.isInactive();
 
 }
 
 addToListAnonimProductPage(){
 
-cy.get(CatalogPageLocators.ADD_TO_LIST)
-.should('be.visible')
-.and('be.disabled')
+cy.get('.vc-product-actions-button--color--danger')
+.eq(0)
+.should('be.visible');
+cy.get('button[aria-label="Wishlists are available only for authenticated users"]')
+  .eq(0)
+  .should('be.disabled');
 
 }
+
 //need to refactor this method and locators
 addProductToNewList(){
 

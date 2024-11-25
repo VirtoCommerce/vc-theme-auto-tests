@@ -64,10 +64,8 @@ checkLabelsPersonal(){
 
 personalRegistration(){
 
-      cy.log('Step: create personal account');
-
-        cy.get('[type="radio"]').first().check().should('be.checked');
-    
+        cy.log('Step: create personal account');
+        cy.get('[type="radio"]').first().check().should('be.checked');    
         cy.get('input[name=firstName]').type(userData.userData[0].first_name);
         cy.get('input[name=lastName]').type(userData.userData[0].last_name);
         cy.get('input[name=email]').type(userData.userData[0].email);
@@ -75,6 +73,7 @@ personalRegistration(){
         cy.get('[placeholder="Confirm your password"]').type(userData.userData[0].confirm_password);
         cy.get('[type="submit"]').should('be.exist');
         cy.get('[type="submit"]').contains('Sign up').click();
+        cy.wait(1000);
         cy.get('.vc-typography--variant--h1').should('be.visible'); 
         cy.get('.vc-typography--variant--h1').contains('Registration completed');
         cy.location('pathname').should('eq', "/successful-registration");        
@@ -86,9 +85,7 @@ personalRegistration(){
 companyRegistration(){
 
         cy.log('Step: create company account');
-
-        cy.get('[type="radio"]').last().check().should('be.checked'); 
-    
+        cy.get('[type="radio"]').last().check().should('be.checked');     
         cy.get('input[name=firstName]').type(userData.userData[1].first_name);
         cy.get('input[name=lastName]').type(userData.userData[1].last_name);
         cy.get('input[name=email]').type(userData.userData[1].email);

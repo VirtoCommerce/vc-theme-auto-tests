@@ -18,10 +18,11 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
-const SUBCATEGORY = 'snacks';
+//const SUBCATEGORY = 'snacks';
 //const SUBCATEGORY = 'drinks-and-food';
-const NEWCATEGORY = 'soft-drinks/soda';
+//const NEWCATEGORY = 'soft-drinks/soda';
 //const NEWCATEGORY = 'tyres';
+const NEWCATEGORY = 'printers/laser-color';
 
 
 beforeEach(() => {
@@ -36,7 +37,7 @@ listsPage.isListsPageEmpty();
 
 it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
-catalogPage.visit(SUBCATEGORY);
+catalogPage.visit(NEWCATEGORY);
 catalogPage.addToListFromListView();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
@@ -82,7 +83,7 @@ listsPage.compareListsNames();
 listsPage.clickToListsRouter();
 listsPage.editList();    
 listsPage.createMultipleLists();
-catalogPage.visit(SUBCATEGORY);
+catalogPage.visit(NEWCATEGORY);
 catalogPage.clickOnSingleHEART();
 catalogPage.checkAddNewList();
 catalogPage.allUnchecked();
@@ -147,7 +148,7 @@ listsPage.checkProductCounter();
 it('Save changes', () => {
 
 listsPage.createListData();
-catalogPage.visit(SUBCATEGORY);
+catalogPage.visit(NEWCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
@@ -158,7 +159,7 @@ listsPage.leaveList();
 it('Product counter', () => {
 
 listsPage.createListData();
-catalogPage.visit(SUBCATEGORY);
+catalogPage.visit(NEWCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.goToListTab();
 listsPage.compareProductsCount();
@@ -190,7 +191,6 @@ it('Icon is grey > Add product anonymously', ()=> {
 catalogPage.visit(NEWCATEGORY); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
-catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToListAnonimProductPage();
 
 });

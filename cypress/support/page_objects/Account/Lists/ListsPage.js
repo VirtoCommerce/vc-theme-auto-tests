@@ -373,7 +373,7 @@ this.goToListDetailsPage();
 this.emptyListDetailPage();
 cy.clickOnContinue("Continue browsing");
 cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
-cy.get('.vc-widget__slot').should('be.visible').and('contain', 'catalog');
+cy.get('.-mt-1').should('be.visible').and('contain', 'Catalog');
 
 }
 
