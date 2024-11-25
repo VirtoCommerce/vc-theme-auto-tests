@@ -36,12 +36,42 @@ class CatalogPage {
   )
 }
 
+addToCartOne(amount = 100) {
+  cy.log('Adding products to cart');
+
+  // Ensure BUY_BUTTONS are visible
+  cy.get(CatalogPageLocators.BUY_BUTTONS)
+    .should('be.visible')
+    .then(($buttons) => {
+      // Filter only enabled buttons
+      const enabledButtons = $buttons.filter((index, button) => !button.disabled);
+
+      if (enabledButtons.length > 0) {
+        // Limit to the required amount
+        const buttonsToClick = enabledButtons.slice(0, amount);
+
+        // Iterate and perform actions
+        cy.wrap(buttonsToClick).each(($button) => {
+          cy.wrap($button).click();
+          cy.checkLoading('.vc-button__loader');
+          cy.get(CatalogPageLocators.UPDATE_BUTTON)
+            .should('be.visible')
+            .and('have.text', 'Update cart');
+        });
+      } else {
+        cy.log('No enabled buttons found.');
+      }
+    });
+}
+
+
 addToCart(amount = 100) {
 
 cy.log('Add products to cart')
 
+cy.get(CatalogPageLocators.BUY_BUTTONS).should('be.visible');
 cy.get(CatalogPageLocators.BUY_BUTTONS)
-  .if('not.be.disabled')
+  .if('enabled')
   .then(() => {
   cy.get(CatalogPageLocators.BUY_BUTTONS)
   .invoke("slice", 0, amount)
@@ -53,7 +83,7 @@ cy.get(CatalogPageLocators.BUY_BUTTONS)
   .and('have.text', 'Update cart');  
   })
   })
-  .else('be.disabled')
+  .else('disabled')
   .then(() => {
   cy.log('The button is disabled');
   });
@@ -62,20 +92,15 @@ cy.get(CatalogPageLocators.BUY_BUTTONS)
 }
 
 
-newAddToCart(){
+AddToCartSingleBtn(){
 
- // Get all the "Add to Cart" buttons
- cy.get(BUY_BUTTONS).should('not.be.disabled').each(($BUY_BUTTONS) => {
-  cy.wrap($BUY_BUTTONS)
-  .should('not.be.disabled')  // Ensure the button is visible before clicking
-  .click();
-  cy.get(CatalogPageLocators.UPDATE_BUTTON)
-  .should('be.visible')
-  .and('have.text', 'Update cart');
-
- });
-
-cy.log('All 6 products have been added to the cart and the buttons changed state 🛒');
+cy.get('.vc-typography').should('exist');
+cy.get(CatalogPageLocators.BUY_BUTTONS).should('be.visible');
+cy.get(CatalogPageLocators.BUY_BUTTONS).eq(1).should('not.be.disabled').click();
+cy.get(CatalogPageLocators.UPDATE_BUTTON)
+.should('be.visible')
+.and('have.text', 'Update cart');
+cy.log('product have been added to the cart and the buttons changed state');
 
 }
 

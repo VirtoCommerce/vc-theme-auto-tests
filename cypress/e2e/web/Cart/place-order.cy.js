@@ -5,10 +5,10 @@ import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/Select
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
-import { aliasQuery } from "../../../utils/graphql-test-utils";
 import userData from "../../Variables/userData";
 
-const PRODUCT_URL = TestData.defaultProductPage;
+//const PRODUCT_URL = TestData.defaultProductPage;
+const PRODUCT_URL = 'soft-drinks/mineral-water/borjomi-mineral-water-the-essence-of-georgian-volcanic-springs';
 
 describe('place order', () => {
   const productPage = new ProductPage();
@@ -24,16 +24,16 @@ describe('place order', () => {
     cy.log('Clearing cookies and local storage');
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.viewport(Cypress.env('DEVICE_NAME'));
+    cy.viewport(Cypress.env('DEVICE_NAME'));    
 
-    cy.intercept('/xapi/graphql', (req) => {
-      aliasQuery(req, 'GetShortCart');
-    });
   });
 
   it('places order created by Anonymous user', () => {
+
+    catalogPage.visit('catalog');
+    cartPage.emptyOrNot();
     productPage.visit(PRODUCT_URL);
-    catalogPage.addToCart();
+    catalogPage.AddToCartSingleBtn();
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -42,21 +42,17 @@ describe('place order', () => {
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
     anonymousCheckout.checkShippingPage();
-
     anonymousCheckout.fillShippingAddress();
     anonymousCheckout.selectDelivery('Fixed Rate (Ground)');
     cy.checkLoading('.vc-loader-overlay__spinner');
-
     anonymousCheckout.proceedToBilling();
-
-
     anonymousCheckout.selectPaymentMethod('Manual');
     cy.checkLoading('.vc-loader-overlay__spinner');
     anonymousCheckout.reviewOrder();
-
     anonymousCheckout.placeOrder();
-    cy.checkLoading('.vc-loader-overlay__spinner');
+    cy.checkLoading('.vc-loader-overlay__spinner');  
     anonymousCheckout.isCompleted();
+
   });
 
   it('places order as Personal user', () => {
