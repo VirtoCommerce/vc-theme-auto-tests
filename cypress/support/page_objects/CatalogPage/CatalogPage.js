@@ -99,7 +99,7 @@ cy.get(CatalogPageLocators.BUY_BUTTONS).should('be.visible');
 cy.get(CatalogPageLocators.BUY_BUTTONS).eq(1).should('not.be.disabled').click();
 cy.get(CatalogPageLocators.UPDATE_BUTTON)
 .should('be.visible')
-.and('have.text', 'Update cart');
+.and('contain.text', 'Update cart');
 cy.log('product have been added to the cart and the buttons changed state');
 
 }

@@ -36,7 +36,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
 
     catalogPage.visit(CATEGORY_WITH_DIGITAL);
-    catalogPage.newAddToCart(6);
+    catalogPage.addToCart(6);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();

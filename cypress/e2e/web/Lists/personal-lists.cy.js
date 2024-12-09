@@ -18,7 +18,7 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
-//const SUBCATEGORY = 'snacks';
+const SUBCATEGORY = 'snacks';
 //const SUBCATEGORY = 'drinks-and-food';
 //const NEWCATEGORY = 'soft-drinks/soda';
 //const NEWCATEGORY = 'tyres';
@@ -159,7 +159,7 @@ listsPage.leaveList();
 it('Product counter', () => {
 
 listsPage.createListData();
-catalogPage.visit(NEWCATEGORY);
+catalogPage.visit(SUBCATEGORY);
 catalogPage.prepareProductsForList();
 listsPage.goToListTab();
 listsPage.compareProductsCount();

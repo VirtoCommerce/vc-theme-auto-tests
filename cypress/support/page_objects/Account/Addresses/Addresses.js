@@ -34,6 +34,7 @@ cy.get(AddressesLocators.EMPTY_VIEW_TEXT)
 emtyOrNot() {
 
 this.openAddressesPage();
+cy.wait(2000);
 cy.get('tr[class="even:bg-neutral-50"]')
 .if($el => $el.length > 0)
 .then(() => {
@@ -41,6 +42,7 @@ this.clearAddresses();
 cy.log('Addresses are empty');
 })
 .else(() => {
+cy.get('.vc-empty-view__buttons > .vc-button').should('be.visible');
 this.emptyAddresses();
 cy.log('Addresses are empty');
 

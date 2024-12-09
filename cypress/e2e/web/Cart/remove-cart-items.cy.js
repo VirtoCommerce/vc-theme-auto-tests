@@ -3,6 +3,9 @@ import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import {aliasQuery} from "../../../utils/graphql-test-utils";
 import TestData from "../../Variables/TestData";
 
+
+//const PRODUCT_URL = 'soft-drinks/mineral-water/borjomi-mineral-water-the-essence-of-georgian-volcanic-springs';
+
 describe('Remove many cart items', () => {
   const catalogPage = new CatalogPage();
   const cartPage = new CartPage();
@@ -19,9 +22,9 @@ describe('Remove many cart items', () => {
 
   it('removes many items from cart', () => {
 
-    catalogPage.visit(TestData.defaultCatalogUrl);
+    catalogPage.visit('soft-drinks/mineral-water');
 
-    catalogPage.purchaseAll(3);
+    catalogPage.addToCart(6);
     cartPage.visitByCartClick();
 
 cy.wait(1000);
