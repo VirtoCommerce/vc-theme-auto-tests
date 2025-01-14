@@ -18,8 +18,8 @@ userData:[
     last_name: "Cook",
     email: "ricreyacrouyi-3425@yopmail.com",
     gender: "Male",
-    password: "Password2",
-    confirm_password: "Password2",
+    password: "Password1",
+    confirm_password: "Password1",
     company_name: "Cypress-Corporate Kft.",
     user_name: "Andrew Cook" 
   },

@@ -27,7 +27,7 @@ it('Create personal account', ()=> {
   cy.log('Starting registration');
 
   signUpPage.startFromHome();
-  signUpPage.checkLabelsPersonal();
+  signUpPage.checkLabels();
   signUpPage.personalRegistration();
 
   cy.log('Verifying successful registration');

@@ -20,9 +20,9 @@ const selectForCheckout = new SelectForCheckout();
 
 const SUBCATEGORY = 'snacks';
 //const SUBCATEGORY = 'drinks-and-food';
-//const NEWCATEGORY = 'soft-drinks/soda';
+const NEWCATEGORY = 'soft-drinks/soda';
 //const NEWCATEGORY = 'tyres';
-const NEWCATEGORY = 'printers/laser-color';
+//const NEWCATEGORY = 'printers/laser-color';
 
 
 beforeEach(() => {

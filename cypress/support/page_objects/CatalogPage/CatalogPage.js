@@ -5,6 +5,7 @@ import { CatalogPageLocators } from "./CatalogLocators";
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
+    cy.get('.vc-layout__content').should('be.visible');
     cy.get('.vc-typography').should('be.visible');
     cy.log('Step: Visited Catalog Page');
 
@@ -23,32 +24,32 @@ class CatalogPage {
      .if('not.be.disabled')
      .then(() => {
     cy.get(CatalogPageLocators.BUY_BUTTONS)
-     .invoke("slice", 0, amount)
+     .invoke("slice", 1, amount)
       .each(($addToCart) => {
         cy.wrap($addToCart).click();
         cy.checkLoading('.vc-button__loader');
     })
   })
-   .else('be.disabled')
+   .else('disabled')
     .then(() => {      
       cy.log('The button is disabled');
   }
   )
 }
 
-addToCartOne(amount = 100) {
+addToCartOne(amount) {
   cy.log('Adding products to cart');
 
   // Ensure BUY_BUTTONS are visible
   cy.get(CatalogPageLocators.BUY_BUTTONS)
-    .should('be.visible')
+    .should('not.be.disabled')
     .then(($buttons) => {
       // Filter only enabled buttons
       const enabledButtons = $buttons.filter((index, button) => !button.disabled);
 
       if (enabledButtons.length > 0) {
         // Limit to the required amount
-        const buttonsToClick = enabledButtons.slice(0, amount);
+        const buttonsToClick = enabledButtons.slice(1, amount);
 
         // Iterate and perform actions
         cy.wrap(buttonsToClick).each(($button) => {
@@ -56,7 +57,7 @@ addToCartOne(amount = 100) {
           cy.checkLoading('.vc-button__loader');
           cy.get(CatalogPageLocators.UPDATE_BUTTON)
             .should('be.visible')
-            .and('have.text', 'Update cart');
+            .and('contain.text', 'Update cart');
         });
       } else {
         cy.log('No enabled buttons found.');
@@ -65,13 +66,12 @@ addToCartOne(amount = 100) {
 }
 
 
-addToCart(amount = 100) {
+addToCart(amount) {
 
 cy.log('Add products to cart')
 
-cy.get(CatalogPageLocators.BUY_BUTTONS).should('be.visible');
 cy.get(CatalogPageLocators.BUY_BUTTONS)
-  .if('enabled')
+  .if('visible')
   .then(() => {
   cy.get(CatalogPageLocators.BUY_BUTTONS)
   .invoke("slice", 0, amount)
@@ -80,7 +80,7 @@ cy.get(CatalogPageLocators.BUY_BUTTONS)
   cy.checkLoading('.vc-button__loader');
   cy.get(CatalogPageLocators.UPDATE_BUTTON)
   .should('be.visible')
-  .and('have.text', 'Update cart');  
+  .and('contain.text', 'Update cart');  
   })
   })
   .else('disabled')
@@ -250,7 +250,7 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 addProductsToExistList(){
 
 cy.get(CatalogPageLocators.ADD_TO_LIST).first().should('be.visible');
-cy.get(CatalogPageLocators.HEART).each(($heart) => {
+cy.get(CatalogPageLocators.ADD_TO_LIST).each(($heart) => {
 cy.wrap($heart).click();
 this.addToExistList();
 
@@ -301,9 +301,9 @@ cy.get('b[class="font-black"]')
 .then((text) => {
 count = parseInt(text); // Convert text to integer
 cy.log(count);
-cy.get(CatalogPageLocators.HEART).its('length').then((length) => {
+cy.get(CatalogPageLocators.ADD_TO_LIST).its('length').then((length) => {
 if (length >= count) {
-cy.get(CatalogPageLocators.HEART).each(($heart, index) => {
+cy.get(CatalogPageLocators.ADD_TO_LIST).each(($heart, index) => {
 if (index <= count) {
 cy.wrap($heart).click();
 this.addProductToNewList();

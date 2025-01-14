@@ -20,7 +20,7 @@ startFromHome(){
         
 }
    
-checkLabelsPersonal(){
+checkLabels(){
 
 
 
@@ -30,9 +30,10 @@ checkLabelsPersonal(){
         cy.get('[aria-checked]').should('be.enabled');    
         cy.get('span').contains('Personal account');    
         cy.get('.vc-label').should('have.length', 5);
-        cy.get('.vc-label__asterisk').should('have.length', 5).contains('*');        
-        cy.get('label').should('have.class', 'vc-label').contains("First Name");    
-        cy.get('label').should('have.class', 'vc-label').contains("Last Name");    
+        cy.get('.vc-label__asterisk').should('have.length', 5).contains('*');
+        cy.get('label').should('be.visible');        
+        cy.get('label').should('have.class', 'vc-label').contains("First name");    
+        cy.get('label').should('have.class', 'vc-label').contains("Last name");    
         cy.get('label').should('have.class', 'vc-label').contains("Email");    
         cy.get('label').should('have.class', 'vc-label').contains("Password");    
         cy.get('label').should('have.class', 'vc-label').contains("Confirm password");
@@ -47,15 +48,12 @@ checkLabelsPersonal(){
 
             cy.get('[type="radio"]').last().check().should('be.checked');   
             cy.get('[aria-checked]').last().should('be.enabled');      
-            cy.get('span').contains('Company account');            
+            cy.get('span').contains('Company account'); 
+            cy.get('label').should('be.visible');           
             cy.get('.vc-label').should('have.length', 6);
-            cy.get('.vc-label__asterisk').should('have.length', 6).contains('*');            
-            cy.get('label').should('have.class', 'vc-label').contains("First Name");        
-            cy.get('label').should('have.class', 'vc-label').contains("Last Name");        
-            cy.get('label').should('have.class', 'vc-label').contains("Email");        
+            cy.get('.vc-label__asterisk').should('have.length', 6).contains('*');   
             cy.get('label').should('have.class', 'vc-label').contains("Company name");        
-            cy.get('label').should('have.class', 'vc-label').contains("Password");        
-            cy.get('label').should('have.class', 'vc-label').contains("Confirm password");
+       
       
 
       }

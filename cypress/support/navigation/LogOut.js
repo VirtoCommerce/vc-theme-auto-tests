@@ -4,6 +4,7 @@ class LogOut{
 
 signOut(user_name){
 
+cy.scrollTo('top');
 cy.get('span[class="font-bold"]').contains(user_name).should('be.visible').click();
 cy.contains('span', user_name).should('be.visible');
 cy.get('button[title="Logout"]').should('be.visible').click(); 

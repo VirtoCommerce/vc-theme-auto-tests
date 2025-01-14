@@ -83,6 +83,7 @@ class LoginPage {
     const storedValue = win.localStorage.getItem('auth');
     cy.log(storedValue);
     cy.log('The token is saved')
+    cy.get('.main-layout__content').should('be.visible');
     });   
   }
 
