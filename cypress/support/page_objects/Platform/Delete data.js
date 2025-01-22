@@ -2,8 +2,6 @@
 
 class DeleteData {
 
-
-
   deleteUsers(userEmail, authToken) {
 
     const url1 = `${Cypress.env('BASE_URL')}/api/platform/security/users`;
@@ -22,7 +20,6 @@ class DeleteData {
       cy.log('Delete user response:', response.body);
     });
   }
-
 
   deleteContact(auth_token) {
 
