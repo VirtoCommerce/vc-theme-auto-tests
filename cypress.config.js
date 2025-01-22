@@ -17,7 +17,12 @@ module.exports = defineConfig({
     CVV: process.env.CVV,
 
     PLATFORM_URL: process.env.PLATFORM_URL,
+    BASE_URL: process.env.BASE_URL,
     DEVICE_NAME: process.env.DEVICE_NAME,
+
+    ADMIN_NAME: process.env.ADMIN_NAME,
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    ADMIN_TOKEN: process.env.ADMIN_TOKEN,
   },
 
   e2e: {

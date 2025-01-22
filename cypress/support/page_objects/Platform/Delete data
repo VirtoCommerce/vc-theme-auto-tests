@@ -1,0 +1,84 @@
+
+
+class DeleteData {
+
+
+
+  deleteUsers(userEmail, authToken) {
+
+    const url1 = `${Cypress.env('BASE_URL')}/api/platform/security/users`;
+    const email = userEmail;
+
+    cy.request({
+      method: 'DELETE',
+      url: `${url1}?names=${encodeURIComponent(email)}`,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('succeeded', true);
+      cy.log('Delete user response:', response.body);
+    });
+  }
+
+
+  deleteContact(auth_token) {
+
+    const baseUrl = `${Cypress.env('BASE_URL')}/api/members`;
+
+    // Read MEMBER_ID from the file
+    cy.readFile('cypress/fixtures/data.json').then((data) => {
+      const memberId = data.MEMBER_ID;
+      if (!memberId) {
+        cy.log('MEMBER_ID is not defined in data.json');
+      }
+      cy.log('Retrieved MEMBER_ID:', memberId);
+
+      cy.request({
+        method: 'DELETE',
+        url: `${baseUrl}?ids=${memberId}`,
+        headers: {
+          Authorization: `Bearer ${auth_token}`,
+          'Content-Type': 'application/json',
+        },
+      }).then((response) => {
+        // Validate the response
+        expect(response.status).to.eq(204);
+        cy.log('Member deleted successfully:', memberId);
+      });
+    });
+
+
+  }
+
+  deleteOrganization(authToken) {
+
+    const baseUrl = `${Cypress.env('BASE_URL')}/api/organizations`;    
+    // Read COMPANY_ID from the file
+    cy.readFile('cypress/fixtures/data.json').then((data) => {
+      const orgId = data.COMPANY_ID;
+      if (!orgId) {
+        cy.log('COMPANY_ID is not defined in data.json');
+      }
+      cy.log('Retrieved COMPANY_ID:', orgId);
+      cy.request({
+        method: 'DELETE',
+        url: `${baseUrl}?ids=${orgId}`,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      }).then((response) => {
+
+        expect(response.status).to.eq(204);
+
+      });
+    });
+
+    }
+}
+
+export default DeleteData;
+

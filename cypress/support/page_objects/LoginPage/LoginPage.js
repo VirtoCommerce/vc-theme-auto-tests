@@ -80,8 +80,10 @@ class LoginPage {
     cy.url().should('include', '/');      
     cy.log('Check token in LocalStorage')
     cy.window().then((win) => {
-    const storedValue = win.localStorage.getItem('auth');
-    cy.log(storedValue);
+    const authToken = win.localStorage.getItem('auth');
+    Cypress.env('AUTH_TOKEN', authToken);
+    cy.log('Saved auth_token:', authToken);
+    cy.log(authToken);
     cy.log('The token is saved')
     cy.get('.main-layout__content').should('be.visible');
     });   
