@@ -1,3 +1,15 @@
 {
-  "COMPANY_ID": "615616f2-99ba-4ce2-b39e-a8c070044905"
+  "env": [
+    {
+      "MEMBER_ID": "eb287dac-de1e-40f1-9c88-39187f54c5c3",
+      "COMPANY_ID": "457173fc-ed75-4126-aedb-8cb9d2f66674"
+    }
+  ],
+  "user": [
+    {
+      "USER_ID": "5c56d93f-2063-4fa5-ae4b-8982c2a22c30",
+      "USER_TOKEN": "CfDJ8LcceMzsc4pGjHf8INYLpYCSVW1R88VeT7PeWmVrdyrakdhmWtuo35SiBVJdjDybrqw6V%2FO7SXuJrsOMP73BE8B5MuUJd40%2FqLO8d58c5CCK5T%2BSUtiN9Dmuc5gO0dp9al3WJOlREqplLn3aB%2BsSRxNHb2cZK4%2BcTJ62dRzzg%2FvFZ%2FMS%2BKMLCO6vWnYEoPXXt%2BmyLR5cMfpRyA0DE3kNMwKjmB7JpcXXTjDPPjTB0cfS06b4qf%2FUry1jXiFpOa3PMQ%3D%3D",
+      "URL": "https://vcptcore-qa-storefront.govirto.com/account/confirmemail?UserId=5c56d93f-2063-4fa5-ae4b-8982c2a22c30&Token=CfDJ8LcceMzsc4pGjHf8INYLpYCSVW1R88VeT7PeWmVrdyrakdhmWtuo35SiBVJdjDybrqw6V%2FO7SXuJrsOMP73BE8B5MuUJd40%2FqLO8d58c5CCK5T%2BSUtiN9Dmuc5gO0dp9al3WJOlREqplLn3aB%2BsSRxNHb2cZK4%2BcTJ62dRzzg%2FvFZ%2FMS%2BKMLCO6vWnYEoPXXt%2BmyLR5cMfpRyA0DE3kNMwKjmB7JpcXXTjDPPjTB0cfS06b4qf%2FUry1jXiFpOa3PMQ%3D%3D"
+    }
+  ]
 }

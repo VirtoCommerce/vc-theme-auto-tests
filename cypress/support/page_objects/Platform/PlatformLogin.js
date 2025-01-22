@@ -83,8 +83,12 @@ class Platform {
             if (responseData.results.length > 0) {
                 const firstMemberId = responseData.results[0].id;
                 // Write MEMBER_ID to a JSON file
-                cy.writeFile('cypress/fixtures/data.json', { "MEMBER_ID": firstMemberId });
-                cy.log('MEMBER_ID saved to file', firstMemberId);
+                cy.readFile('cypress/fixtures/data.json').then((data) => {
+                    data.env[0].MEMBER_ID = firstMemberId;
+                    // Save back to the file
+                    cy.writeFile('cypress/fixtures/data.json', data);
+                    cy.log('Updated MEMBER_ID in the JSON file.');
+                });
 
             } else {
                 cy.log('No members found matching the keyword.');
@@ -131,8 +135,12 @@ class Platform {
             if (responseData.results.length > 0) {
                 const firstMemberId = responseData.results[0].id;
                 // Write COMPANY_ID to a JSON file
-                cy.writeFile('cypress/fixtures/data.json', { "COMPANY_ID": firstMemberId });
-                cy.log('COMPANY_ID saved to file', firstMemberId);
+                cy.readFile('cypress/fixtures/data.json').then((data) => {
+                    data.env[0].COMPANY_ID = firstMemberId;
+                    // Save back to the file
+                    cy.writeFile('cypress/fixtures/data.json', data);
+                    cy.log('COMPANY_ID saved to file', firstMemberId);
+                });
 
             } else {
                 cy.log('No members found matching the keyword.');

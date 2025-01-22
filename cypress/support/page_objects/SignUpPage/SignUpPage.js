@@ -100,6 +100,20 @@ companyRegistration(){
 
 }
 
+confirmEmail() {
+        cy.fixture('data').then((data) => {
+        const url = data.user[0].URL;      
+        cy.visit(url);
+        cy.get('.vc-typography--variant--h1').should('be.visible');
+        cy.get('.vc-typography--variant--h1').contains('Email confirmation');
+        cy.get('.vc-button').should('be.exist');
+        cy.log('Email confirmed:', url);
+        cy.get('a[href="/sign-in"]').contains('Sign in').click();
+        cy.location('pathname').should('eq', "/sign-in"); 
+       
+        });
+    }
+
 }
 
 export default SignUpPage;

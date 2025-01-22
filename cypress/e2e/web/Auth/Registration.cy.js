@@ -4,6 +4,7 @@ import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import userData from "../../Variables/userData";
 import DeleteData from "../../../support/page_objects/Platform/Delete data";
 import Platform from "../../../support/page_objects/Platform/PlatformLogin";
+import RegistrationNotificationTests from "../../../support/page_objects/Platform/Notifications";
 
 
 
@@ -111,3 +112,112 @@ describe('Successful registration', () => {
   })
 
 })
+
+describe('Registration Notification Tests', () => {
+
+  const platform = new Platform();
+
+  beforeEach(() => {
+    cy.log('Logging to platform. Get admin token');
+    AuthLogin.setDimensions();
+    platform.loginPlatform();
+    cy.wait(1000);
+    platform.getAdminToken();
+
+  });
+
+  const baseUrl = Cypress.env('BASE_URL');
+  const customerEmail1 = userData.userData[0].email;
+  const customerEmail2 = userData.userData[1].email;
+  const tests = new RegistrationNotificationTests(baseUrl);
+
+  it('should validate registration notification email', () => {
+
+    const token = Cypress.env('ADMIN_TOKEN');
+    tests.validateNotificationEmail(customerEmail1, token);
+    tests.extractAndSaveUserId(customerEmail1, token);
+    tests.extractAndSaveToken(customerEmail1, token);
+    tests.extractAndSaveLastUrl(customerEmail1, token);
+  });
+
+  it('should validate registration notification email', () => {
+
+    const token = Cypress.env('ADMIN_TOKEN');
+    tests.validateNotificationEmail(customerEmail2, token);
+    tests.extractAndSaveUserId(customerEmail2, token);
+    tests.extractAndSaveToken(customerEmail2, token);
+    tests.extractAndSaveLastUrl(customerEmail2, token);
+  });
+
+
+});
+
+describe('Confirm Email: Personal account', () => {
+
+  beforeEach(() => {
+
+    cy.log('Clearing cookies and local storage');
+    cy.clearCookies();
+    cy.clearLocalStorage();
+    AuthLogin.setDimensions();
+  });
+
+  const signUpPage = new SignUpPage();  
+
+  it('should Confirm email', () => {
+  signUpPage.confirmEmail();
+
+  });
+
+
+});
+
+describe('Registration Notification Tests', () => {
+
+  const platform = new Platform();
+
+  beforeEach(() => {
+    cy.log('Logging to platform. Get admin token');
+    AuthLogin.setDimensions();
+    platform.loginPlatform();
+    cy.wait(1000);
+    platform.getAdminToken();
+
+  });
+
+  const baseUrl = Cypress.env('BASE_URL');
+  const customerEmail1 = userData.userData[0].email;
+  const customerEmail2 = userData.userData[1].email;
+  const tests = new RegistrationNotificationTests(baseUrl);
+
+  it('should validate registration notification email', () => {
+
+    const token = Cypress.env('ADMIN_TOKEN');
+    tests.validateNotificationEmail(customerEmail2, token);
+    tests.extractAndSaveUserId(customerEmail2, token);
+    tests.extractAndSaveToken(customerEmail2, token);
+    tests.extractAndSaveLastUrl(customerEmail2, token);
+  });
+
+
+});
+
+describe('Confirm Email: Company', () => {
+
+  beforeEach(() => {
+
+    cy.log('Clearing cookies and local storage');
+    cy.clearCookies();
+    cy.clearLocalStorage();
+    AuthLogin.setDimensions();
+  });
+
+  const signUpPage = new SignUpPage();  
+
+  it('should Confirm email', () => {
+  signUpPage.confirmEmail();
+
+  });
+
+
+});
