@@ -80,15 +80,15 @@ class Platform {
             expect(responseData).to.have.property('results').that.is.an('array');
 
             // Log the first result for debugging
-            if (responseData.results.length > 0) {            
-                    const firstMemberId = responseData.results[0].id;
-                    // Write MEMBER_ID to a JSON file
-                    cy.writeFile('cypress/fixtures/data.json', { "MEMBER_ID": firstMemberId });
-                    cy.log('MEMBER_ID saved to file', firstMemberId);
+            if (responseData.results.length > 0) {
+                const firstMemberId = responseData.results[0].id;
+                // Write MEMBER_ID to a JSON file
+                cy.writeFile('cypress/fixtures/data.json', { "MEMBER_ID": firstMemberId });
+                cy.log('MEMBER_ID saved to file', firstMemberId);
 
-                } else {
-                    cy.log('No members found matching the keyword.');
-                }           
+            } else {
+                cy.log('No members found matching the keyword.');
+            }
 
         });
 

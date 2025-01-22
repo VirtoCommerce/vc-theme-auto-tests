@@ -20,6 +20,7 @@ describe('Delete personal and company account from admin site', () => {
     cy.log('Logging to platform. Get admin token');
     AuthLogin.setDimensions();
     platform.loginPlatform();
+    cy.wait(1000);
     platform.getAdminToken();
 
   });
