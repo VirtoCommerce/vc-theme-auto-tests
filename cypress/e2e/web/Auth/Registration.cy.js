@@ -32,6 +32,7 @@ describe('Delete personal and company account from admin site', () => {
     cy.log('Starting deletion of the user');
     deleteData.deleteUsers(userData.userData[0].email, token);
     cy.log('Deleting  ContactId for the user');
+    platform.getContactId(userData.userData[0].user_name, token);
     deleteData.deleteContact(token);
 
   })
@@ -113,7 +114,7 @@ describe('Successful registration', () => {
 
 })
 
-describe('Registration Notification Tests', () => {
+describe('Confirmation Email Notification. Set confirmation url for Personal account', () => {
 
   const platform = new Platform();
 
@@ -127,8 +128,7 @@ describe('Registration Notification Tests', () => {
   });
 
   const baseUrl = Cypress.env('BASE_URL');
-  const customerEmail1 = userData.userData[0].email;
-  const customerEmail2 = userData.userData[1].email;
+  const customerEmail1 = userData.userData[0].email;  
   const tests = new RegistrationNotificationTests(baseUrl);
 
   it('should validate registration notification email', () => {
@@ -138,15 +138,6 @@ describe('Registration Notification Tests', () => {
     tests.extractAndSaveUserId(customerEmail1, token);
     tests.extractAndSaveToken(customerEmail1, token);
     tests.extractAndSaveLastUrl(customerEmail1, token);
-  });
-
-  it('should validate registration notification email', () => {
-
-    const token = Cypress.env('ADMIN_TOKEN');
-    tests.validateNotificationEmail(customerEmail2, token);
-    tests.extractAndSaveUserId(customerEmail2, token);
-    tests.extractAndSaveToken(customerEmail2, token);
-    tests.extractAndSaveLastUrl(customerEmail2, token);
   });
 
 
@@ -162,17 +153,17 @@ describe('Confirm Email: Personal account', () => {
     AuthLogin.setDimensions();
   });
 
-  const signUpPage = new SignUpPage();  
+  const signUpPage = new SignUpPage();
 
   it('should Confirm email', () => {
-  signUpPage.confirmEmail();
+    signUpPage.confirmEmail();
 
   });
 
 
 });
 
-describe('Registration Notification Tests', () => {
+describe('Confirmation Email Notification. Set confirmation url for Company account', () => {
 
   const platform = new Platform();
 
@@ -185,8 +176,7 @@ describe('Registration Notification Tests', () => {
 
   });
 
-  const baseUrl = Cypress.env('BASE_URL');
-  const customerEmail1 = userData.userData[0].email;
+  const baseUrl = Cypress.env('BASE_URL'); 
   const customerEmail2 = userData.userData[1].email;
   const tests = new RegistrationNotificationTests(baseUrl);
 
@@ -212,10 +202,10 @@ describe('Confirm Email: Company', () => {
     AuthLogin.setDimensions();
   });
 
-  const signUpPage = new SignUpPage();  
+  const signUpPage = new SignUpPage();
 
   it('should Confirm email', () => {
-  signUpPage.confirmEmail();
+    signUpPage.confirmEmail();
 
   });
 

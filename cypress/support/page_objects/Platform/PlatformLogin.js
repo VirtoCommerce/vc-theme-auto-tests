@@ -51,7 +51,6 @@ class Platform {
 
     getContactId(memberName, authToken) {
 
-
         const endpoint = `${Cypress.env('BASE_URL')}/api/members/search`;
         const payload = {
             memberId: null,
@@ -62,7 +61,7 @@ class Platform {
             take: 20,
             objectType: "Member",
         };
-
+        
         cy.request({
             method: 'POST',
             url: endpoint,
@@ -72,49 +71,54 @@ class Platform {
             },
             body: payload,
         }).then((response) => {
-
             expect(response.status).to.eq(200);
-            // Validate the response structure
             const responseData = response.body;
             expect(responseData).to.have.property('totalCount').that.is.a('number');
             expect(responseData).to.have.property('results').that.is.an('array');
-
-            // Log the first result for debugging
+            cy.log('Total count results:', responseData.totalCount);
+        
             if (responseData.results.length > 0) {
-                const firstMemberId = responseData.results[0].id;
-                // Write MEMBER_ID to a JSON file
+                const memberIds = responseData.results.map(result => result.id);
+        
                 cy.readFile('cypress/fixtures/data.json').then((data) => {
-                    data.env[0].MEMBER_ID = firstMemberId;
-                    // Save back to the file
-                    cy.writeFile('cypress/fixtures/data.json', data);
-                    cy.log('Updated MEMBER_ID in the JSON file.');
+                    if (!data.env) {
+                        data.env = [];
+                    }
+                    if (!data.env[0]) {
+                        data.env[0] = {};
+                    }
+                    if (!data.env[0].MEMBER_ID) {
+                        data.env[0].MEMBER_ID = [];
+                    }
+        
+                    memberIds.forEach(id => {
+                        data.env[0].MEMBER_ID.push(id);
+                    });
+        
+                    cy.writeFile('cypress/fixtures/data.json', data).then(() => {
+                        cy.log('Updated MEMBER_ID in the JSON file.');
+                    });
                 });
-
             } else {
                 cy.log('No members found matching the keyword.');
             }
-
         });
-
-
-
     }
 
 
-    getOrganizationtId(orgName, authToken) {
-
+    getOrganizationtId(OrgName, authToken) {
 
         const endpoint = `${Cypress.env('BASE_URL')}/api/members/search`;
         const payload = {
             memberId: null,
-            keyword: orgName,
+            keyword: OrgName,
             deepSearch: true,
             sort: "",
             skip: 0,
             take: 20,
             objectType: "Member",
         };
-
+        
         cy.request({
             method: 'POST',
             url: endpoint,
@@ -124,36 +128,39 @@ class Platform {
             },
             body: payload,
         }).then((response) => {
-
             expect(response.status).to.eq(200);
-            // Validate the response structure
             const responseData = response.body;
             expect(responseData).to.have.property('totalCount').that.is.a('number');
             expect(responseData).to.have.property('results').that.is.an('array');
-
-            // Log the first result for debugging
+            cy.log('Total count results:', responseData.totalCount);
+        
             if (responseData.results.length > 0) {
-                const firstMemberId = responseData.results[0].id;
-                // Write COMPANY_ID to a JSON file
+                const memberIds = responseData.results.map(result => result.id);
+        
                 cy.readFile('cypress/fixtures/data.json').then((data) => {
-                    data.env[0].COMPANY_ID = firstMemberId;
-                    // Save back to the file
-                    cy.writeFile('cypress/fixtures/data.json', data);
-                    cy.log('COMPANY_ID saved to file', firstMemberId);
+                    if (!data.env) {
+                        data.env = [];
+                    }
+                    if (!data.env[0]) {
+                        data.env[0] = {};
+                    }
+                    if (!data.env[0].COMPANY_ID) {
+                        data.env[0].COMPANY_ID = [];
+                    }
+        
+                    memberIds.forEach(id => {
+                        data.env[0].COMPANY_ID.push(id);
+                    });
+        
+                    cy.writeFile('cypress/fixtures/data.json', data).then(() => {
+                        cy.log('Updated COMPANY_IDin the JSON file.');
+                    });
                 });
-
             } else {
                 cy.log('No members found matching the keyword.');
             }
-
-
-        });
-
-
-
+        }); 
     }
-
-
 
 }
 
