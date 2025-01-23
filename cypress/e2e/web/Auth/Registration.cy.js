@@ -55,11 +55,9 @@ describe('Delete personal and company account from admin site', () => {
 
 describe('Successful registration', () => {
 
-  // Initializing Page Objects
   const signUpPage = new SignUpPage();
   const loginPage = new LoginPage();
   const platform = new Platform();
-
 
   // This block runs before each test
   beforeEach(() => {
