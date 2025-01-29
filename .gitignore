@@ -2,3 +2,4 @@
 .env
 node_modules
 cypress/fixtures
+cypress/fixtures/data.json
