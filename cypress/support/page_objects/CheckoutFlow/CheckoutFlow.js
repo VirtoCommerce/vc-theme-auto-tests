@@ -16,28 +16,28 @@ export class AnonymousCheckout {
 
  fillShippingAddress() {
     cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
-    cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
-    cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
-    cy.contains('div', 'Email').find('input').type(testData.shipping.email);
+    cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
+    cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
+    cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
     cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
     cy.contains('li', testData.shipping.country).click();
-    cy.contains('div', 'ZIP / Postal code').find('input').type(testData.shipping.postCode);
-    cy.contains('div', 'City').find('input').type(testData.shipping.city);
-    cy.contains('div', 'Address').find('input').type(testData.shipping.address);
+    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
+    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
+    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
 
     cy.contains('button', 'Create').click();
   }
 
   fillBillingAddress(){
     cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
-    cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
-    cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
-    cy.contains('div', 'Email').find('input').type(testData.shipping.email);
+    cy.contains('input', 'First Name').type(testData.shipping.firstName);
+    cy.contains('input', 'Last Name').type(testData.shipping.lastName);
+    cy.contains('input', 'Email').type(testData.shipping.email);
     cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
     cy.contains('li', testData.shipping.country).click();
-    cy.contains('div', 'ZIP / Postal code').find('input').type(testData.shipping.postCode);
-    cy.contains('div', 'City').find('input').type(testData.shipping.city);
-    cy.contains('div', 'Address').find('input').type(testData.shipping.address);
+    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
+    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
+    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
 
     cy.contains('button', 'Create').click();
   }
@@ -74,7 +74,9 @@ export class AnonymousCheckout {
   }
 
   isCompleted() {
+    cy.wait(1000);
     cy.url().should('include', '/checkout/completed');
+    cy.contains('h1', 'Order completed');
   }
 }
 
@@ -94,15 +96,17 @@ export class PersonalCheckout {
 
       cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();     
       
-      //cy.contains('button', 'Add new address').click();
-      cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
-      cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
-      cy.contains('div', 'Email').find('input').type(testData.shipping.email);
+      //cy.contains('button', 'Add new address').click();      
+      //cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
+      cy.get('.vc-dialog-header__title').contains('New address').should('be.visible');
+      cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
+      cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
+      cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
       cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
       cy.contains('li', testData.shipping.country).click();
-      cy.contains('div', 'ZIP / Postal code').find('input').type(testData.shipping.postCode);
-      cy.contains('div', 'City').find('input').type(testData.shipping.city);
-      cy.contains('div', 'Address').find('input').type(testData.shipping.address);
+      cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
+      cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
+      cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
   
       cy.contains('button', 'Create').click();
   
@@ -161,14 +165,15 @@ cy.contains('Billing');
     cy.contains('button', 'Select a billing address').click();
     cy.wait(5000);
     //cy.contains('button', 'Add new address').click();
-    cy.contains('div', 'First Name').find('input').type(testData.shipping.firstName);
-    cy.contains('div', 'Last Name').find('input').type(testData.shipping.lastName);
-    cy.contains('div', 'Email').find('input').type(testData.shipping.email);
+    cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
+    cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
+    cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
+    cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
     cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
     cy.contains('li', testData.shipping.country).click();
-    cy.contains('div', 'ZIP / Postal code').find('input').type(testData.shipping.postCode);
-    cy.contains('div', 'City').find('input').type(testData.shipping.city);
-    cy.contains('div', 'Address').find('input').type(testData.shipping.address);
+    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
+    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
+    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
 
     cy.contains('button', 'Create').click();
 
@@ -211,12 +216,12 @@ fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
 cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
 cy.get('input[class="vc-input__input"]').eq(1).type(name);
 cy.get('input[class="vc-input__input"]').eq(2).type(date);
-cy.contains('div', 'Security Code').find('input').type(cvv);     
+cy.get('input[data-test-id="security-code-input"]').type(cvv);     
    
 }
 
 pay() {
-cy.contains('button', 'Pay Now').click();
+cy.get('button[data-test-id="pay-now-button"]').click();
 }
 
 isPayed() {

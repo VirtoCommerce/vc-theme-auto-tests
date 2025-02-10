@@ -93,7 +93,7 @@ Cypress.Commands.add('confirmDelete', () => {
 cy.wait(500);
 cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Confirm Delete");
 cy.contains('.vc-button--color--danger', "Delete").click();
-cy.wait(500);
+cy.wait(1000);
 cy.contains(CartPageLocators.DIALOG_TITLE, 'Confirm Delete').should('not.exist');
 cy.log('The deletion completed');
     

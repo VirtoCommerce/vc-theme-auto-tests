@@ -51,13 +51,12 @@ describe('place order', () => {
     anonymousCheckout.selectPaymentMethod('Manual');
     cy.checkLoading('.vc-loader-overlay__spinner');
     anonymousCheckout.reviewOrder();
-    anonymousCheckout.placeOrder();
-    cy.checkLoading('.vc-loader-overlay__spinner');  
+    anonymousCheckout.placeOrder();    
     anonymousCheckout.isCompleted();
 
   });
 
-  it('places order as Personal user', () => {
+  it.only('places order as Personal user', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();

@@ -84,7 +84,7 @@ const randomNumber = Lists_data.getRandomNumber();
 const randomWord = Lists_data.getRandomWord();
 
 cy.log('Edit list');
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', "List Settings");
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.get('input[aria-checked="false"]').should('have.value', 'false');
 cy.contains('button', 'Make shared');
 cy.contains('button', 'Save').should('be.disabled');
@@ -94,7 +94,7 @@ cy.get('textarea').clear();
 cy.get('textarea').type(list_description + ' ' + randomWord + randomNumber);
 this.toggleSwitcher();
 cy.get(CartPageLocators.DIALOG_FOOTER).should('be.enabled').click();
-cy.contains(CartPageLocators.DIALOG_TITLE, "List Settings").should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
 cy.log('The name of list is updated');
 
 }

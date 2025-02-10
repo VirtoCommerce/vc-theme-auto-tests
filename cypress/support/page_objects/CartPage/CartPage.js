@@ -63,7 +63,7 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
   cy.contains('button', 'Clear cart').click();
   cy.contains(CartPageLocators.DIALOG_TITLE, "Clear cart").should('be.visible');
   cy.clickOnButton('Yes');
-  cy.contains('h2', 'Your cart is empty').should('be.visible');
+  cy.contains('div', 'Your cart is empty').should('be.visible');
   cy.log('The cart is cleared');
 })
 .else()

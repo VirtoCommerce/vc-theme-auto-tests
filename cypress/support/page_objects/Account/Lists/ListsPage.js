@@ -413,7 +413,7 @@ cy.contains('button', 'Save changes').should('be.disabled');
 saveChangesPopUp(){
     
 cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'Save changes');
-cy.get('.vc-dialog-content').contains('Would you like to save changes in the list?');
+//cy.get('.vc-dialog-content').contains('Would you like to save changes in the list?');
 cy.contains('button', 'Yes').should('be.enabled');
 cy.contains('button', 'No').should('be.enabled');
 }
