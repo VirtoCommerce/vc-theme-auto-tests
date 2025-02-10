@@ -14,6 +14,7 @@ COUNTER: '.gap-2 > .vc-badge > .vc-badge__content',
 LINE_ITEM: '.vc-line-item',
 LIST_OF_LISTS: 'div[class="ml-4 flex items-center space-x-2 overflow-hidden text-ellipsis px-3 text-sm"]',
 CURRENT_PAGE: '[aria-current]',
-SWITCHER_LABEL: 'button[class="vc-switch__label"]'
+SWITCHER_LABEL: 'button[class="vc-switch__label"]',
+LIST_SETTINGS: "List settings"
 
 }

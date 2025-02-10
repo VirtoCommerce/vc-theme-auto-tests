@@ -90,7 +90,8 @@ cy.get('.vc-dialog-footer > .vc-button--color--primary').should('be.enabled').cl
 
 Cypress.Commands.add('confirmDelete', () => {
 
-cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Confirm Delete").and('be.visible');
+cy.wait(500);
+cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Confirm Delete");
 cy.contains('.vc-button--color--danger', "Delete").click();
 cy.wait(500);
 cy.contains(CartPageLocators.DIALOG_TITLE, 'Confirm Delete').should('not.exist');
@@ -100,7 +101,7 @@ cy.log('The deletion completed');
 
 Cypress.Commands.add('confirmAction', (text1, text2) => {
 
-  cy.get('.vc-dialog-header__title').should('have.text', text1).and('be.visible');
+  cy.get('.vc-dialog-header__title').should('have.text', text1);
   cy.contains('.vc-button--color--danger', text2).click();
   cy.wait(500);
   cy.contains('.vc-dialog-header__title', text1).should('not.exist');

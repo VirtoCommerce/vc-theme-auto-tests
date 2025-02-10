@@ -5,6 +5,7 @@ import { CatalogPageLocators } from "./CatalogLocators";
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
+    cy.wait(500);
     cy.get('.vc-layout__content').should('be.visible');
     cy.get('.vc-typography').should('be.visible');
     cy.log('Step: Visited Catalog Page');

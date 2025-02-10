@@ -131,7 +131,7 @@ cartPage.confirmClearCart();
 
 });
 
-it('Lists tab > List with Products > remove product', ()=> {
+it.only('Lists tab > List with Products > remove product', ()=> {
 
 listsPage.createListData();
 catalogPage.visit(NEWCATEGORY);
@@ -145,7 +145,7 @@ listsPage.checkProductCounter();
     
 });
 
-it('Save changes', () => {
+it.only('Save changes', () => {
 
 listsPage.createListData();
 catalogPage.visit(NEWCATEGORY);

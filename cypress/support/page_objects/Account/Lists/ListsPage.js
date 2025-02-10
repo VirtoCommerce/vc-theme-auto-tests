@@ -48,7 +48,7 @@ emptyListDetailPage(){
 cy.get('.vc-empty-view__text').should('have.text', 'Your list is empty');
 cy.contains('a', 'Continue browsing');
 cy.contains('button','Add all to cart').should('be.disabled');
-cy.contains('button', 'Save Changes').should('be.disabled');
+cy.contains('button', 'Save changes').should('be.disabled');
 cy.contains('button', 'List settings').should('be.enabled');
     
 }
@@ -175,14 +175,14 @@ cy.log('Edit list name');
 cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
 cy.get(ListsLocators.DROP_DOWN).should('be.visible');
 cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', "List Settings");
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.contains('button', 'Save').should('be.enabled').click();
-cy.contains(CartPageLocators.DIALOG_TITLE, "List Settings").should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
 cy.log('The name of list is updated');
 
 
@@ -192,14 +192,14 @@ editListFromDetailsPage(list_name, list_description){
 
 cy.log('Edit list from details page');
 cy.contains('button', 'List settings').should('be.enabled').click();
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', "List Settings");
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.contains('button', 'Save').should('be.disabled');
 cy.get('input[type="text"]').eq(1).clear();
 cy.get('input[type="text"]').eq(1).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.clickOnActiveDialogButton();
-cy.contains(CartPageLocators.DIALOG_TITLE, "List Settings").should('not.exist');
+cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
 cy.log('The name of list is updated');
     
 }
@@ -207,14 +207,18 @@ cy.log('The name of list is updated');
 
 compareListsNames(){
 
-cy.log('Compare list name in the left menue and current list title')
-cy.get('[aria-current]').eq(0)
-.invoke('text').then((text1) => {
-cy.get('.vc-typography').invoke('text').then((text2) => {
-expect(text1).to.equal(text2)
-cy.log('The lists title are equal');
-});
-});
+    const normalizeText = (text) => text.replace(/\s+/g, ' ').trim();
+
+    cy.get('[aria-current]').eq(0)
+      .invoke('text')
+      .then((text1) => {
+        cy.get('.vc-typography')
+          .invoke('text')
+          .then((text2) => {
+            expect(normalizeText(text1)).to.equal(normalizeText(text2));
+          });
+      });
+    
 
 }
 
@@ -249,7 +253,7 @@ checkListDetailsPage(){
 cy.log('check List Details Page');
 cy.get('.vc-empty-view__text').should('not.exist');
 cy.contains('button','Add all to cart').should('be.enabled');
-cy.contains('button', 'Save Changes').should('be.disabled');
+cy.contains('button', 'Save changes').should('be.disabled');
 cy.contains('button', 'List settings').should('be.enabled');
 cy.get('.vc-line-item').should('exist');
 
@@ -372,6 +376,7 @@ this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].descripti
 this.goToListDetailsPage();
 this.emptyListDetailPage();
 cy.clickOnContinue("Continue browsing");
+cy.location('pathname').should('eq', "/catalog");
 cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
 cy.get('.-mt-1').should('be.visible').and('contain', 'Catalog');
 
@@ -395,19 +400,19 @@ saveChanges(value){
     
 this.changeQuantity(1, 2);
 cy.wait(500);
-cy.contains('button', 'Save Changes').should('be.enabled').click();
+cy.contains('button', 'Save changes').should('be.enabled').click();
 this.saveChangesPopUp();
 cy.clickOnButton(value);
 cy.get(CartPageLocators.DIALOG_TITLE).should('not.exist');
 cy.wait(500);
-cy.contains('button', 'Save Changes').should('be.disabled');
+cy.contains('button', 'Save changes').should('be.disabled');
     
     
 }
     
 saveChangesPopUp(){
     
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'Save Changes');
+cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'Save changes');
 cy.get('.vc-dialog-content').contains('Would you like to save changes in the list?');
 cy.contains('button', 'Yes').should('be.enabled');
 cy.contains('button', 'No').should('be.enabled');
