@@ -65,7 +65,7 @@ createPersonalList(list_name, list_description){
 cy.log('Create a new list')
 cy.contains('button', 'Create list').click();
 cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
-cy.get('input[type="text"]').eq(1).type(list_name);
+cy.get('input[aria-label="List name"]').type(list_name);
 cy.get('textarea').type(list_description);
 cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
 cy.wait(500);
@@ -89,7 +89,7 @@ cy.contains('button', 'Create list')
 .then(() => {
 cy.contains('button', 'Create list').should('be.visible').click();
 cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
-cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
+cy.get(ListsLocators.LIST_NAME).type(randomWord + randomNumber);
 cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
 cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
 cy.wait(500);
@@ -177,8 +177,8 @@ cy.get(ListsLocators.DROP_DOWN).should('be.visible');
 cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
 cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.contains('button', 'Save').should('be.disabled');
-cy.get('input[type="text"]').eq(1).clear();
-cy.get('input[type="text"]').eq(1).type(list_name);
+cy.get(ListsLocators.LIST_NAME).clear();
+cy.get(ListsLocators.LIST_NAME).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.contains('button', 'Save').should('be.enabled').click();
@@ -194,8 +194,8 @@ cy.log('Edit list from details page');
 cy.contains('button', 'List settings').should('be.enabled').click();
 cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.contains('button', 'Save').should('be.disabled');
-cy.get('input[type="text"]').eq(1).clear();
-cy.get('input[type="text"]').eq(1).type(list_name);
+cy.get(ListsLocators.LIST_NAME).clear();
+cy.get(ListsLocators.LIST_NAME).type(list_name);
 cy.get('textarea').clear();
 cy.get('textarea').type(list_description);
 cy.clickOnActiveDialogButton();
