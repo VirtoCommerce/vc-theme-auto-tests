@@ -83,7 +83,8 @@ export class AnonymousCheckout {
 export class PersonalCheckout {
 
   checkShippingPage(){
-
+    
+    cy.wait(1000);
     cy.location('pathname').should('eq', "/checkout/shipping");
     cy.get('.vc-steps__item').should('have.length', 5);
     cy.contains('Shipping')
@@ -96,8 +97,7 @@ export class PersonalCheckout {
 
       cy.get('.vc-address-selection__link').should('have.text', 'select a shipping address').click();     
       
-      //cy.contains('button', 'Add new address').click();      
-      //cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
+       
       cy.get('.vc-dialog-header__title').contains('New address').should('be.visible');
       cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
       cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
@@ -162,10 +162,10 @@ cy.contains('Billing');
 
   addNewBillingAddress(){
 
-    cy.contains('button', 'Select a billing address').click();
-    cy.wait(5000);
-    //cy.contains('button', 'Add new address').click();
-    cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
+    cy.get('.vc-address-selection__link').should('have.text', 'Select a billing address');    
+    cy.get('button[data-test-id="select-address-button"]').click();
+    cy.get('.vc-dialog-header__title').contains('New address').should('be.visible');
+    //cy.contains('button', 'Add new address').click();    
     cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
     cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
     cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
@@ -233,8 +233,8 @@ checkCompletePage(){
 
 cy.url().should('include', '/checkout/completed');
 cy.contains('h1', 'Order completed');
-cy.contains('a', "Home Page").should('be.visible');
-cy.contains('a', 'Show order').should('be.visible').click();
+cy.get('.mt-6 > [href="/"]').should('be.visible');
+cy.contains('span', 'Show order').should('be.visible').click();
 cy.location().should((loc) => {
 expect(loc.href).to.include('/account/orders/')
 })

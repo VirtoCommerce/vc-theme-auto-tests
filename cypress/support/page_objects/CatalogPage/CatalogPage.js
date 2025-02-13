@@ -5,7 +5,7 @@ import { CatalogPageLocators } from "./CatalogLocators";
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
-    cy.wait(500);
+    cy.wait(1000);
     cy.get('.vc-layout__content').should('be.visible');
     cy.get('.vc-typography').should('be.visible');
     cy.log('Step: Visited Catalog Page');
@@ -41,29 +41,20 @@ class CatalogPage {
 addToCartOne(amount) {
   cy.log('Adding products to cart');
 
-  // Ensure BUY_BUTTONS are visible
   cy.get(CatalogPageLocators.BUY_BUTTONS)
-    .should('not.be.disabled')
-    .then(($buttons) => {
-      // Filter only enabled buttons
-      const enabledButtons = $buttons.filter((index, button) => !button.disabled);
-
-      if (enabledButtons.length > 0) {
-        // Limit to the required amount
-        const buttonsToClick = enabledButtons.slice(1, amount);
-
-        // Iterate and perform actions
-        cy.wrap(buttonsToClick).each(($button) => {
-          cy.wrap($button).click();
-          cy.checkLoading('.vc-button__loader');
-          cy.get(CatalogPageLocators.UPDATE_BUTTON)
-            .should('be.visible')
-            .and('contain.text', 'Update cart');
-        });
-      } else {
-        cy.log('No enabled buttons found.');
-      }
-    });
+  .should('be.visible') // Ensure at least one visible button exists
+  .not('[disabled]') // Filter out disabled buttons
+  .filter(':visible') // Ensure only visible buttons are selected
+  .each(($button, index) => {
+    if (index < amount) {
+      cy.wrap($button).click();
+      cy.checkLoading('.vc-button__loader');
+      cy.get(CatalogPageLocators.UPDATE_BUTTON)
+        .should('be.visible')
+        .and('contain.text', 'Update cart');
+    }
+  });
+  cy.log('Products have been added to the cart and the buttons changed state');
 }
 
 

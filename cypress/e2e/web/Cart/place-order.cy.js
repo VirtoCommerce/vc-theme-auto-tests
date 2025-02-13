@@ -1,6 +1,6 @@
 import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
-import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import CartPage from "../../../support/page_objects/CartPage/cartPage";
 import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
@@ -56,7 +56,7 @@ describe('place order', () => {
 
   });
 
-  it.only('places order as Personal user', () => {
+  it('places order as Personal user', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();

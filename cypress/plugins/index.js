@@ -1,15 +1,17 @@
 //import '../support/commands';
 require('dotenv').config();
 
+const TestRailReporter = require('cypress-testrail');
+
 module.exports = (on, config) => {
   config.env = config.env || {};
-  config.env.username = process.env.OPUS_LOGIN;
-  config.env.password = process.env.OPUS_PASSWORD;
+  config.env.username = process.env.LOGIN_CORP_EMAIL;
+  config.env.password = process.env.LOGIN_CORP_PASSWORD;
   return config;
 };
 
-console.log('OPUS_LOGIN:', process.env.OPUS_LOGIN);
-console.log('OPUS_PASSWORD:', process.env.OPUS_PASSWORD);
+console.log('CORP_LOGIN:', process.env.LOGIN_CORP_EMAIL);
+console.log('CORP_PASSWORD:', process.env.LOGIN_CORP_PASSWORD);
 
 
 module.exports = (on, config) => {
@@ -36,9 +38,8 @@ module.exports = (on, config) => {
   });
 };
 
-const TestRailReporter = require('cypress-testrail');
 
 module.exports = (on, config) => {
     new TestRailReporter(on, config).register();
-    return config
+    return config;
 };
