@@ -32,8 +32,8 @@ cy.get('button').contains('Yes').click();
 
 isCleared() {
 
-cy.contains('h2', 'Your cart is empty').should('be.visible');
-cy.contains('a', 'Continue shopping').should('be.visible');
+cy.contains('div', 'Your cart is empty').should('be.visible');
+cy.contains('span', 'Continue shopping').should('be.visible');
 
 
 }

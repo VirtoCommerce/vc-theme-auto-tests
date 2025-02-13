@@ -1,4 +1,4 @@
-import CartPage from "../../../support/page_objects/CartPage/CartPage";
+import CartPage from "../../../support/page_objects/CartPage/cartPage";
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
 import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
@@ -6,11 +6,10 @@ import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import TestData from "../../Variables/TestData";
 import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
+import Addresses from "../../../support/page_objects/Account/Addresses/Addresses";
 
 
 const CATEGORY_WITH_DIGITAL= 'soft-drinks/soda';
-//const CATEGORY_WITH_DIGITAL = 'courses-and-digital-products/digital-products';
-// const CATEGORY_WITH_SEVERAL_VENDORS = 'printers'
 
 describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON', () => {
 
@@ -21,6 +20,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     const personalCheckout = new PersonalCheckout();
     const anonymousCheckout = new AnonymousCheckout();
     const logOut = new LogOut();
+    const addresses = new Addresses();
 
 
     beforeEach(() => {
@@ -29,14 +29,15 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     cy.viewport(Cypress.env('DEVICE_NAME'));
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();
+    addresses.emtyOrNot();
 
     });
 
-    it.only('C378456: add mixed items > unselect physical products > create an order', () => {
+    it('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
     catalogPage.visit(CATEGORY_WITH_DIGITAL);
-    catalogPage.addToCartOne(5);
+    catalogPage.addToCartOne(10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -55,17 +56,16 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     //Checkout
     cartPage.checkout();
-    cy.checkLoading('.vc-loader-overlay__spinner');
-
+    cy.wait(500); 
     selectForCheckout.checkoutForDigitalProduct();
     personalCheckout.addNewBillingAddress();
     personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
     cy.checkLoading('.vc-loader-overlay__spinner');
-    personalCheckout.checkBillingPage();
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
-    personalCheckout.checkPaymentPage();
-    personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkPaymentPage();      
+    personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
     personalCheckout.pay();
     personalCheckout.isPayed();
     personalCheckout.checkOrder();
@@ -94,7 +94,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     it('C367728: add mixed items > unselect digital products > create an order', () => {
 
     catalogPage.visit(CATEGORY_WITH_DIGITAL);
-    catalogPage.purchaseAll();
+    catalogPage.addToCartOne(10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -111,10 +111,8 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     //Checkout
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
-
-    personalCheckout.checkShippingPage();
-    //personalCheckout.addNewShippingAddress();
-    personalCheckout.selectShippingAddress();
+    personalCheckout.checkShippingPage();    
+    personalCheckout.addNewShippingAddress();
     personalCheckout.selectDelivery('Fixed Rate (Ground)');
     personalCheckout.leaveComment('place-order.cy test');
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -125,6 +123,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     personalCheckout.checkStepsNumber();
     personalCheckout.reviewOrder();
     personalCheckout.placeOrder();
+    cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.checkPaymentPage();
 
 //Payment page
@@ -157,7 +156,7 @@ cy.log('Logging out completed')
 it('C367723: select All items > create an order', () => {
 
 catalogPage.visit(CATEGORY_WITH_DIGITAL);
-catalogPage.purchaseAll();
+catalogPage.addToCartOne(10);
 cartPage.visitByCartClick();
 cy.checkLoading('.vc-loader-overlay__spinner');
 cartPage.cartLineItemsCheck();
@@ -173,9 +172,8 @@ selectForCheckout.totalSubtotal();
 //Checkout
 cartPage.checkout();
 cy.checkLoading('.vc-loader-overlay__spinner');
-
 personalCheckout.checkShippingPage();
-personalCheckout.selectShippingAddress();
+personalCheckout.addNewShippingAddress();
 personalCheckout.selectDelivery('Fixed Rate (Air)');
 personalCheckout.leaveComment('place-order.cy test');
 cy.checkLoading('.vc-loader-overlay__spinner');
