@@ -203,6 +203,7 @@ cy.contains('button', 'Place order').click();
 
 checkPaymentPage(){
 
+cy.wait(1000);
 cy.url().should('include', '/checkout/payment');
 cy.contains('h1', 'Payment').should('be.visible');
 cy.checkLoading('.vc-loader-overlay__spinner');

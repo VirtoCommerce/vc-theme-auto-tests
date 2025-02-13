@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "allure-cypress": "^3.1.0",
     "cypress": "^14.0.0",
     "cypress-if": "^1.10.5",
     "cypress-testrail": "^2.10.0",

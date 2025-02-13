@@ -3,3 +3,12 @@
 node_modules
 cypress/screenshots
 cypress/videos
+
+//project specific
+*reports*
+cypress/reports
+cypress/downloads/
+node_modules
+.vscode
+.env
+cypress/fixtures

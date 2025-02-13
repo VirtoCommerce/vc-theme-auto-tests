@@ -1,21 +1,22 @@
-//import '../support/commands';
 require('dotenv').config();
+
+
 
 module.exports = (on, config) => {
   config.env = config.env || {};
-  config.env.username = process.env.OPUS_LOGIN;
-  config.env.password = process.env.OPUS_PASSWORD;
+  config.env.username = process.env.LOGIN_CORP_EMAIL;
+  config.env.password = process.env.LOGIN_CORP_PASSWORD;
   return config;
 };
 
-console.log('OPUS_LOGIN:', process.env.OPUS_LOGIN);
-console.log('OPUS_PASSWORD:', process.env.OPUS_PASSWORD);
+console.log('CORP_LOGIN:', process.env.LOGIN_CORP_EMAIL);
+console.log('CORP_PASSWORD:', process.env.LOGIN_CORP_PASSWORD);
 
 
 module.exports = (on, config) => {
   // Middleware
   on('before:browser:launch', (browser = {}, launchOptions) => {
-    // Настройка конфигурации браузера перед его запуском
+    
     console.log('Launching browser:', browser.name);
     return launchOptions;
   });
@@ -30,7 +31,7 @@ module.exports = (on, config) => {
 
   // Event Listeners
   on('file:preprocessor', (file) => {
-    // Обработчик для события перед обработкой файла
+    
     console.log('Preprocessing file:', file.filePath);
     return file;
   });
@@ -41,4 +42,10 @@ const TestRailReporter = require('cypress-testrail');
 module.exports = (on, config) => {
     new TestRailReporter(on, config).register();
     return config
+};
+
+const allureCypress = require('allure-cypress');
+module.exports = (on, config) => {
+    allureCypress(on, config);
+    return config;
 };
