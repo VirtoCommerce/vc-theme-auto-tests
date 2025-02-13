@@ -1,6 +1,7 @@
+//import '../support/commands';
 require('dotenv').config();
 
-
+const TestRailReporter = require('cypress-testrail');
 
 module.exports = (on, config) => {
   config.env = config.env || {};
@@ -16,7 +17,7 @@ console.log('CORP_PASSWORD:', process.env.LOGIN_CORP_PASSWORD);
 module.exports = (on, config) => {
   // Middleware
   on('before:browser:launch', (browser = {}, launchOptions) => {
-    
+    // Настройка конфигурации браузера перед его запуском
     console.log('Launching browser:', browser.name);
     return launchOptions;
   });
@@ -31,21 +32,14 @@ module.exports = (on, config) => {
 
   // Event Listeners
   on('file:preprocessor', (file) => {
-    
+    // Обработчик для события перед обработкой файла
     console.log('Preprocessing file:', file.filePath);
     return file;
   });
 };
 
-const TestRailReporter = require('cypress-testrail');
 
 module.exports = (on, config) => {
     new TestRailReporter(on, config).register();
-    return config
-};
-
-const allureCypress = require('allure-cypress');
-module.exports = (on, config) => {
-    allureCypress(on, config);
     return config;
 };
