@@ -1,13 +1,10 @@
 import AuthLogin from "./navigation/AuthLogin";
 import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
-
-
-
 require('cypress-xpath');
-
 import 'cypress-if'
 import 'cypress-real-events/support'
 import 'cypress-testrail'
+
 
 Cypress.Commands.add('login', (email, password) => {
   cy.session(
@@ -36,10 +33,18 @@ Cypress.Commands.add('login', (email, password) => {
   )
 })
 
-Cypress.Commands.add('checkLoading', (locator, timeout = 3000) => {
-//cy.get(locator, {timeout}).should('exist');
-cy.get(locator, {timeout}).should('not.exist');
-})
+Cypress.Commands.add('checkLoading', (locator, timeout = 10000) => {
+  cy.log(`Waiting for loader: ${locator}`);
+  
+  // Wait for loader to appear first (if it exists)
+  cy.get('body').then(($body) => {
+    if ($body.find(locator).length > 0) {
+      cy.get(locator, { timeout }).should('exist');
+    }
+  });
+  // Wait until the loader disappears
+  cy.get(locator, { timeout }).should('not.exist');
+});
 
 
 Cypress.Commands.add('proceedButtonDisabled', locator =>{

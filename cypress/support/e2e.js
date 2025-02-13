@@ -17,7 +17,6 @@
 import './commands'
 import 'cypress-if'
 import '@shopify/cypress-graphql'
-import "allure-cypress";
 import "cypress-real-events/support";
 import "cypress-testrail";
 
