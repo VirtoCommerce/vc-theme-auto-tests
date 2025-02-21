@@ -3,6 +3,7 @@
 node_modules
 cypress/screenshots
 cypress/videos
+cypress/fixtures
 
 //project specific
 *reports*
@@ -11,4 +12,3 @@ cypress/downloads/
 node_modules
 .vscode
 .env
-cypress/fixtures
