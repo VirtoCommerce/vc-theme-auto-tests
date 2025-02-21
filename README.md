@@ -1,6 +1,7 @@
 # vc-theme-auto-tests
 
 DEVICE_NAME - viewport https://docs.cypress.io/api/commands/viewport
+Cypress docs - https://docs.cypress.io/app/get-started/install-cypress
 
 # Cypress Installation Guide
 
