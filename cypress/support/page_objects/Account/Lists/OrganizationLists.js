@@ -1,10 +1,14 @@
 import { ListsLocators } from "../ListsLocators";
-import Lists_data from "./Lists_data";
+import Lists_data from "../Lists/Lists_data";
 import { CartPageLocators } from "../../CartPage/CartPageLocators/CartPageLocators";
 
 class OrganizationLists {
 
-createList(list_name, list_description){
+createList(){
+// Generate a random number between 0 and 100
+const randomNumber = Lists_data.getRandomNumber();
+// Generate a random word
+const randomWord = Lists_data.getRandomWord();
 
 cy.log('Create a new list');
 cy.contains('button', 'Create list').click();
@@ -14,19 +18,25 @@ cy.get('input[aria-checked="false"]').should('exist'); // Verify switcher state
 cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure switcher is checked
 
 // Fill in the list name and description
-cy.get('input[type="text"]').eq(1).type(list_name);
-cy.get('textarea').type(list_description);
-
-cy.contains(CartPageLocators.DIALOG_FOOTER, 'Create list').click();
+cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
+cy.get(ListsLocators.LIST_NAME).type(Lists_data.lists[0].name1);
+cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
+cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
+cy.wait(500);
 cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list');
 
 // Verify that the newly created list name is visible
-cy.contains('a', list_name).should('be.visible');
+cy.contains('a', Lists_data.lists[0].name1).should('be.visible');
       
 }
 
-createSharedList(list_name, list_description){
+createSharedList(){
+
+// Generate a random number between 0 and 100
+const randomNumber = Lists_data.getRandomNumber();
+// Generate a random word
+const randomWord = Lists_data.getRandomWord();
 
 cy.log('Create a new list');
 cy.contains('button', 'Create list').click();
@@ -36,8 +46,8 @@ cy.get('input[aria-checked="false"]').should('exist'); // Verify switcher state
 cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure switcher is checked
     
 // Fill in the list name and description
-cy.get('input[type="text"]').eq(1).type(list_name);
-cy.get('textarea').type(list_description);
+cy.get(ListsLocators.LIST_NAME).type(Lists_data.lists[3].name4);
+cy.get('textarea').type(Lists_data.lists[3].description4 + ' ' + randomWord + randomNumber);
 this.toggleSwitcher();
     
 cy.contains(CartPageLocators.DIALOG_FOOTER, 'Create list').click();
@@ -45,7 +55,7 @@ cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list');
     
 // Verify that the newly created list name is visible
-cy.contains('a', list_name).should('be.visible');
+cy.contains('a', Lists_data.lists[3].name4).should('be.visible');
           
 }
 
@@ -76,7 +86,7 @@ cy.contains('button', 'List settings').should('be.enabled').click();
 }
     
 
-editOrgList(list_description){
+editOrgList(){
 
 // Generate a random number between 0 and 100
 const randomNumber = Lists_data.getRandomNumber();
@@ -88,10 +98,11 @@ cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', List
 cy.get('input[aria-checked="false"]').should('have.value', 'false');
 cy.contains('button', 'Make shared');
 cy.contains('button', 'Save').should('be.disabled');
-cy.get('input[type="text"]').eq(1).clear();
-cy.get('input[type="text"]').eq(1).type(randomWord + randomNumber);
+cy.get(ListsLocators.LIST_NAME).clear();
+cy.get(ListsLocators.LIST_NAME).type(randomWord + randomNumber);
+cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
 cy.get('textarea').clear();
-cy.get('textarea').type(list_description + ' ' + randomWord + randomNumber);
+cy.get('textarea').type(Lists_data.lists[1].description2 + ' ' + randomWord + randomNumber);
 this.toggleSwitcher();
 cy.get(CartPageLocators.DIALOG_FOOTER).should('be.enabled').click();
 cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
