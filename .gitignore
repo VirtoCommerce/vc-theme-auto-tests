@@ -3,7 +3,7 @@
 node_modules
 cypress/screenshots
 cypress/videos
-cypress/fixtures
+cypress\fixtures\data.json
 
 //project specific
 *reports*
