@@ -5,11 +5,9 @@ import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/Select
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import Addresses from "../../../support/page_objects/Account/Addresses/Addresses";
-import TestData from "../../Variables/TestData";
 import userData from "../../Variables/userData";
 
-//const PRODUCT_URL = TestData.defaultProductPage;
-const PRODUCT_URL = 'soft-drinks/mineral-water/borjomi-mineral-water-the-essence-of-georgian-volcanic-springs';
+
 
 describe('place order', () => {
   const productPage = new ProductPage();
@@ -26,15 +24,13 @@ describe('place order', () => {
     cy.log('Clearing cookies and local storage');
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.viewport(Cypress.env('DEVICE_NAME'));    
+    cy.viewport(Cypress.env('DEVICE_NAME'));      
 
   });
 
   it('places order created by Anonymous user', () => {
 
-    catalogPage.visit('catalog');
-    cartPage.emptyOrNot();
-    productPage.visit(PRODUCT_URL);
+    catalogPage.visit('catalog');      
     catalogPage.AddToCartSingleBtn();
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -56,12 +52,12 @@ describe('place order', () => {
 
   });
 
-  it.only('places order as Personal user', () => {
+  it('places order as Personal user', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();
     addresses.emtyOrNot();    
-    productPage.visit(PRODUCT_URL);
+    productPage.visit('catalog');
     catalogPage.AddToCartSingleBtn();
     cy.checkLoading('.vc-button__loader');
     cartPage.visitByCartClick();
