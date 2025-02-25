@@ -19,25 +19,6 @@ class CatalogPage {
 
   }
 
-  purchaseAll(amount = 100) {
-    cy.log('Add products to cart')
-    cy.get(CatalogPageLocators.BUY_BUTTONS)
-     .if('not.be.disabled')
-     .then(() => {
-    cy.get(CatalogPageLocators.BUY_BUTTONS)
-     .invoke("slice", 1, amount)
-      .each(($addToCart) => {
-        cy.wrap($addToCart).click();
-        cy.checkLoading('.vc-button__loader');
-    })
-  })
-   .else('disabled')
-    .then(() => {      
-      cy.log('The button is disabled');
-  }
-  )
-}
-
 addToCartOne(amount) {
   cy.log('Adding products to cart');
 
