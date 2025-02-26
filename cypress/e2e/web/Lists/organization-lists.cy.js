@@ -6,7 +6,7 @@ import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import OrganizationLists from "../../../support/page_objects/Account/Lists/OrganizationLists";
 import AuthLogin from "../../../support/navigation/AuthLogin";
-
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";    
 
 describe('Private/Shared lists', ()=> {
 
@@ -15,7 +15,7 @@ const loginPage = new LoginPage();
 const listsPage = new Lists();
 const cartPage = new CartPage();
 const orgList = new OrganizationLists();
-
+const productPage = new ProductPage();
 //const SUBCATEGORY = 'tv-multimedia';
 const SUBCATEGORY = 'soft-drinks/soda';
 const NEWCATEGORY = 'snacks';
@@ -55,7 +55,7 @@ orgList.checkMenuDropDown('Share');
 
 it('Create private list from catalog. Edit name and description', ()=> {
 
-catalogPage.visit(SUBCATEGORY);
+productPage.visit(SUBCATEGORY);
 catalogPage.clickOnSingleHEART();
 catalogPage.addProductToNewList();
 catalogPage.clickInTheList();

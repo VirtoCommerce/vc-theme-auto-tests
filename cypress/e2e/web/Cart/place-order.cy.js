@@ -85,6 +85,6 @@ describe('place order', () => {
     cartPage.visitByCartClick();
     cy.intercept('/cart').as('GetFullCart');
     cartPage.isCleared();
-    
+
   });
 });

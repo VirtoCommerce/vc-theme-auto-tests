@@ -27,7 +27,7 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome  # Run tests in Chrome (or use "electron" for headless mode)
+          browser: electron  # Run tests in Chrome (or use "electron" for headless mode)
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions

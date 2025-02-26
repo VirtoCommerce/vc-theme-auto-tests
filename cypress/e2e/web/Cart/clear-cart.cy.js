@@ -1,8 +1,9 @@
 import TestData from "../../Variables/TestData";
 import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
-import CartPage from "../../../support/page_objects/CartPage/cartPage";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
 import AuthLogin from "../../../support/navigation/AuthLogin";
+
 const PRODUCT_URL = TestData.defaultProductPage;
 
 describe('Clear cart', () => {
@@ -18,24 +19,17 @@ describe('Clear cart', () => {
 
   it('Should login and then perform actions', () => {
     
-    catalogPage.visit('catalog');
-    cartPage.emptyOrNot();
     productPage.visit(PRODUCT_URL);
-    catalogPage.AddToCartSingleBtn();
+    catalogPage.addToCartOne(1);
     cartPage.visitByCartClick();
-
     cy.checkLoading('.vc-button__loader');
-
     cartPage.visitByCartClick();
-
     cy.checkLoading('.vc-loader-overlay__spinner');
-
     cartPage.clearCart();
     cartPage.confirmClearCart();
-
     cy.checkLoading('.vc-loader-overlay__spinner');
-
     cartPage.isCleared();
+
   })
 
 })

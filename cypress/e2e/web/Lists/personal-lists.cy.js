@@ -8,6 +8,7 @@ import ProductCard from "../../../support/page_objects/CatalogPage/ProductCard";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 import AuthLogin from "../../../support/navigation/AuthLogin";
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 
 
 describe('Personal Lists', ()=> {
@@ -17,6 +18,7 @@ const loginPage = new LoginPage();
 const listsPage = new Lists();
 const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
+const productPage = new ProductPage();
 
 const SUBCATEGORY = 'snacks';
 const NEWCATEGORY = 'soft-drinks/soda';
@@ -36,7 +38,7 @@ listsPage.isListsPageEmpty();
 
 it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
-catalogPage.visit(NEWCATEGORY);
+productPage.visit(NEWCATEGORY);
 catalogPage.addToListFromListView();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
@@ -147,8 +149,8 @@ listsPage.checkProductCounter();
 it('Save changes', () => {
 
 listsPage.createListData();
-catalogPage.visit(NEWCATEGORY);
-catalogPage.prepareProductsForList(6);
+productPage.visit(NEWCATEGORY);
+productPage.prepareProductsForList(6);
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
 listsPage.leaveList();
@@ -179,7 +181,7 @@ const catalogPage = new CatalogPage();
 beforeEach(() => {
 cy.clearCookies();
 cy.clearLocalStorage(); 
-cy.viewport(Cypress.env('DEVICE_NAME')); 
+AuthLogin.setDimensions();
     
            
 });

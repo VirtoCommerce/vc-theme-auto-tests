@@ -1,4 +1,4 @@
-import CartPage from "../../../support/page_objects/CartPage/cartPage";
+import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
 import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
 import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects/CheckoutFlow/CheckoutFlow";
@@ -8,6 +8,7 @@ import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 import Addresses from "../../../support/page_objects/Account/Addresses/Addresses";
 import AuthLogin from "../../../support/navigation/AuthLogin";
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 
 const CATEGORY_WITH_DIGITAL= 'soft-drinks/soda';
 
@@ -21,6 +22,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     const anonymousCheckout = new AnonymousCheckout();
     const logOut = new LogOut();
     const addresses = new Addresses();
+    const productPage = new ProductPage();
 
 
     beforeEach(() => {
@@ -36,7 +38,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     it('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
-    catalogPage.visit(CATEGORY_WITH_DIGITAL);
+    productPage.visit(CATEGORY_WITH_DIGITAL);
     catalogPage.addToCartOne(10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -93,7 +95,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     it('C367728: add mixed items > unselect digital products > create an order', () => {
 
-    catalogPage.visit(CATEGORY_WITH_DIGITAL);
+    productPage.visit(CATEGORY_WITH_DIGITAL);
     catalogPage.addToCartOne(10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
@@ -155,7 +157,7 @@ cy.log('Logging out completed')
 
 it('C367723: select All items > create an order', () => {
 
-catalogPage.visit(CATEGORY_WITH_DIGITAL);
+productPage.visit(CATEGORY_WITH_DIGITAL);
 catalogPage.addToCartOne(10);
 cartPage.visitByCartClick();
 cy.checkLoading('.vc-loader-overlay__spinner');
