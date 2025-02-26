@@ -1,7 +1,7 @@
 class AuthLogin {
 
   setDimensions(){
-    cy.viewport(Cypress.env('DEVICE_NAME'));
+    cy.viewport(1536, 960);
   }
     visitHomePage() {
       cy.visit(Cypress.env('PLATFORM_URL'));

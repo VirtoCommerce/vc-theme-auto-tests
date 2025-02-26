@@ -1,6 +1,6 @@
 class TestData {
     constructor() {
-        this.device = Cypress.env('DEVICE_NAME');
+        
         this.defaultProductPage = 'soft-drinks/mineral-water/borjomi-mineral-water-the-essence-of-georgian-volcanic-springs';
         this.cardNumber = Cypress.env('CARD_NUMBER_VISA');
         this.cvv = Cypress.env('CVV');
