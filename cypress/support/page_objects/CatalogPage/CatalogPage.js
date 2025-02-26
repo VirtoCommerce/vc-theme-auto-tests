@@ -6,16 +6,16 @@ class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
     cy.wait(500);
-    cy.get('.vc-layout__content').should('be.visible');
-    cy.get('.vc-typography').should('be.visible');
+    cy.get('.vc-typography').should('be.visible').and('have.text', 'Catalog');    
     cy.log('Step: Visited Catalog Page');
+    this.checkCatalogPage();    
 
   }
 
   checkCatalogPage() {
-  cy.get('.vc-typography').should('be.visible').and('have.text', 'Catalog');
-  cy.get('.vc-widget__slot').should('be.visible').and('contain', 'catalog')
-  cy.log('Catalog page is visible');
+  
+  cy.get('.vc-widget__slot').should('be.visible').and('contain', 'Catalog')
+  cy.log('Catalog page is visible');  
 
   }
 
@@ -220,16 +220,21 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 
 }
 
-addProductsToExistList(){
+addProductsToExistList(amount){
 
-cy.get(CatalogPageLocators.ADD_TO_LIST).first().should('be.visible');
-cy.get(CatalogPageLocators.ADD_TO_LIST).each(($heart) => {
-cy.wrap($heart).click();
-this.addToExistList();
+  cy.get(CatalogPageLocators.ADD_TO_LIST)
+  .should('be.visible') // Ensure at least one heart is visible
+  .then(($hearts) => {
+    const heartsToClick = $hearts.slice(0, Math.min(amount, $hearts.length)); // Select only `amount` hearts
 
-})
+    cy.wrap(heartsToClick).each(($heart) => {
+      cy.wrap($heart).click();
+      this.addToExistList();
+    });
+  });
 
 }
+
 
 checkAlreadyInList(){
 
@@ -266,29 +271,22 @@ cy.wrap($checkbox).should('be.checked');
 });
 }
 
-clickOnHEARTs() {
-let count;
+clickOnHEARTs(amount) {
 
-cy.get('b[class="font-black"]')
-.invoke('text')
-.then((text) => {
-count = parseInt(text); // Convert text to integer
-cy.log(count);
-cy.get(CatalogPageLocators.ADD_TO_LIST).its('length').then((length) => {
-if (length >= count) {
-cy.get(CatalogPageLocators.ADD_TO_LIST).each(($heart, index) => {
-if (index <= count) {
-cy.wrap($heart).click();
-this.addProductToNewList();
-}
-});
-}
-});
+  cy.get(CatalogPageLocators.ADD_TO_LIST)
+  .should('be.visible') // Ensure at least one heart is visible
+  .then(($hearts) => {
+    const heartsToClick = $hearts.slice(0, Math.min(amount, $hearts.length)); // Select only `amount` hearts
+
+    cy.wrap(heartsToClick).each(($heart) => {
+      cy.wrap($heart).click();
+      this.addProductToNewList();
+    });
+  });
 
 cy.get(CatalogPageLocators.ACTIVE_HEART)
 .its('length')
 .should('be.lte', 10);
-});
 }
 
 
@@ -324,9 +322,9 @@ cy.log('Product not added to any list')
 });
 }
 
-prepareProductsForList(){
+prepareProductsForList(amount){
 
-this.addProductsToExistList();
+this.addProductsToExistList(amount);
 this.clickInTheList();
 this.checkAlreadyInList();
 

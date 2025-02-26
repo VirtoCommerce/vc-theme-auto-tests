@@ -19,10 +19,9 @@ const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 
 const SUBCATEGORY = 'snacks';
-//const SUBCATEGORY = 'drinks-and-food';
 const NEWCATEGORY = 'soft-drinks/soda';
-//const NEWCATEGORY = 'tyres';
-//const NEWCATEGORY = 'printers/laser-color';
+const CATALOG = 'catalog';
+
 
 
 beforeEach(() => {
@@ -43,8 +42,8 @@ catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
 listsPage.goToListTab();
 listsPage.deleteMultipleLists();
-catalogPage.visit(NEWCATEGORY);
-catalogPage.clickOnHEARTs();
+catalogPage.visit(CATALOG);
+catalogPage.clickOnHEARTs(11);
 catalogPage.openProductPage();
 ProductCard.isActive();
 catalogPage.clickInTheList();
@@ -65,9 +64,9 @@ cy.clickOnButton("Cancel");
 it('Icon is red > Add several products to existing list from List view.', () => {
 
 listsPage.createListData();
-catalogPage.visit('printers/multifunction-printers');
+catalogPage.visit(CATALOG);
 cy.switchProductView('List');
-catalogPage.prepareProductsForList();
+catalogPage.prepareProductsForList(5);
 listsPage.checkNewList();
 
                     
@@ -83,7 +82,7 @@ listsPage.compareListsNames();
 listsPage.clickToListsRouter();
 listsPage.editList();    
 listsPage.createMultipleLists();
-catalogPage.visit(NEWCATEGORY);
+catalogPage.visit(CATALOG);
 catalogPage.clickOnSingleHEART();
 catalogPage.checkAddNewList();
 catalogPage.allUnchecked();
@@ -106,9 +105,9 @@ listsPage.checkNewList();
 it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
-catalogPage.visit(NEWCATEGORY);
+catalogPage.visit(CATALOG);
 cy.get('div[search-params]').should('be.visible');
-catalogPage.prepareProductsForList();
+catalogPage.prepareProductsForList(6);
 listsPage.checkNewList();
 listsPage.clickOnAddToCart();
 listsPage.clickOnViewCart();
@@ -134,8 +133,8 @@ cartPage.confirmClearCart();
 it('Lists tab > List with Products > remove product', ()=> {
 
 listsPage.createListData();
-catalogPage.visit(NEWCATEGORY);
-catalogPage.prepareProductsForList();
+catalogPage.visit(CATALOG);
+catalogPage.prepareProductsForList(8);
 listsPage.checkNewList();
 listsPage.removeProductsFromAllPages();
 listsPage.emptyListDetailPage();
@@ -149,22 +148,22 @@ it('Save changes', () => {
 
 listsPage.createListData();
 catalogPage.visit(NEWCATEGORY);
-catalogPage.prepareProductsForList();
+catalogPage.prepareProductsForList(6);
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
 listsPage.leaveList();
 
 });
 
-it('Product counter', () => {
+it.only('Product counter', () => {
 
 listsPage.createListData();
-catalogPage.visit(SUBCATEGORY);
-catalogPage.prepareProductsForList();
+catalogPage.visit(CATALOG);
+catalogPage.prepareProductsForList(6);
 listsPage.goToListTab();
 listsPage.compareProductsCount();
 listsPage.removeSingleProduct();
-cy.wait(500);
+cy.wait(1000);
 listsPage.clickToListsRouter();
 listsPage.compareProductsCount();
 
@@ -176,7 +175,6 @@ listsPage.compareProductsCount();
 describe('Anonymous', ()=> {
 
 const catalogPage = new CatalogPage();
-const NEWCATEGORY = 'soft-drinks/soda';
 
 beforeEach(() => {
 cy.clearCookies();
@@ -188,7 +186,7 @@ cy.viewport(Cypress.env('DEVICE_NAME'));
 
 it('Icon is grey > Add product anonymously', ()=> {
 
-catalogPage.visit(NEWCATEGORY); 
+catalogPage.visit(CATALOG); 
 catalogPage.addToListAnonim();
 catalogPage.openProductPage();
 catalogPage.addToListAnonimProductPage();

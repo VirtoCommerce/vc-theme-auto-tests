@@ -404,7 +404,7 @@ cy.contains('button', 'Save changes').should('be.enabled').click();
 this.saveChangesPopUp();
 cy.clickOnButton(value);
 cy.get(CartPageLocators.DIALOG_TITLE).should('not.exist');
-cy.wait(500);
+cy.wait(1000);
 cy.contains('button', 'Save changes').should('be.disabled');
     
     
