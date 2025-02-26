@@ -6,7 +6,7 @@ import {AnonymousCheckout, PersonalCheckout} from "../../../support/page_objects
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import Addresses from "../../../support/page_objects/Account/Addresses/Addresses";
 import userData from "../../Variables/userData";
-
+import AuthLogin from "../../../support/navigation/AuthLogin";
 
 
 describe('place order', () => {
@@ -24,7 +24,7 @@ describe('place order', () => {
     cy.log('Clearing cookies and local storage');
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.viewport(Cypress.env('DEVICE_NAME'));      
+    AuthLogin.setDimensions();
 
   });
 

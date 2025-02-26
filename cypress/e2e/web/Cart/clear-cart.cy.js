@@ -2,7 +2,7 @@ import TestData from "../../Variables/TestData";
 import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 import CartPage from "../../../support/page_objects/CartPage/cartPage";
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
-
+import AuthLogin from "../../../support/navigation/AuthLogin";
 const PRODUCT_URL = TestData.defaultProductPage;
 
 describe('Clear cart', () => {
@@ -13,7 +13,7 @@ describe('Clear cart', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.viewport(Cypress.env('DEVICE_NAME'));
+    AuthLogin.setDimensions();
   });
 
   it('Should login and then perform actions', () => {

@@ -1,6 +1,7 @@
 import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
+import AuthLogin from "../../../support/navigation/AuthLogin";
 
 describe('Login and Logout', ()=> {
 
@@ -10,7 +11,7 @@ const logOut = new LogOut();
     
 // This block runs before each test
 beforeEach(() => {
-cy.viewport(Cypress.env('DEVICE_NAME')); 
+AuthLogin.setDimensions();
            
 });
 

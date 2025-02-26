@@ -5,7 +5,7 @@ import TestData from "../../Variables/TestData";
 import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import OrganizationLists from "../../../support/page_objects/Account/Lists/OrganizationLists";
-
+import AuthLogin from "../../../support/navigation/AuthLogin";
 
 
 describe('Private/Shared lists', ()=> {
@@ -24,7 +24,7 @@ const NEWCATEGORY = 'snacks';
 beforeEach(() => {
 cy.clearCookies();
 cy.clearLocalStorage(); 
-cy.viewport(Cypress.env('DEVICE_NAME'));
+AuthLogin.setDimensions();
 loginPage.login(userData.userData[1].email, userData.userData[1].password);
 cartPage.emptyOrNot();
 listsPage.isListsPageEmpty();  

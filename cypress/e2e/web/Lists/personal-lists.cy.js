@@ -7,7 +7,7 @@ import Lists_data from "../../../support/page_objects/Account/Lists/Lists_data";
 import ProductCard from "../../../support/page_objects/CatalogPage/ProductCard";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import SelectForCheckout from "../../../support/page_objects/CheckoutFlow/SelectForCheckout";
-
+import AuthLogin from "../../../support/navigation/AuthLogin";
 
 
 describe('Personal Lists', ()=> {
@@ -27,7 +27,7 @@ const CATALOG = 'catalog';
 beforeEach(() => {
 cy.clearCookies();
 cy.clearLocalStorage(); 
-cy.viewport(Cypress.env('DEVICE_NAME'));
+AuthLogin.setDimensions();
 loginPage.login(userData.userData[0].email, userData.userData[0].password);
 cartPage.emptyOrNot();
 listsPage.isListsPageEmpty();

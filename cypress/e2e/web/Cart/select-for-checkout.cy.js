@@ -7,7 +7,7 @@ import TestData from "../../Variables/TestData";
 import LogOut from "../../../support/navigation/LogOut";
 import userData from "../../Variables/userData";
 import Addresses from "../../../support/page_objects/Account/Addresses/Addresses";
-
+import AuthLogin from "../../../support/navigation/AuthLogin";
 
 const CATEGORY_WITH_DIGITAL= 'soft-drinks/soda';
 
@@ -26,7 +26,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     beforeEach(() => {
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.viewport(Cypress.env('DEVICE_NAME'));
+    AuthLogin.setDimensions();
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();
     addresses.emtyOrNot();
