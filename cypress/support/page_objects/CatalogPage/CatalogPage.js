@@ -64,7 +64,7 @@ cy.get(CatalogPageLocators.BUY_BUTTONS)
 
 }
 
-
+//deprecated
 AddToCartSingleBtn(){
 
 cy.get('.vc-typography').should('exist');
