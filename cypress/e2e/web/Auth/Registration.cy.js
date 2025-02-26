@@ -57,7 +57,6 @@ describe('Successful registration', () => {
 
   const signUpPage = new SignUpPage();
   const loginPage = new LoginPage();
-  const platform = new Platform();
 
   // This block runs before each test
   beforeEach(() => {

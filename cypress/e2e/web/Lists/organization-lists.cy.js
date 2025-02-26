@@ -93,9 +93,9 @@ it('Add products to Shared list', () => {
 orgList.createSharedList();
 cy.checkLabel('Shared');
 orgList.checkMenuDropDown('Make private');
-catalogPage.visit(NEWCATEGORY);
+productPage.visit(NEWCATEGORY);
 cy.scrollTo('top');
-catalogPage.prepareProductsForList();
+catalogPage.prepareProductsForList(4);
 cy.wait(500);
 listsPage.goToListTab();
 cy.checkLabel('Shared');
@@ -105,16 +105,5 @@ listsPage.compareProductsCount();
 
 })
 
-it.skip('Create lists. Switch between lists', () => {
-
-orgList.createSharedList();
-listsPage.createMultipleLists();
-listsPage.goToListDetailsPage();
-listsPage.compareListsNames();
-listsPage.listCounter();
-listsPage.listSwitcher();
-
-
-})
 })
 

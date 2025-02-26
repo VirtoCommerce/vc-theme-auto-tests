@@ -177,6 +177,7 @@ listsPage.compareProductsCount();
 describe('Anonymous', ()=> {
 
 const catalogPage = new CatalogPage();
+const CATALOG = 'catalog';
 
 beforeEach(() => {
 cy.clearCookies();
