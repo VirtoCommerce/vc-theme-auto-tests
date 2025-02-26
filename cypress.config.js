@@ -3,7 +3,7 @@ const { defineConfig } = require("cypress");
 require("dotenv").config();
 
 module.exports = defineConfig({
-  projectId: "4qfpp4",
+  projectId: "z99mdt",
 
   env: {
     LOGIN_PERSONAL_EMAIL: process.env.LOGIN_PERSONAL_EMAIL,
