@@ -6,7 +6,7 @@ import AuthLogin from "../../../support/navigation/AuthLogin";
 import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 
 
-const CATEGORY = 'soft-drinks/soda';
+const CATEGORY = 'printers';
 
 describe('Remove many cart items', () => {
   const catalogPage = new CatalogPage();
@@ -26,7 +26,7 @@ describe('Remove many cart items', () => {
   it('removes many items from cart', () => {
 
   productPage.visit(CATEGORY);
-  catalogPage.addToCartOne(1);
+  catalogPage.addToCart(1);
   cartPage.visitByCartClick();
   cy.wait(1000);
   cy.intercept('/cart').as('GetFullCart');

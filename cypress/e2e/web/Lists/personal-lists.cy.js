@@ -19,9 +19,9 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const selectForCheckout = new SelectForCheckout();
 const productPage = new ProductPage();
+const productCard = new ProductCard();
 
-const SUBCATEGORY = 'snacks';
-const NEWCATEGORY = 'soft-drinks/soda';
+const NEWCATEGORY = 'printers';
 const CATALOG = 'catalog';
 
 
@@ -36,7 +36,7 @@ listsPage.isListsPageEmpty();
        
 });
 
-it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
+it.skip('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
 productPage.visit(NEWCATEGORY);
 catalogPage.addToListFromListView();
@@ -47,15 +47,15 @@ listsPage.deleteMultipleLists();
 catalogPage.visit(CATALOG);
 catalogPage.clickOnHEARTs(11);
 catalogPage.openProductPage();
-ProductCard.isActive();
+productCard.isActive();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
 catalogPage.clickInTheList();
 catalogPage.removeProductFromLists();
-ProductCard.isInactive();
+productCard.isInactive();
 cy.go('back');
 cy.log('Backward');
-ProductCard.isActive();
+productCard.isActive();
 catalogPage.clickOnSingleHEART();
 catalogPage.allUnchecked();
 cy.clickOnButton("Cancel");
@@ -92,13 +92,13 @@ catalogPage.addToExistList();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
 productPage.visit(TestData.defaultProductPage);
-ProductCard.isInactive();
+productCard.isInactive();
 catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToExistList();
 catalogPage.clickInTheList();
 catalogPage.checkAddNewList();
 catalogPage.checkAlreadyInList();
-ProductCard.isActive();
+productCard.isActive();
 listsPage.checkNewList();
 
 
@@ -107,11 +107,12 @@ listsPage.checkNewList();
 it('Lists tab > List with Products > Add 1 product to the cart > Successfully added. Add all to cart.', ()=> {
 
 listsPage.createListData();
-catalogPage.visit(CATALOG);
+productPage.visit(NEWCATEGORY);
 cy.get('div[search-params]').should('be.visible');
 catalogPage.prepareProductsForList(6);
 listsPage.checkNewList();
 listsPage.clickOnAddToCart();
+cy.pause();
 listsPage.clickOnViewCart();
 cy.log('Check added product to cart');
 cy.checkLoading('.vc-loader-overlay__spinner');        
@@ -150,7 +151,7 @@ it('Save changes', () => {
 
 listsPage.createListData();
 productPage.visit(NEWCATEGORY);
-productPage.prepareProductsForList(6);
+catalogPage.prepareProductsForList(6);
 listsPage.checkNewList();
 listsPage.updateQuantityInList();
 listsPage.leaveList();

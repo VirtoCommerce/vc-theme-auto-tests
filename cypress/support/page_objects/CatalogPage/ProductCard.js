@@ -24,6 +24,6 @@ cy.log('The product was added to the list')
 
 }
 
-export default new ProductCard();
+export default ProductCard;
 
 

@@ -94,21 +94,33 @@ cy.get('.vc-dialog-footer > .vc-button--color--primary').should('be.enabled').cl
 })
 
 Cypress.Commands.add('confirmDelete', () => {
+  const dialogTitle = 'Confirm Delete';
+  const timeout = 6000;
+  
+  cy.get(CartPageLocators.DIALOG_TITLE)
+    .should('be.visible')
+    .and('have.text', dialogTitle);
 
-cy.wait(500);
-cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', "Confirm Delete");
-cy.contains('.vc-button--color--danger', "Delete").click();
-cy.wait(1000);
-cy.contains(CartPageLocators.DIALOG_TITLE, 'Confirm Delete').should('not.exist');
-cy.log('The deletion completed');
-    
-})
+  cy.contains('button.vc-button--color--danger', 'Delete')
+    .should('be.enabled')
+    .click();
+
+  // Wait for any loading spinners/overlays to disappear
+  cy.get('.vc-loader-overlay__spinner', { timeout: 5000 })
+    .should('not.exist');
+
+  // Use longer timeout and retry until dialog disappears
+  cy.get('body', { timeout })
+    .should('not.contain', dialogTitle);
+
+  cy.log('Deletion confirmed and completed');
+});
 
 Cypress.Commands.add('confirmAction', (text1, text2) => {
 
   cy.get('.vc-dialog-header__title').should('have.text', text1);
   cy.contains('.vc-button--color--danger', text2).click();
-  cy.wait(500);
+  cy.wait(1000);
   cy.contains('.vc-dialog-header__title', text1).should('not.exist');
   cy.log('The action completed');
       

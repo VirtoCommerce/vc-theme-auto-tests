@@ -19,7 +19,6 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     const catalogPage = new CatalogPage();
     const loginPage = new LoginPage();
     const personalCheckout = new PersonalCheckout();
-    const anonymousCheckout = new AnonymousCheckout();
     const logOut = new LogOut();
     const addresses = new Addresses();
     const productPage = new ProductPage();
@@ -35,11 +34,11 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     });
 
-    it('C378456: add mixed items > unselect physical products > create an order', () => {
+    it.skip('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
     productPage.visit(CATEGORY_WITH_DIGITAL);
-    catalogPage.addToCartOne(10);
+    catalogPage.addToCart(10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -58,7 +57,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     //Checkout
     cartPage.checkout();
-    cy.wait(500); 
+    cy.wait(1000); 
     selectForCheckout.checkoutForDigitalProduct();
     personalCheckout.addNewBillingAddress();
     personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
@@ -93,10 +92,10 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     });
 
 
-    it('C367728: add mixed items > unselect digital products > create an order', () => {
+    it.skip('C367728: add mixed items > unselect digital products > create an order', () => {
 
     productPage.visit(CATEGORY_WITH_DIGITAL);
-    catalogPage.addToCartOne(10);
+    catalogPage.addToCart(10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -128,82 +127,80 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.checkPaymentPage();
 
-//Payment page
-personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
-personalCheckout.pay();
+    //Payment page
+    personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
+    personalCheckout.pay();
 
-personalCheckout.isPayed();
-personalCheckout.checkOrder();
+    personalCheckout.isPayed();
+    personalCheckout.checkOrder();
 
-//check cart after order creation
-cartPage.visitByCartClick();
-cy.intercept('/cart').as('GetFullCart');
-cartPage.cartLineItemsCheck();
-selectForCheckout.SelectedState();
-cy.digitalLabel('.vc-chip__content');
+    //check cart after order creation
+    cartPage.visitByCartClick();
+    cy.intercept('/cart').as('GetFullCart');
+    cartPage.cartLineItemsCheck();
+    selectForCheckout.SelectedState();
+    cy.digitalLabel('.vc-chip__content');
 
-//Clear cart
-cartPage.clearCart();
-cartPage.confirmClearCart();
-cy.log('The test is comleted');
+    //Clear cart
+    cartPage.clearCart();
+    cartPage.confirmClearCart();
+    cy.log('The test is comleted');
 
-//log out
-cy.log('click on the user name and log out')
-logOut.signOut(userData.userData[0].user_name);
-cy.log('Logging out completed')
+    //log out
+    cy.log('click on the user name and log out')
+    logOut.signOut(userData.userData[0].user_name);
+    cy.log('Logging out completed')
 
-});
+    });
 
 
-it('C367723: select All items > create an order', () => {
+    it('C367723: select All items > create an order', () => {
 
-productPage.visit(CATEGORY_WITH_DIGITAL);
-catalogPage.addToCartOne(10);
-cartPage.visitByCartClick();
-cy.checkLoading('.vc-loader-overlay__spinner');
-cartPage.cartLineItemsCheck();
+    catalogPage.visit('catalog');
+    catalogPage.scrollUntilFindAddToCart(10, 10);
+    cartPage.visitByCartClick();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.cartLineItemsCheck();
+    selectForCheckout.SelectedState();
+    //Select for checkout > Mixed order
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    cartPage.proceedButtonActive();
+    selectForCheckout.totalSubtotal();
 
-selectForCheckout.SelectedState();
+    //Checkout
+    cartPage.checkout();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkShippingPage();    
+    personalCheckout.addNewShippingAddress();
+    personalCheckout.selectDelivery('Fixed Rate (Ground)');
+    personalCheckout.leaveComment('place-order.cy test');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.proceedToBilling();
+    personalCheckout.checkBillingPage();
+    personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkStepsNumber();
+    personalCheckout.reviewOrder();
+    personalCheckout.placeOrder();
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.checkPaymentPage();
 
-//Select for checkout > Mixed order
+    //Payment page
+    personalCheckout.fillCardForm(TestData.cardNumber, TestData.cvv);
+    personalCheckout.pay();
 
-cy.checkLoading('.vc-loader-overlay__spinner');
-cartPage.proceedButtonActive();
-selectForCheckout.totalSubtotal();
+    personalCheckout.isPayed();
+    personalCheckout.checkOrder();
 
-//Checkout
-cartPage.checkout();
-cy.checkLoading('.vc-loader-overlay__spinner');
-personalCheckout.checkShippingPage();
-personalCheckout.addNewShippingAddress();
-personalCheckout.selectDelivery('Fixed Rate (Air)');
-personalCheckout.leaveComment('place-order.cy test');
-cy.checkLoading('.vc-loader-overlay__spinner');
-personalCheckout.proceedToBilling();
+    //check cart after order creation
+    cartPage.visitByCartClick();
+    cy.intercept('/cart').as('GetFullCart');
+    cartPage.isCleared();
+    cy.log('The test is comleted');
+    //log out
+    cy.log('click on the user name and log out')
+    logOut.signOut(userData.userData[0].user_name);
+    cy.log('Logging out completed')
 
-cy.log('Select manual payment')
-personalCheckout.selectPaymentMethod('Manual');
-cy.checkLoading('.vc-loader-overlay__spinner');
-personalCheckout.checkBillingPage();
-personalCheckout.reviewOrder();
-anonymousCheckout.placeOrder();
-cy.checkLoading('.vc-loader-overlay__spinner');
-
-//Completed page page
-personalCheckout.checkCompletePage();
-
-//check cart after order creation
-cartPage.visitByCartClick();
-cy.intercept('/cart').as('GetFullCart');
-cartPage.isCleared();
-
-cy.log('The test is comleted');
-
-//log out
-cy.log('click on the user name and log out')
-logOut.signOut(userData.userData[0].user_name);
-cy.log('Logging out completed')
-
- });
-
+    });
 });

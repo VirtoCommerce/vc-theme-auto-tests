@@ -16,10 +16,9 @@ const listsPage = new Lists();
 const cartPage = new CartPage();
 const orgList = new OrganizationLists();
 const productPage = new ProductPage();
-//const SUBCATEGORY = 'tv-multimedia';
-const SUBCATEGORY = 'soft-drinks/soda';
-const NEWCATEGORY = 'snacks';
-//const NEWCATEGORY = 'tyres';
+
+const SUBCATEGORY = 'printers';
+
 
 beforeEach(() => {
 cy.clearCookies();
@@ -93,7 +92,7 @@ it('Add products to Shared list', () => {
 orgList.createSharedList();
 cy.checkLabel('Shared');
 orgList.checkMenuDropDown('Make private');
-productPage.visit(NEWCATEGORY);
+productPage.visit(SUBCATEGORY);
 cy.scrollTo('top');
 catalogPage.prepareProductsForList(4);
 cy.wait(500);

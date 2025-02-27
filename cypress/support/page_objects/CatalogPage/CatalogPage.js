@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard";
 import { CatalogPageLocators } from "./CatalogLocators";
+const productCard = new ProductCard();
 
 
 class CatalogPage {
@@ -19,62 +20,46 @@ class CatalogPage {
 
   }
 
-addToCartOne(amount) {
+addToCart(amount) {
   cy.log('Adding products to cart');
-
   cy.get(CatalogPageLocators.BUY_BUTTONS)
-  .should('be.visible') // Ensure at least one visible button exists
-  .not('[disabled]') // Filter out disabled buttons
-  .filter(':visible') // Ensure only visible buttons are selected
-  .each(($button, index) => {
-    if (index < amount) {
-      cy.wrap($button).click();
-      cy.checkLoading('.vc-button__loader');
-      cy.get(CatalogPageLocators.UPDATE_BUTTON)
-        .should('be.visible')
-        .and('contain.text', 'Update cart');
-    }
-  });
+    .should('be.visible')
+    .not('[disabled]')
+    .filter(':visible')
+    .each(($button, index) => {
+      if (index < amount) {
+        cy.wrap($button).click();
+        cy.checkLoading('.vc-button__loader');
+        cy.get(CatalogPageLocators.UPDATE_BUTTON)
+          .should('be.visible')
+          .and('contain.text', 'Update cart');
+      }
+    });
   cy.log('Products have been added to the cart and the buttons changed state');
 }
 
-
-addToCart(amount) {
-
-cy.log('Add products to cart')
-
-cy.get(CatalogPageLocators.BUY_BUTTONS)
-  .if('visible')
-  .then(() => {
-  cy.get(CatalogPageLocators.BUY_BUTTONS)
-  .invoke("slice", 0, amount)
-  .each(($BUY_BUTTONS) => {
-  cy.wrap($BUY_BUTTONS).click();
-  cy.checkLoading('.vc-button__loader');
-  cy.get(CatalogPageLocators.UPDATE_BUTTON)
-  .should('be.visible')
-  .and('contain.text', 'Update cart');  
-  })
-  })
-  .else('disabled')
-  .then(() => {
-  cy.log('The button is disabled');
-  });
-
-
+/**
+ * @deprecated Since version X.X.X
+ * Please use addToCart() instead.
+ */
+addToCartOne(amount) {
+    cy.log('DEPRECATED: Please use addToCart() instead');
+    return this.addToCart(amount);
 }
 
-//deprecated
-AddToCartSingleBtn(){
-
-cy.get('.vc-typography').should('exist');
-cy.get(CatalogPageLocators.BUY_BUTTONS).should('be.visible');
-cy.get(CatalogPageLocators.BUY_BUTTONS).eq(1).should('not.be.disabled').click();
-cy.get(CatalogPageLocators.UPDATE_BUTTON)
-.should('be.visible')
-.and('contain.text', 'Update cart');
-cy.log('product have been added to the cart and the buttons changed state');
-
+/**
+ * @deprecated Since version X.X.X
+ * Please use addToCartOne(1) instead.
+ * This method will be removed in future versions.
+ * @example
+ * // Instead of:
+ * catalogPage.AddToCartSingleBtn();
+ * // Use:
+ * catalogPage.addToCartOne(1);
+ */
+AddToCartSingleBtn() {
+    cy.log('DEPRECATED: Please use addToCartOne(1) instead');
+    return this.addToCart(1);
 }
 
 
@@ -188,20 +173,20 @@ this.inActiveStateView();
 cy.switchProductView('List');
 this.activeStateView();
 
-ProductCard.isInactive();
+productCard.isInactive();
 
 this.clickOnSingleHEART();
 
 this.addProductToNewList();
 
-ProductCard.isActive();
+productCard.isActive();
 
 this.inActiveStateView()
 cy.switchProductView('Grid')
 this.activeStateView()
 
 cy.log('Check heart from Grid View')
-ProductCard.isActive();
+productCard.isActive();
 
 }
 
@@ -335,6 +320,52 @@ clickShowInStock(){
 cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
 
 }
+
+scrollUntilFindAddToCart(maxScrolls = 10, amount) {
+  cy.log('Scrolling to find an enabled Add to Cart button');
+
+  let attempts = 0;
+
+  function scrollAndCheck() {
+    if (attempts >= maxScrolls) {
+      cy.log('Reached maximum scroll attempts, stopping.');
+      throw new Error('Maximum scroll attempts reached without finding an enabled Add to Cart button.');
+    }
+
+    attempts++;
+
+    // Scroll to the bottom of the page
+    cy.window().scrollTo('bottom', { ensureScrollable: false });
+
+    cy.checkLoading('.vc-button__loader');
+
+    // Check if an enabled Add to Cart button exists
+    cy.get(CatalogPageLocators.BUY_BUTTONS)
+      .should('be.visible')
+      .not('[disabled]')
+      .filter(':visible')
+      .then($buttons => {
+        if ($buttons.length > 0) {
+          cy.wrap($buttons).each(($button, index) => {
+            if (index < amount) {
+              cy.wrap($button).click();
+              cy.checkLoading('.vc-button__loader');
+              cy.get(CatalogPageLocators.UPDATE_BUTTON)
+                .should('be.visible')
+                .and('contain.text', 'Update cart');
+            }
+          });
+        } else {
+          cy.log('No enabled button found, scrolling again...');
+          scrollAndCheck();
+        }
+      });
+  }
+
+  scrollAndCheck();
+}
+
+
 }
 
 

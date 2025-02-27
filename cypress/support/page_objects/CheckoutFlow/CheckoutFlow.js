@@ -222,6 +222,7 @@ cy.get('input[data-test-id="security-code-input"]').type(cvv);
 
 pay() {
 cy.get('button[data-test-id="pay-now-button"]').click();
+cy.checkLoading('.vc-loader-overlay__spinner');
 }
 
 isPayed() {

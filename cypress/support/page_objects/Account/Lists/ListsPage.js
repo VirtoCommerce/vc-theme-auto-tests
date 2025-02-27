@@ -355,10 +355,12 @@ cy.contains('button','Add all to cart').click();
 }
 
 clickOnAddToCart(){
-
-cy.contains('button','Add to cart').eq(0).click();
-
-    
+  
+    cy.contains('button', 'Add to cart')
+        .filter(':visible')
+        .not(':disabled')
+        .first()
+        .click();
 }
 
 clickOnViewCart(){
@@ -399,7 +401,7 @@ cy.get(ListsLocators.INPUT).eq(value1).clear().type(value2);
 saveChanges(value){
     
 this.changeQuantity(1, 2);
-cy.wait(500);
+cy.wait(1000);
 cy.contains('button', 'Save changes').should('be.enabled').click();
 this.saveChangesPopUp();
 cy.clickOnButton(value);
@@ -430,10 +432,10 @@ leaveList(){
 cy.log('Change qty > leave the list > Save changes > Yes');   
 this.changeQuantity(3, 5);
 cy.get(ListsLocators.ROUTER_LINK).click();
-cy.wait(500);
+cy.wait(1000);
 this.saveChangesPopUp();
 cy.clickOnButton('Yes');
-cy.wait(500);
+cy.wait(1000);
 cy.location('pathname').should('eq', "/account/lists");
 this.goToListDetailsPage();
 
