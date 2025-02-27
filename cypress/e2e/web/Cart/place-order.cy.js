@@ -56,7 +56,7 @@ describe('place order', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();
-    addresses.emtyOrNot();    
+    addresses.emptyOrNot();    
     productPage.visit('printers');
     catalogPage.addToCart(3);
     cy.checkLoading('.vc-button__loader');
@@ -64,21 +64,21 @@ describe('place order', () => {
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
-     personalCheckout.addNewShippingAddress();
-      personalCheckout.selectDelivery('Fixed Rate (Ground)');
-      cy.checkLoading('.vc-loader-overlay__spinner');
-      personalCheckout.leaveComment('place-order.cy test');
-      cy.checkLoading('.vc-loader-overlay__spinner');
-      personalCheckout.proceedToBilling();
-      personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
-      cy.checkLoading('.vc-loader-overlay__spinner');
-      personalCheckout.reviewOrder();
-      personalCheckout.placeOrder();
-      personalCheckout.checkPaymentPage();      
-      personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
-      personalCheckout.pay();
-      personalCheckout.isPayed();
-    })
+    personalCheckout.addNewShippingAddress();
+    personalCheckout.selectDelivery('Fixed Rate (Ground)');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.leaveComment('place-order.cy test');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.proceedToBilling();
+    personalCheckout.selectPaymentMethod('Bank card (Authorize.Net)');
+    cy.checkLoading('.vc-loader-overlay__spinner');
+    personalCheckout.reviewOrder();
+    personalCheckout.placeOrder();
+    personalCheckout.checkPaymentPage();      
+    personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
+    personalCheckout.pay();
+    personalCheckout.isPayed();
+  })
 
   afterEach(() => {
     // Check cart after order creation

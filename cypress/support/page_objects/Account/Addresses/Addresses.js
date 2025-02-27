@@ -31,7 +31,7 @@ cy.get(AddressesLocators.EMPTY_VIEW_TEXT)
 
 }
 
-emtyOrNot() {
+emptyOrNot() {
 
 this.openAddressesPage();
 cy.wait(2000);

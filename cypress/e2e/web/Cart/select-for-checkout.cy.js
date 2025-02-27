@@ -30,7 +30,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     AuthLogin.setDimensions();
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();
-    addresses.emtyOrNot();
+    addresses.emptyOrNot();
 
     });
 

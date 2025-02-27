@@ -22,7 +22,7 @@ describe('Delete personal and company account from admin site', () => {
     AuthLogin.setDimensions();
     platform.loginPlatform();
     cy.wait(1000);
-    platform.getAdminToken();
+    platform.getAdminToken(); 
 
   });
 
