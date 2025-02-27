@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm  # Enable caching for faster npm install
 
       - name: Install dependencies
         run: npm install
@@ -27,20 +28,19 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome  # Run tests in Chrome (or use "electron" for headless mode)
+          browser: chrome
+          record: true
         env:
-          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
-          # in GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PLATFORM_URL: https://vcst-qa-storefront.govirto.com
-          BASE_URL: https://vcst-qa.govirto.com
-          ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          API_KEY: ${{ secrets.API_KEY }}
-          LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
-          LOGIN_CORP_PASSWORD: Password1
-          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
-          CARD_NUMBER_VISA: 4007000000027 
-          CVV: 900
+          CYPRESS_PLATFORM_URL: https://vcst-qa-storefront.govirto.com
+          CYPRESS_BASE_URL: https://vcst-qa.govirto.com
+          CYPRESS_ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
+          CYPRESS_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          CYPRESS_API_KEY: ${{ secrets.API_KEY }}
+          CYPRESS_ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          CYPRESS_LOGIN_CORP_EMAIL: ${{ secrets.LOGIN_CORP_EMAIL }}
+          CYPRESS_LOGIN_CORP_PASSWORD: ${{ secrets.LOGIN_CORP_PASSWORD }}
+          CYPRESS_CARD_NUMBER_VISA: ${{ secrets.CARD_NUMBER_VISA }}
+          CYPRESS_CVV: ${{ secrets.CVV }}
+
