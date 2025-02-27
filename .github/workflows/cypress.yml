@@ -28,8 +28,7 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
-          record: true
+          browser: chrome          
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,8 +38,8 @@ jobs:
           CYPRESS_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           CYPRESS_API_KEY: ${{ secrets.API_KEY }}
           CYPRESS_ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
-          CYPRESS_LOGIN_CORP_EMAIL: ${{ secrets.LOGIN_CORP_EMAIL }}
-          CYPRESS_LOGIN_CORP_PASSWORD: ${{ secrets.LOGIN_CORP_PASSWORD }}
-          CYPRESS_CARD_NUMBER_VISA: ${{ secrets.CARD_NUMBER_VISA }}
-          CYPRESS_CVV: ${{ secrets.CVV }}
+          CYPRESS_LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
+          CYPRESS_LOGIN_CORP_PASSWORD: Password1
+          CYPRESS_CARD_NUMBER_VISA: 4007000000027
+          CYPRESS_CVV: 900
 
