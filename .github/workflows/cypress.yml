@@ -33,8 +33,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PLATFORM_URL: https://vcst-qa-storefront.govirto.com
           BASE_URL: https://vcst-qa.govirto.com
-          ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_NAME: admin
+          ADMIN_PASSWORD: Password1!
           API_KEY: ${{ secrets.API_KEY }}
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
