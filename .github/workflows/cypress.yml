@@ -20,27 +20,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
+          
       - name: Install dependencies
         run: npm install
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: electron  # Run tests in Chrome (or use "electron" for headless mode)
+          browser: chrome          
         env:
-          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
-          # in GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PLATFORM_URL: https://vcst-qa-storefront.govirto.com
           BASE_URL: https://vcst-qa.govirto.com
           ADMIN_NAME: admin
           ADMIN_PASSWORD: Password1!
-          API_KEY: 458ab7f7-df17-4aed-9f21-092f8b611efa
+          API_KEY: ${{ secrets.API_KEY }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
           LOGIN_CORP_PASSWORD: Password1
-          ADMIN_TOKEN: eyJhbGciOiJSUzI1NiIsImtpZCI6IkQ1ODhEQUJFNjRBNkZDQ0UwNzA4NjBFMjIyMzU5Njc1QzBDNTM0ODEiLCJ4NXQiOiIxWWphdm1TbV9NNEhDR0RpSWpXV2RjREZOSUUiLCJ0eXAiOiJhdCtqd3QifQ.eyJpc3MiOiJodHRwczovL3Zjc3QtcWEuZ292aXJ0by5jb20vIiwiZXhwIjoxNzM3NDg3MjEyLCJpYXQiOjE3Mzc0ODU0MTIsImF1ZCI6InJlc291cmNlX3NlcnZlciIsInNjb3BlIjoib2ZmbGluZV9hY2Nlc3MiLCJqdGkiOiI0YTFhN2Y1OS0xNzY3LTRkNmEtYmIxMy1jYTI1ZGQxMzgwMDUiLCJzdWIiOiIxZWIyZmE4YWM2NTc0NTQxYWZkYjUyNTgzM2RhZGI0NiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AdmMtZGVtb3N0b3JlLmNvbSIsInBlcm1pc3Npb24iOlsiYnVpbGRlcjp0aGVtZSIsImJ1aWxkZXI6dGVtcGxhdGVzIl0sInJvbGUiOiJfX2FkbWluaXN0cmF0b3IiLCJvaV9hdV9pZCI6Ijk2OTE4MDdkLThjNjktNGU0MS1iM2RjLWUzZGU0ZmJlNzNmNiIsIm9pX3Rrbl9pZCI6IjkyZmY1ZGNjLTUwYmQtNGZjOS1iYjM1LTkyZmQxZDk0YTgxYiJ9.YYcIf2hXhZjNZ7D1IQpzBel548kfosRpWk_EskREJ20sVbUWD8C-9HPO3CmieRhvnLWOVyktNVp0T3uKpeikMd3ZpMZ6gf3l70haMWbcGhZ9YjNYyI-aMWDW38YrytkqUuXQkO_nMOfFKxhADKrrPse-sMnTPzAWNIiKywKiMpiPSXoqCwVxV5QihtOxYrIBEoDYL8Lf-XLcDwDmOQ3rEfBMEBbFxYke9iZeKk_1pZWj-zhGqqYN7U358e_fYJ73J6L_cO2O8Fu_rCfwWJa3XppHeTgDVtWG2KL4p_GjaljTVB7ydDlKaxyZ1dNmeCwZ2bF8-Sr4XzwBrc8gWScecmbZqNg_bIxoaW0iPluGMPXpaeUUMOC-EEtvcufG63rBqBoUOQmekaS_SQ01HyFKjrcGldyEwVHaD8GGUCtNZM_eWXCwAXdC0YdM1Y0MUI2O2p7T1fVRH9BKscs5RXCAkfAUQ3NHgktLtYBBOUUgUvI94r5SFS3tkys5W_d5YeAsCX51nxPHAVJHrymBmrJH22GbTN28s1Mj5oawz6APWZufZKaf-TGkj_w0EWdNciTSHx0ZHdCflW5tBwX_OPy3xmBXkbtRXjNyEOTpR9aTwlCkEvL8-TPlBh4g9kwZV0mDdzjrbKMkZSuV7YEL3hgpDMaFqpTgTud589uTj6G4ENs
-          CARD_NUMBER_VISA: 4007000000027 
+          CARD_NUMBER_VISA: 4007000000027
           CVV: 900
+
