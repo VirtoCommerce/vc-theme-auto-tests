@@ -213,7 +213,7 @@ cy.wait(500);
 cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
 .should('be.enabled')
 .click();
-cy.wait(500);
+cy.wait(1000);
 cy.contains('h2', "Please select list").should('not.exist');
 // Check the notification banner
 cy.checkNotificationBanner('Your lists were successfully updated');

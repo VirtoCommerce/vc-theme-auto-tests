@@ -5,6 +5,14 @@ require("dotenv").config();
 module.exports = defineConfig({
   projectId: 'fqhmiq',
 
+  defaultCommandTimeout: 20000, // Increase timeout to 10 seconds
+  pageLoadTimeout: 60000, // 1 minute for page loads
+
+  retries: {
+    openMode: 0,
+    runMode: 1
+  },
+
   env: {
     LOGIN_PERSONAL_EMAIL: process.env.LOGIN_PERSONAL_EMAIL,
     LOGIN_PERSONAL_PASSWORD: process.env.LOGIN_PERSONAL_PASSWORD,

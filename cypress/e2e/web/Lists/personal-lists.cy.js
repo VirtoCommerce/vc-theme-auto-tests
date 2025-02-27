@@ -91,7 +91,7 @@ catalogPage.allUnchecked();
 catalogPage.addToExistList();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
-catalogPage.visit(TestData.defaultProductPage);
+productPage.visit(TestData.defaultProductPage);
 ProductCard.isInactive();
 catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToExistList();
@@ -170,6 +170,10 @@ listsPage.clickToListsRouter();
 listsPage.compareProductsCount();
 
 })
+
+afterEach(() => {
+    listsPage.isListsPageEmpty();
+  });
 
 
 });
