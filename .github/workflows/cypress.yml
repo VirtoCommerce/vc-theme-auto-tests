@@ -20,8 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm  # Enable caching for faster npm install
-
+          
       - name: Install dependencies
         run: npm install
 
@@ -32,14 +31,14 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_PLATFORM_URL: https://vcst-qa-storefront.govirto.com
-          CYPRESS_BASE_URL: https://vcst-qa.govirto.com
-          CYPRESS_ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
-          CYPRESS_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          CYPRESS_API_KEY: ${{ secrets.API_KEY }}
-          CYPRESS_ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
-          CYPRESS_LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
-          CYPRESS_LOGIN_CORP_PASSWORD: Password1
-          CYPRESS_CARD_NUMBER_VISA: 4007000000027
-          CYPRESS_CVV: 900
+          PLATFORM_URL: https://vcst-qa-storefront.govirto.com
+          BASE_URL: https://vcst-qa.govirto.com
+          ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          API_KEY: ${{ secrets.API_KEY }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
+          LOGIN_CORP_PASSWORD: Password1
+          CARD_NUMBER_VISA: 4007000000027
+          CVV: 900
 
