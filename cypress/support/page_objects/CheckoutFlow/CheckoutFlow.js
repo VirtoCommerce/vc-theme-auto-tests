@@ -16,28 +16,28 @@ export class AnonymousCheckout {
 
  fillShippingAddress() {
     cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
-    cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
-    cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
-    cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
+    cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName, { delay: 100 });    
+    cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName, { delay: 100 });   
+    cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email, { delay: 100 });   
     cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
     cy.contains('li', testData.shipping.country).click();
-    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
-    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
-    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
+    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode, { delay: 100 });
+    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city, { delay: 100 });
+    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address, { delay: 100 });
 
     cy.contains('button', 'Create').click();
   }
 
   fillBillingAddress(){
     cy.get(CheckoutFlowLocators.SELECT_SHIPPING_ADDRESS_BUTTON).click();
-    cy.contains('input', 'First Name').type(testData.shipping.firstName);
-    cy.contains('input', 'Last Name').type(testData.shipping.lastName);
-    cy.contains('input', 'Email').type(testData.shipping.email);
+    cy.contains('input', 'First Name').type(testData.shipping.firstName, { delay: 100 });
+    cy.contains('input', 'Last Name').type(testData.shipping.lastName, { delay: 100 });
+    cy.contains('input', 'Email').type(testData.shipping.email, { delay: 100 });
     cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
     cy.contains('li', testData.shipping.country).click();
-    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
-    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
-    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
+    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode, { delay: 100 });
+    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city, { delay: 100 });
+    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address, { delay: 100 });
 
     cy.contains('button', 'Create').click();
   }
@@ -99,14 +99,14 @@ export class PersonalCheckout {
       
        
       cy.get('.vc-dialog-header__title').contains('New address').should('be.visible');
-      cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
-      cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
-      cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
+      cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName, { delay: 100 });    
+      cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName, { delay: 100 });   
+      cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email, { delay: 100 });   
       cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
       cy.contains('li', testData.shipping.country).click();
-      cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
-      cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
-      cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
+      cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode, { delay: 100 });
+      cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city, { delay: 100 });
+      cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address, { delay: 100 });
   
       cy.contains('button', 'Create').click();
   
@@ -136,7 +136,7 @@ export class PersonalCheckout {
   }
 
   leaveComment(text) {
-  cy.get('textarea').type(text);
+  cy.get('textarea').type(text, { delay: 100 });
   }
 
 checkBillingPage(){
@@ -166,14 +166,14 @@ cy.contains('Billing');
     cy.get('button[data-test-id="select-address-button"]').click();
     cy.get('.vc-dialog-header__title').contains('New address').should('be.visible');
     //cy.contains('button', 'Add new address').click();    
-    cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName);    
-    cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName);   
-    cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email);   
+    cy.get(CheckoutFlowLocators.ADDRESS_FIRST_NAME).type(testData.shipping.firstName, { delay: 100 });    
+    cy.get(CheckoutFlowLocators.ADDRESS_LAST_NAME).type(testData.shipping.lastName, { delay: 100 });   
+    cy.get(CheckoutFlowLocators.ADDRESS_EMAIL).type(testData.shipping.email, { delay: 100 });   
     cy.get(CheckoutFlowLocators.SELECT_COUNTRY_INPUT).click();
     cy.contains('li', testData.shipping.country).click();
-    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode);
-    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city);
-    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address);
+    cy.get(CheckoutFlowLocators.ADDRESS_ZIP).type(testData.shipping.postCode, { delay: 100 });
+    cy.get(CheckoutFlowLocators.ADDRESS_CITY).type(testData.shipping.city, { delay: 100 });
+    cy.get(CheckoutFlowLocators.ADDRESS).type(testData.shipping.address, { delay: 100 });
 
     cy.contains('button', 'Create').click();
 
@@ -213,10 +213,10 @@ cy.get('button[data-test-id="pay-now-button"]').should('be.disabled');
 }
 
 fillCardForm(cardNumber, cvv, name = 'ELON MUSK', date = '1234') {
-cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber);
-cy.get('input[class="vc-input__input"]').eq(1).type(name);
-cy.get('input[class="vc-input__input"]').eq(2).type(date);
-cy.get('input[data-test-id="security-code-input"]').type(cvv);     
+cy.get('div[class="vc-input vc-input--size--md"]').first().find('input').type(cardNumber, { delay: 100 });
+cy.get('input[class="vc-input__input"]').eq(1).type(name, { delay: 100 });
+cy.get('input[class="vc-input__input"]').eq(2).type(date, { delay: 100 });
+cy.get('input[data-test-id="security-code-input"]').type(cvv, { delay: 100 });     
    
 }
 
@@ -227,7 +227,9 @@ cy.checkLoading('.vc-loader-overlay__spinner');
 
 isPayed() {
 
-cy.url().should('include', 'checkout/payment/success');    
+cy.get('h1').contains('Payment successful').should('be.visible');
+cy.url().should('include', 'checkout/payment/success');
+
 }
 
 checkCompletePage(){

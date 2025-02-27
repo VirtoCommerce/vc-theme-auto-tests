@@ -112,7 +112,6 @@ cy.get('div[search-params]').should('be.visible');
 catalogPage.prepareProductsForList(6);
 listsPage.checkNewList();
 listsPage.clickOnAddToCart();
-cy.pause();
 listsPage.clickOnViewCart();
 cy.log('Check added product to cart');
 cy.checkLoading('.vc-loader-overlay__spinner');        

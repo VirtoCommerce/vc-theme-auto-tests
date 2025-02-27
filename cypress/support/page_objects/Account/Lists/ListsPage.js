@@ -60,22 +60,31 @@ cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
 
 }
 
-createPersonalList(list_name, list_description){
+createPersonalList(list_name, list_description) {
+  cy.log('Creating a new list'); 
+  cy.contains('button', 'Create list').should('be.visible').click();
+  // Ensure the modal appears
+  cy.get(CartPageLocators.DIALOG_TITLE)
+    .should('be.visible')
+    .and('have.text', 'New List');
 
-cy.log('Create a new list')
-cy.contains('button', 'Create list').click();
-cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
-cy.get('input[aria-label="List name"]').type(list_name);
-cy.get('textarea').type(list_description);
-cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
-cy.wait(500);
-cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
-cy.log('Check created list')
-cy.contains('a', list_name);
-this.checkProductCounter();
+  // Fill in list name and description
+  cy.get('input[aria-label="List name"]').should('be.visible').clear().type(list_name);
+  cy.get('textarea').should('be.visible').clear().type(list_description);
 
-
+  // Ensure the "Create list" button is clickable and click it
+  cy.get(CartPageLocators.DIALOG_FOOTER)
+    .contains('Create list')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click();
+      
+  cy.get(CartPageLocators.DIALOG_TITLE, { timeout: 6000 }).should('not.exist');  
+  cy.log('Checking created list');
+  cy.contains('a', list_name).should('be.visible');
+  this.checkProductCounter();
 }
+
 
 createLists(){
 
@@ -355,7 +364,7 @@ cy.contains('button','Add all to cart').click();
 }
 
 clickOnAddToCart(){
-  
+
     cy.contains('button', 'Add to cart')
         .filter(':visible')
         .not(':disabled')

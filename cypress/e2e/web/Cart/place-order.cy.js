@@ -31,7 +31,7 @@ describe('place order', () => {
   it('places order created by Anonymous user', () => {
 
     productPage.visit('printers');      
-    catalogPage.addToCartOne(3);
+    catalogPage.addToCart(3);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -58,7 +58,7 @@ describe('place order', () => {
     cartPage.emptyOrNot();
     addresses.emtyOrNot();    
     productPage.visit('printers');
-    catalogPage.addToCartOne(3);
+    catalogPage.addToCart(3);
     cy.checkLoading('.vc-button__loader');
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
