@@ -2,223 +2,209 @@ import { ListsLocators } from "../ListsLocators";
 import { CartPageLocators } from "../../CartPage/CartPageLocators/CartPageLocators";
 import Lists_data from "./Lists_data";
 
-class Lists{
+class Lists {
+  goToListTab() {
+    cy.log('Go to Lists tab');
+    cy.get(ListsLocators.LISTS_TAB).last().click();
+    cy.location('pathname').should('eq', "/account/lists");
+  }
 
-goToListTab(){
+  isListsPageEmpty() {
+    cy.log("Verify lists page is empty");
+    this.goToListTab();
+    cy.wait(2000);
+    cy.get(ListsLocators.LISTS_TITLE)
+      .if('visible')
+      .then(() => {
+        this.deleteMultipleLists();
+      })
+      .else()
+      .then(() => {
+        this.emptyListsPageView();
+      });
+  }
 
-cy.log('Go to Lists tab')
-cy.get(ListsLocators.LISTS_TAB).last().click();
-cy.location('pathname').should('eq', "/account/lists");
+  emptyListsPageView() {
+    cy.log('Check empty Lists view');
+    cy.get('.vc-typography--variant--h1').contains('Lists');
+    cy.get(ListsLocators.EMPTY_LIST_VIEW).should('be.visible');
+    cy.get(ListsLocators.EMPTY_ICON).should('be.visible');
+    cy.contains('div', "You have not created any lists yet");
+    cy.contains('span', 'Create list');
+    cy.log('The lists page is empty');
+  }
 
+  emptyListDetailPage() {
+    cy.get('.vc-empty-view__text').should('have.text', 'Your list is empty');
+    cy.contains('a', 'Continue browsing');
+    cy.contains('button', 'Add all to cart').should('be.disabled');
+    cy.contains('button', 'Save changes').should('be.disabled');
+    cy.contains('button', 'List settings').should('be.enabled');
+  }
 
-}
+  goToListDetailsPage() {
+    cy.log('Open list details page');
+    cy.get(ListsLocators.LISTS_TITLE).last().click();
+  }
 
-isListsPageEmpty(){
-   
-cy.log("Verify lists page is empty");
-this.goToListTab();
-cy.wait(2000);
-cy.get(ListsLocators.LISTS_TITLE)
-.if('visible')
-.then(()=>{
-this.deleteMultipleLists();
-})
-.else()
-.then(()=>{
-this.emptyListsPageView();
+  createPersonalList(listName, listDescription) {
+    cy.log('Creating a new list');
+    cy.contains('button', 'Create list').should('be.visible').click();
 
-})
+    cy.get(CartPageLocators.DIALOG_TITLE)
+      .should('be.visible')
+      .and('have.text', 'New List');
 
-}
+    cy.get('input[aria-label="List name"]')
+      .should('be.visible')
+      .clear()
+      .type(listName, { delay: 100 });
 
-emptyListsPageView(){
+    cy.get('textarea')
+      .should('be.visible')
+      .clear()
+      .type(listDescription, { delay: 100 });
 
-cy.log('Check empty Lists view');
-cy.get('.vc-typography--variant--h1').contains('Lists');
-cy.get(ListsLocators.EMPTY_LIST_VIEW).should('be.visible');
-cy.get(ListsLocators.EMPTY_ICON).should('be.visible');
-cy.contains('div', "You have not created any lists yet");
-cy.contains('span', 'Create list');
-cy.log('The lists page is empty');
+    cy.get(CartPageLocators.DIALOG_FOOTER)
+      .contains('Create list')
+      .should('be.visible')
+      .and('not.be.disabled')
+      .click();
 
-}
+    cy.get(CartPageLocators.DIALOG_TITLE, { timeout: 6000 }).should('not.exist');
+    cy.log('Checking created list');
+    cy.contains('a', listName).should('be.visible');
+    this.checkProductCounter();
+  }
 
-emptyListDetailPage(){
+  createLists() {
+    const randomNumber = Lists_data.getRandomNumber();
+    const randomWord = Lists_data.getRandomWord();
 
-cy.get('.vc-empty-view__text').should('have.text', 'Your list is empty');
-cy.contains('a', 'Continue browsing');
-cy.contains('button','Add all to cart').should('be.disabled');
-cy.contains('button', 'Save changes').should('be.disabled');
-cy.contains('button', 'List settings').should('be.enabled');
-    
-}
+    cy.contains('button', 'Create list')
+      .if('enabled')
+      .then(() => {
+        cy.contains('button', 'Create list').should('be.visible').click();
+        cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
+        cy.get(ListsLocators.LIST_NAME).type(`${randomWord}${randomNumber}`, { delay: 100 });
+        cy.get('textarea').type(`${Lists_data.lists[0].description1} ${randomWord}${randomNumber}`, { delay: 100 });
+        cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
+        cy.wait(1000);
+        cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
+      })
+      .else('disabled')
+      .then(() => {
+        cy.get('.justify-between > .vc-button').should('be.disabled');
+        cy.log('Create list button is disabled');
+      });
+  }
 
-goToListDetailsPage(){
+  createMultipleLists() {
+    for (let i = 0; i <= 10; i++) {
+      this.createLists();
+    }
+  }
 
-cy.log('Open list details page');
-cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
+  checkListsAfterCreated() {
+    cy.log('Check created lists');
+    cy.get('.vc-empty-view__text').should('not.exist');
+    cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 1);
+    this.checkProductCounter();
+    cy.get(ListsLocators.LISTS_TITLE).first().click();
+  }
 
-}
+  compareProductsCount() {
+    cy.get(ListsLocators.COUNTER)
+      .first()
+      .invoke('text')
+      .then((count1) => {
+        const productCount = parseInt(count1.trim());
+        cy.log(`Product counter is: ${productCount}`);
 
-createPersonalList(list_name, list_description) {
-  cy.log('Creating a new list'); 
-  cy.contains('button', 'Create list').should('be.visible').click();
-  // Ensure the modal appears
-  cy.get(CartPageLocators.DIALOG_TITLE)
-    .should('be.visible')
-    .and('have.text', 'New List');
+        this.goToListDetailsPage();
+        this.countItemsFromAllPages(productCount);
+      });
+  }
 
-  // Fill in list name and description
-  cy.get('input[aria-label="List name"]').should('be.visible').clear().type(list_name, { delay: 100 });
-  cy.get('textarea').should('be.visible').clear().type(list_description, { delay: 100 });
+  countItemsFromAllPages(productCount) {
+    let totalLineItems = 0;
 
-  // Ensure the "Create list" button is clickable and click it
-  cy.get(CartPageLocators.DIALOG_FOOTER)
-    .contains('Create list')
-    .should('be.visible')
-    .and('not.be.disabled')
-    .click();
-      
-  cy.get(CartPageLocators.DIALOG_TITLE, { timeout: 6000 }).should('not.exist');  
-  cy.log('Checking created list');
-  cy.contains('a', list_name).should('be.visible');
-  this.checkProductCounter();
-}
+    const countItems = () => {
+      cy.get(ListsLocators.LINE_ITEM)
+        .then($items => {
+          const currentPageCount = $items.length;
+          totalLineItems += currentPageCount;
+          cy.log(`Found ${currentPageCount} items on current page. Running total: ${totalLineItems}`);
 
+          cy.get('body').then($body => {
+            const hasNextPage = $body.find(ListsLocators.NEXT_PAGE_BUTTON).length > 0 
+              && !$body.find(ListsLocators.NEXT_PAGE_BUTTON).prop('disabled');
 
-createLists(){
+            if (hasNextPage) {
+              cy.get(ListsLocators.NEXT_PAGE_BUTTON)
+                .should('be.visible')
+                .click()
+                .then(() => {
+                  // Wait for items to load on next page
+                  cy.get(ListsLocators.LINE_ITEM).should('exist');
+                  countItems();
+                });
+            } else {
+              cy.log(`Final count: Found ${totalLineItems} total items across all pages`);
+              cy.log(`Expected count from counter: ${productCount}`);
+              
+              expect(totalLineItems).to.equal(productCount, 
+                `Product counter (${productCount}) should match total items found (${totalLineItems})`);
+            }
+          });
+        });
+    };
 
-// Generate a random number between 0 and 100
-const randomNumber = Lists_data.getRandomNumber();
-// Generate a random word
-const randomWord = Lists_data.getRandomWord();
+    // Start counting from first page
+    countItems();
+  }
 
-cy.contains('button', 'Create list')
-.if('enabled')
-.then(() => {
-cy.contains('button', 'Create list').should('be.visible').click();
-cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
-cy.get(ListsLocators.LIST_NAME).type(randomWord + randomNumber);
-cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
-cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
-cy.wait(500);
-cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
-      
-})
-.else('disabled')
-.then(() => {
-cy.get('.justify-between > .vc-button').should('be.disabled')
-cy.log('Create list button is disabled');
+  checkProductCounter() {
+    cy.get(ListsLocators.COUNTER)
+      .first()
+      .invoke('text')
+      .then((count) => {
+        const productCount = parseInt(count.trim());
+        cy.log(`Product counter is: ${productCount}`);
+      });
+  }
 
-}); 
-}
+  editListFromSettings(listName, listDescription) {
+    cy.log('Edit list name');
+    cy.get(ListsLocators.SETTINGS_WHEEL).first().click();
+    cy.get(ListsLocators.DROP_DOWN).should('be.visible');
+    cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
+    cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
+    cy.contains('button', 'Save').should('be.disabled');
+    cy.get(ListsLocators.LIST_NAME).clear().type(listName, { delay: 100 });
+    cy.get('textarea').clear().type(listDescription, { delay: 100 });
+    cy.contains('button', 'Save').should('be.enabled').click();
+    cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
+    cy.log('The name of list is updated');
+  }
 
+  editListFromDetailsPage(listName, listDescription) {
+    cy.log('Edit list from details page');
+    cy.contains('button', 'List settings').should('be.enabled').click();
+    cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
+    cy.contains('button', 'Save').should('be.disabled');
+    cy.get(ListsLocators.LIST_NAME).clear().type(listName, { delay: 100 });
+    cy.get('textarea').clear().type(listDescription, { delay: 100 });
+    cy.clickOnActiveDialogButton();
+    cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
+    cy.log('The name of list is updated');
+  }
 
-createMultipleLists() {
-
-for (let i = 0; i <= 10; i++) {
-this.createLists();
-}
-}
-  
-
-
-checkListsAfterCreated(){
-
-cy.log('Check created lists')
-cy.get('.vc-empty-view__text')
-.should('not.exist')
-cy.get(ListsLocators.LISTS_TITLE).its('length').should('gte', 1);
-this.checkProductCounter();
-cy.get(ListsLocators.LISTS_TITLE).eq(0).click();
-
-
-}
-
-compareProductsCount(){
-// Retrieve the text content of the counter element and save it to productCount variable
-cy.get(ListsLocators.COUNTER)
-.eq(0)
-.invoke('text')
-.then((count1) => {
-const productCount = parseInt(count1.trim()); // Parse the text content into an integer
-cy.log(`Product counter is: ${productCount}`);
-
-// Navigate to the list details page
- this.goToListDetailsPage();
-
-// Count the number of line item elements and compare with productCount
-cy.get(ListsLocators.LINE_ITEM)
-.its('length')
-.then((count2) => {
-const lineItemCount = count2;
-cy.log(`Number of elements found: ${lineItemCount}`);
-
-// Assertion to compare productCount with lineItemCount
-expect(productCount).to.equal(lineItemCount);
-cy.log(`The product count at badge: ${productCount} is equal to line-items in list: ${lineItemCount}`);
-
-});
-});
-
-
-}
-
-checkProductCounter(){
-
-// Retrieve the text content of the counter element and save it to productCount variable
-cy.get(ListsLocators.COUNTER)
-.eq(0)
-.invoke('text')
-.then((count1) => {
-const productCount = parseInt(count1.trim()); // Parse the text content into an integer
-cy.log(`Product counter is: ${productCount}`);
-
-});
-}
-
-
-editListFromSettings(list_name, list_description){
-
-cy.log('Edit list name');
-cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
-cy.get(ListsLocators.DROP_DOWN).should('be.visible');
-cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
-cy.contains('button', 'Save').should('be.disabled');
-cy.get(ListsLocators.LIST_NAME).clear();
-cy.get(ListsLocators.LIST_NAME).type(list_name, { delay: 100 });
-cy.get('textarea').clear();
-cy.get('textarea').type(list_description, { delay: 100 });
-cy.contains('button', 'Save').should('be.enabled').click();
-cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
-cy.log('The name of list is updated');
-
-
-}
-
-editListFromDetailsPage(list_name, list_description){
-
-cy.log('Edit list from details page');
-cy.contains('button', 'List settings').should('be.enabled').click();
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
-cy.contains('button', 'Save').should('be.disabled');
-cy.get(ListsLocators.LIST_NAME).clear();
-cy.get(ListsLocators.LIST_NAME).type(list_name, { delay: 100 });
-cy.get('textarea').clear();
-cy.get('textarea').type(list_description, { delay: 100 });
-cy.clickOnActiveDialogButton();
-cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
-cy.log('The name of list is updated');
-    
-}
-
-
-compareListsNames(){
-
+  compareListsNames() {
     const normalizeText = (text) => text.replace(/\s+/g, ' ').trim();
 
-    cy.get('[aria-current]').eq(0)
+    cy.get('[aria-current]')
+      .first()
       .invoke('text')
       .then((text1) => {
         cy.get('.vc-typography')
@@ -227,261 +213,231 @@ compareListsNames(){
             expect(normalizeText(text1)).to.equal(normalizeText(text2));
           });
       });
-    
+  }
 
-}
+  editList() {
+    this.compareListsNames();
+    this.clickToListsRouter();
 
-editList() {
+    this.editListFromSettings(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
+    this.goToListDetailsPage(Lists_data.lists[1].name2);
+    this.compareListsNames();
 
-this.compareListsNames();
-this.clickToListsRouter();
-    
-this.editListFromSettings(Lists_data.lists[1].name2, Lists_data.lists[1].description2);
-this.goToListDetailsPage(Lists_data.lists[1].name2);
-this.compareListsNames();
-    
-this.editListFromDetailsPage(Lists_data.lists[2].name3, Lists_data.lists[2].description3)
-this.compareListsNames();
-this.clickToListsRouter();
+    this.editListFromDetailsPage(Lists_data.lists[2].name3, Lists_data.lists[2].description3);
+    this.compareListsNames();
+    this.clickToListsRouter();
+  }
 
-}
+  clickToListsRouter() {
+    cy.get(ListsLocators.ROUTER_LINK).last().click();
+    cy.location('pathname').should('eq', "/account/lists");
+  }
 
-clickToListsRouter(){
-cy.get(ListsLocators.ROUTER_LINK).last().click();
-cy.location('pathname').should('eq', "/account/lists");
-}
+  switchBetweenLists() {
+    cy.get('div[class="ml-4 flex items-center space-x-2 overflow-hidden text-ellipsis px-3 text-sm"]')
+      .last()
+      .click();
+    this.compareListsNames();
+  }
 
-switchBetweenLists(){
+  checkListDetailsPage() {
+    cy.log('check List Details Page');
+    cy.get('.vc-empty-view__text').should('not.exist');
+    cy.contains('button', 'Add all to cart').should('be.enabled');
+    cy.contains('button', 'Save changes').should('be.disabled');
+    cy.contains('button', 'List settings').should('be.enabled');
+    cy.get('.vc-line-item').should('exist');
+  }
 
-cy.get('div[class="ml-4 flex items-center space-x-2 overflow-hidden text-ellipsis px-3 text-sm"]').last().click();
-this.compareListsNames();
-}
+  deleteList() {
+    cy.log('Delete list');
+    cy.get('.vc-empty-view__text')
+      .if('not.exist')
+      .then(() => {
+        cy.get(ListsLocators.SETTINGS_WHEEL).first().click();
+        cy.get(ListsLocators.DROP_DOWN).should('be.visible');
+        cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Delete').click();
+        cy.confirmDelete();
+      })
+      .else()
+      .then(() => {
+        this.emptyListsPageView();
+        cy.log('All lists were deleted');
+      });
+  }
 
-checkListDetailsPage(){
+  deleteMultipleLists() {
+    cy.get(ListsLocators.LISTS_TITLE)
+      .should('have.length.gte', 1)
+      .then((elements) => {
+        elements.each(() => {
+          this.deleteList();
+        });
+      });
+  }
 
-cy.log('check List Details Page');
-cy.get('.vc-empty-view__text').should('not.exist');
-cy.contains('button','Add all to cart').should('be.enabled');
-cy.contains('button', 'Save changes').should('be.disabled');
-cy.contains('button', 'List settings').should('be.enabled');
-cy.get('.vc-line-item').should('exist');
+  removeSingleProduct() {
+    cy.wait(1000);
+    cy.get(ListsLocators.REMOVE_BUTTON)
+      .if('exist')
+      .then(() => {
+        cy.get(ListsLocators.REMOVE_BUTTON)
+          .first()
+          .click();
+        cy.confirmDelete();
+      })
+      .else('not.exist')
+      .then(() => {
+        cy.get(ListsLocators.REMOVE_BUTTON).should('have.length', 0);
+        cy.log('All items were removed from list');
+      });
+  }
 
-}
+  testRemove() {
+    cy.get(ListsLocators.LINE_ITEM)
+      .then(($items) => {
+        const itemCount = $items.length;
+        cy.log(`Found ${itemCount} items on page`);
+        
+        for(let i = 0; i < Math.min(itemCount, 6); i++) {
+          this.removeSingleProduct();
+          cy.wait(1000); // Small wait to allow UI to update
+        }
+      });
+  }
 
-deleteList(){
+  removeProductsFromAllPages() {
+    cy.get(ListsLocators.LINE_ITEM)
+      .then(($items) => {
+        const totalItems = $items.length;
+        cy.log(`Found ${totalItems} total line items on current page`);
 
-cy.log('Delete list')
-cy.get('.vc-empty-view__text')
-.if('not.exist')
-.then(()=> {
-cy.get(ListsLocators.SETTINGS_WHEEL).eq(0).click();
-cy.get(ListsLocators.DROP_DOWN).should('be.visible');
-cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Delete').click();
-cy.confirmDelete();
-})
+        cy.get('.vc-pagination__page')
+          .if('exist')
+          .then(($pages) => {
+            const totalPages = $pages.length;
+            
+            if (totalPages > 0) {
+              cy.log(`Found ${totalPages} pages with 6 items per page`);
+              
+              for (let page = 0; page < totalPages; page++) {
+                this.testRemove();
+                
+                if (page < totalPages - 1) {
+                  cy.get('.vc-pagination__next').click();
+                  cy.wait(1000);
+                }
+              }
+            }
+          })
+          .else('not.exist')
+          .then(() => {
+            cy.log('Single page with items - removing all items');
+            this.testRemove();
+          });
+      });
+  }
 
-.else()
-.then(() => {
-this.emptyListsPageView();
-cy.log('All lists were deleted')  
-})
+  clickOnAddAllToCart() {
+    cy.contains('button', 'Add all to cart').click();
+  }
 
-}
-
-deleteMultipleLists() {
-
-let elementsLength;
-
-cy.get(ListsLocators.LISTS_TITLE)
-.should('have.length.gte', 1)
-.then((elements) => {
-elementsLength = elements.length;
-    
-elements.each((element, index) => {
-console.log(index + 1);
-this.deleteList();
-
-})
-})   
-
-}
-
-removeSingleProduct(){
-cy.wait(1000);
-cy.get(ListsLocators.REMOVE_BUTTON)
-.if('exist')
-.then(() => {
-cy.get(ListsLocators.REMOVE_BUTTON)
-.first()
-.click();
-cy.confirmDelete();
-})
-.else('not.exist')
-.then(() => {
-cy.get(ListsLocators.REMOVE_BUTTON).should('have.length', 0);
-cy.log('All items were removed from list');
-})
-}
-
-testRemove(){
-
-let batchCount = 0;
-
-// Delete elements in batches of 6 until none are left
-do {
-this.removeSingleProduct();
-batchCount++;
-} 
-while (batchCount < 6);
-}
-
-removeProductsFromAllPages(){
-
-let elementsLength;
-
-cy.get('.vc-pagination__page')
-.should('have.length.gte', 1)
-.then((elements) => {
-elementsLength = elements.length;          
-cy.log(`Number of elements: ${elementsLength}`);
-
-for (let page = 1; page <= elementsLength ; page++) {
-// Delete elements in batches on the current page
-this.testRemove();
-
-}
-
-});
-
-
-}
-
-clickOnAddAllToCart(){
-
-cy.contains('button','Add all to cart').click();
-
-
-}
-
-clickOnAddToCart(){
-
+  clickOnAddToCart() {
     cy.contains('button', 'Add to cart')
-        .filter(':visible')
-        .not(':disabled')
-        .first()
-        .click();
+      .filter(':visible')
+      .not(':disabled')
+      .first()
+      .click();
+  }
+
+  clickOnViewCart() {
+    cy.checkAddingProductsToCart();
+    cy.contains('button', "Successfully added").should('be.visible');
+    cy.contains('a', "View cart").click();
+    cy.location('pathname').should('eq', "/cart");
+  }
+
+  createListData() {
+    this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
+    this.goToListDetailsPage();
+    this.emptyListDetailPage();
+    cy.clickOnContinue("Continue browsing");
+    cy.location('pathname').should('eq', "/catalog");
+    cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
+    cy.get('.-mt-1').should('be.visible').and('contain', 'Catalog');
+  }
+
+  checkNewList() {
+    this.goToListTab();
+    this.checkListsAfterCreated();
+    this.checkListDetailsPage();
+  }
+
+  changeQuantity(index, value) {
+    cy.get(ListsLocators.INPUT).eq(index).clear().type(value, { delay: 100 });
+  }
+
+  saveChanges(action) {
+    this.changeQuantity(1, Math.floor(Math.random() * 20) + 1);
+    cy.wait(1000);
+    cy.contains('button', 'Save changes').should('be.enabled').click();
+    this.saveChangesPopUp();
+    cy.clickOnButton(action);
+    cy.get(CartPageLocators.DIALOG_TITLE).should('not.exist');
+    cy.wait(1000);
+    cy.contains('button', 'Save changes').should('be.disabled');
+  }
+
+  saveChangesPopUp() {
+    cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'Save changes');
+    cy.get('.vc-dialog-content').contains('Would you like to save changes?');
+    cy.contains('button', 'Yes').should('be.enabled');
+    cy.contains('button', 'No').should('be.enabled');
+  }
+
+  updateQuantityInList() {
+    cy.log('Check qty update > Save changes');
+    this.saveChanges('No');
+    this.saveChanges('Yes');
+  }
+
+  leaveList() {
+    cy.log('Change qty > leave the list > Save changes > Yes');
+    this.changeQuantity(3, Math.floor(Math.random() * 20) + 1);
+    cy.get(ListsLocators.ROUTER_LINK).click();
+    cy.wait(1000);
+    this.saveChangesPopUp();
+    cy.clickOnButton('Yes');
+    cy.wait(1000);
+    cy.location('pathname').should('eq', "/account/lists");
+    this.goToListDetailsPage();
+
+    cy.log('Change qty > leave the list > Save changes > No');
+    this.changeQuantity(4, Math.floor(Math.random() * 20) + 1);
+    cy.wait(1000);
+    cy.get(ListsLocators.ROUTER_LINK).click();
+    cy.wait(1000);
+    this.saveChangesPopUp();
+    cy.clickOnButton('No');
+    cy.location('pathname').should('eq', "/account/lists");
+  }
+
+  listCounter() {
+    cy.get(ListsLocators.LIST_OF_LISTS)
+      .its('length')
+      .then((length) => {
+        cy.log('The length of lists is:', length);
+      });
+  }
+
+  listSwitcher() {
+    for (let i = 7; i <= 15; i++) {
+      cy.get(`:nth-child(${i}) > .line-clamp-2`).click();
+      cy.wait(1000);
+      this.compareListsNames();
+      cy.wait(1000);
+    }
+  }
 }
-
-clickOnViewCart(){
-
-cy.checkAddingProductsToCart();
-cy.contains('button', "Successfully added").should('be.visible');
-cy.contains('a', "View cart").click();
-cy.location('pathname').should('eq', "/cart");
-
-}
-
-createListData(){
-
-this.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
-this.goToListDetailsPage();
-this.emptyListDetailPage();
-cy.clickOnContinue("Continue browsing");
-cy.location('pathname').should('eq', "/catalog");
-cy.get('.vc-typography > span').should('be.visible').and('have.text', 'Catalog');
-cy.get('.-mt-1').should('be.visible').and('contain', 'Catalog');
-
-}
-
-checkNewList(){
-
-this.goToListTab();
-this.checkListsAfterCreated();
-this.checkListDetailsPage();
-
-}
-
-changeQuantity(value1, value2){
-
-cy.get(ListsLocators.INPUT).eq(value1).clear().type(value2);
-    
-}
-    
-saveChanges(value){
-    
-this.changeQuantity(1, 2);
-cy.wait(1000);
-cy.contains('button', 'Save changes').should('be.enabled').click();
-this.saveChangesPopUp();
-cy.clickOnButton(value);
-cy.get(CartPageLocators.DIALOG_TITLE).should('not.exist');
-cy.wait(1000);
-cy.contains('button', 'Save changes').should('be.disabled');
-    
-    
-}
-    
-saveChangesPopUp(){
-    
-cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', 'Save changes');
-cy.get('.vc-dialog-content').contains('Would you like to save changes?');
-cy.contains('button', 'Yes').should('be.enabled');
-cy.contains('button', 'No').should('be.enabled');
-}
-    
-updateQuantityInList(){
-
-cy.log('Check qty update > Save chenges')
-this.saveChanges('No');
-this.saveChanges('Yes');
-    
-}
-    
-leaveList(){
-cy.log('Change qty > leave the list > Save changes > Yes');   
-this.changeQuantity(3, 5);
-cy.get(ListsLocators.ROUTER_LINK).click();
-cy.wait(1000);
-this.saveChangesPopUp();
-cy.clickOnButton('Yes');
-cy.wait(1000);
-cy.location('pathname').should('eq', "/account/lists");
-this.goToListDetailsPage();
-
-cy.log('Change qty > leave the list > Save changes > No');
-this.changeQuantity(4, 6);
-cy.get(ListsLocators.ROUTER_LINK).click();
-this.saveChangesPopUp();
-cy.clickOnButton('No');
-cy.location('pathname').should('eq', "/account/lists");
-    
-}
-
-listCounter() {
-  
-cy.get(ListsLocators.LIST_OF_LISTS).its('length')
-.then((length) => {
-cy.log('The length of lists is:', length);
-
-})
-
-}
-
-
-listSwitcher() {
-
-for (let i = 7; i <= 15; i++) {
-
-cy.get(`:nth-child(${i}) > .line-clamp-2`).click();
-cy.wait(500);
-this.compareListsNames();
-cy.wait(500);
-}
-
-}
-
-}
-
-
 
 export default Lists;

@@ -16,6 +16,8 @@ LIST_OF_LISTS: 'div[class="ml-4 flex items-center space-x-2 overflow-hidden text
 CURRENT_PAGE: '[aria-current]',
 SWITCHER_LABEL: 'button[class="vc-switch__label"]',
 LIST_SETTINGS: "List settings",
-LIST_NAME: 'input[aria-label="List name"]'
+LIST_NAME: 'input[aria-label="List name"]',
+NEXT_PAGE_BUTTON: '.vc-pagination__button--next',
+PREVIOUS_PAGE_BUTTON: '.vc-pagination__nav > .vc-button--disabled'
 
 }

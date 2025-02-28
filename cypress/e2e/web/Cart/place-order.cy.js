@@ -7,7 +7,7 @@ import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
 import Addresses from "../../../support/page_objects/Account/Addresses/Addresses";
 import userData from "../../Variables/userData";
 import AuthLogin from "../../../support/navigation/AuthLogin";
-
+import LogOut from "../../../support/navigation/LogOut";
 
 describe('place order', () => {
   const productPage = new ProductPage();
@@ -18,7 +18,7 @@ describe('place order', () => {
   const personalCheckout = new PersonalCheckout();
   const loginPage = new LoginPage();
   const addresses = new Addresses();
-
+  const logOut = new LogOut();
 
   beforeEach(() => {
     cy.log('Clearing cookies and local storage');
@@ -77,7 +77,12 @@ describe('place order', () => {
     personalCheckout.checkPaymentPage();      
     personalCheckout.fillCardForm(Cypress.env('CARD_NUMBER_VISA'), Cypress.env('CVV'));
     personalCheckout.pay();
-    personalCheckout.isPayed();
+    personalCheckout.isPayed();    
+    cy.log('click on the user name and log out')
+    addresses.emptyOrNot();
+    logOut.signOut(userData.userData[0].user_name);
+    
+    
   })
 
   afterEach(() => {
