@@ -27,16 +27,17 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome          
+          browser: chrome
+          record: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #PLATFORM_URL: https://vcst-qa-storefront.govirto.com
-          PLATFORM_URL: https://vcptcore-qa-storefront.govirto.com
-          #BASE_URL: https://vcst-qa.govirto.com
-          BASE_URL: https://vcptcore-qa.govirto.com
+          PLATFORM_URL: https://vcst-qa-storefront.govirto.com
+          #PLATFORM_URL: https://vcptcore-qa-storefront.govirto.com
+          BASE_URL: https://vcst-qa.govirto.com
+          #BASE_URL: https://vcptcore-qa.govirto.com
           ADMIN_NAME: admin
-          ADMIN_PASSWORD: Password2
+          ADMIN_PASSWORD: Password1!
           API_KEY: ${{ secrets.API_KEY }}
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
