@@ -27,7 +27,10 @@ jobs:
       - name: Print Environment Variables (Debugging)
         run: |
           echo "PLATFORM_URL=$PLATFORM_URL"
-          echo "BASE_URL=$BASE_URL"       
+          echo "BASE_URL=$BASE_URL"
+        env:
+          PLATFORM_URL: https://vcst-qa-storefront.govirto.com
+          BASE_URL: https://vcst-qa.govirto.com
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
