@@ -24,6 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Print Environment Variables (Debugging)
+        run: |
+          echo "PLATFORM_URL=$PLATFORM_URL"
+          echo "BASE_URL=$BASE_URL"       
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
