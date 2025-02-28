@@ -36,7 +36,7 @@ listsPage.isListsPageEmpty();
        
 });
 
-it.skip('Add new List. Remove the product from the list in the Grid view and PDP', () => {
+it('Add new List. Remove the product from the list in the Grid view and PDP', () => {
 
 productPage.visit(NEWCATEGORY);
 catalogPage.addToListFromListView();
@@ -46,7 +46,8 @@ listsPage.goToListTab();
 listsPage.deleteMultipleLists();
 catalogPage.visit(CATALOG);
 catalogPage.clickOnHEARTs(11);
-catalogPage.openProductPage();
+productPage.openProductPage();
+productPage.checkProductPage();
 productCard.isActive();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
@@ -91,7 +92,8 @@ catalogPage.allUnchecked();
 catalogPage.addToExistList();
 catalogPage.clickInTheList();
 catalogPage.checkAlreadyInList();
-productPage.visit(TestData.defaultProductPage);
+productPage.openProductPage();
+productCard.isActive();
 productCard.isInactive();
 catalogPage.clickOnHeartTFromPDP();
 catalogPage.addToExistList();
@@ -182,6 +184,7 @@ describe('Anonymous', ()=> {
 
 const catalogPage = new CatalogPage();
 const CATALOG = 'catalog';
+const productPage = new ProductPage();
 
 beforeEach(() => {
 cy.clearCookies();
@@ -195,7 +198,8 @@ it('Icon is grey > Add product anonymously', ()=> {
 
 catalogPage.visit(CATALOG); 
 catalogPage.addToListAnonim();
-catalogPage.openProductPage();
+productPage.openProductPage();
+productPage.checkProductPage();
 catalogPage.addToListAnonimProductPage();
 
 });

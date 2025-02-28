@@ -69,8 +69,8 @@ createPersonalList(list_name, list_description) {
     .and('have.text', 'New List');
 
   // Fill in list name and description
-  cy.get('input[aria-label="List name"]').should('be.visible').clear().type(list_name);
-  cy.get('textarea').should('be.visible').clear().type(list_description);
+  cy.get('input[aria-label="List name"]').should('be.visible').clear().type(list_name, { delay: 100 });
+  cy.get('textarea').should('be.visible').clear().type(list_description, { delay: 100 });
 
   // Ensure the "Create list" button is clickable and click it
   cy.get(CartPageLocators.DIALOG_FOOTER)
@@ -187,9 +187,9 @@ cy.get(ListsLocators.DROP_DOWN_ITEM).contains('Edit').click();
 cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.contains('button', 'Save').should('be.disabled');
 cy.get(ListsLocators.LIST_NAME).clear();
-cy.get(ListsLocators.LIST_NAME).type(list_name);
+cy.get(ListsLocators.LIST_NAME).type(list_name, { delay: 100 });
 cy.get('textarea').clear();
-cy.get('textarea').type(list_description);
+cy.get('textarea').type(list_description, { delay: 100 });
 cy.contains('button', 'Save').should('be.enabled').click();
 cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
 cy.log('The name of list is updated');
@@ -204,9 +204,9 @@ cy.contains('button', 'List settings').should('be.enabled').click();
 cy.get(CartPageLocators.DIALOG_TITLE).should('be.visible').and('have.text', ListsLocators.LIST_SETTINGS);
 cy.contains('button', 'Save').should('be.disabled');
 cy.get(ListsLocators.LIST_NAME).clear();
-cy.get(ListsLocators.LIST_NAME).type(list_name);
+cy.get(ListsLocators.LIST_NAME).type(list_name, { delay: 100 });
 cy.get('textarea').clear();
-cy.get('textarea').type(list_description);
+cy.get('textarea').type(list_description, { delay: 100 });
 cy.clickOnActiveDialogButton();
 cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');
 cy.log('The name of list is updated');

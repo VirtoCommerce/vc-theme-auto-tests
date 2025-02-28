@@ -1,13 +1,11 @@
-import TestData from "../../Variables/TestData";
-import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
 import AuthLogin from "../../../support/navigation/AuthLogin";
 
-const PRODUCT_URL = TestData.defaultProductPage;
+const PRODUCT_URL = 'printers';
 
 describe('Clear cart', () => {
-  const productPage = new ProductPage();
+  
   const cartPage = new CartPage();
   const catalogPage = new CatalogPage();
 
@@ -19,8 +17,8 @@ describe('Clear cart', () => {
 
   it('Should login and then perform actions', () => {
     
-    productPage.visit(PRODUCT_URL);
-    catalogPage.addToCartOne(1);
+    catalogPage.visit(PRODUCT_URL);
+    catalogPage.addToCart(1);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-button__loader');
     cartPage.visitByCartClick();

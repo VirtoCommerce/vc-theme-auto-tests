@@ -130,8 +130,10 @@ Cypress.Commands.add('confirmAction', (text1, text2) => {
 Cypress.Commands.add('checkNotificationBanner', (bannerText)=>{
  
   cy.log('Check the notification banner');
-  cy.scrollTo('top');
-  cy.get('.notifications-host__item').should('be.visible').and('contain.text', bannerText);
+  cy.get('.notifications-host__item')
+    .scrollIntoView()
+    .should('be.visible')
+    .and('contain.text', bannerText);
   cy.log('Banner is presented');
   cy.get('.vc-alert__close-button').click();
   cy.wait(1000);

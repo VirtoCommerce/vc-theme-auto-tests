@@ -32,9 +32,11 @@ cy.get('button').contains('Yes').click();
 
 isCleared() {
 
-cy.contains('div', 'Your cart is empty').should('be.visible');
-cy.contains('span', 'Continue shopping').should('be.visible');
-
+cy.log('Verifying cart is empty');
+cy.get(CartPageLocators.EMPTY_CART_LAYOUT).should('be.visible');
+cy.get(CartPageLocators.EMPTY_CART_CONTAINER).should('be.visible').and('contain', CartPageLocators.EMPTY_CART_MESSAGE);
+cy.get(CartPageLocators.CONTINUE_SHOPPING_BUTTON).should('be.visible');
+cy.log('Cart is empty');
 
 }
 

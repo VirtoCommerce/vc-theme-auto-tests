@@ -6,15 +6,16 @@ const productCard = new ProductCard();
 class CatalogPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
-    cy.wait(500);
-    cy.get('.vc-typography').should('be.visible').and('have.text', 'Catalog');    
-    cy.log('Step: Visited Catalog Page');
-    this.checkCatalogPage();    
+    cy.wait(1000);
+    cy.get('.vc-typography').should('be.visible');
+     
 
   }
 
   checkCatalogPage() {
   
+  cy.get('.vc-typography').should('be.visible').and('have.text', 'Catalog');    
+  cy.log('Step: Visited Catalog Page');
   cy.get('.vc-widget__slot').should('be.visible').and('contain', 'Catalog')
   cy.log('Catalog page is visible');  
 
@@ -274,15 +275,6 @@ cy.get(CatalogPageLocators.ACTIVE_HEART)
 .should('be.lte', 10);
 }
 
-
-openProductPage(){
-
-cy.get('.vc-popover > .vc-popover__trigger > .my-px')
-.eq(0)
-.invoke('removeAttr', 'target')
-.click();
-
-}
 
 removeProductFromLists(){
 

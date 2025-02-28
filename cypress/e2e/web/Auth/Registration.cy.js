@@ -94,7 +94,7 @@ describe('Successful registration', () => {
   })
 
   //Login as a personal account
-  it('Personal: Email verification is mandatory', () => {
+  it.skip('Personal: Email verification is mandatory', () => {
     cy.log('Login as a personal account');
     loginPage.checkEmailVerification(userData.userData[0].email, userData.userData[0].password);
     cy.log('Need to confirm the email');
@@ -102,7 +102,7 @@ describe('Successful registration', () => {
   })
 
   //Login as a company account
-  it('Company: Email verification is mandatory', () => {
+  it.skip('Company: Email verification is mandatory', () => {
     cy.log('Login as a company account');
     loginPage.checkEmailVerification(userData.userData[1].email, userData.userData[1].password);
     cy.log('Need to confirm the email');

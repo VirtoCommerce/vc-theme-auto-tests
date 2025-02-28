@@ -9,4 +9,5 @@ BUY_BUTTONS: 'button[title="Add to cart"]',
 UPDATE_BUTTON: 'button[title="Update cart"]'
 
 
+
 };
