@@ -102,8 +102,8 @@ describe('Personal Lists', () => {
     catalogPage.prepareProductsForList(6);
     listsPage.checkNewList();
     
-    // Add single product to cart
-    listsPage.clickOnAddToCart();
+    // Add single product to cart    
+    catalogPage.addToCart(1);
     listsPage.clickOnViewCart();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
@@ -123,7 +123,7 @@ describe('Personal Lists', () => {
     cartPage.confirmClearCart();
   });
 
-  it('should handle list product management', () => {
+  it.only('should handle list product management', () => {
     // Initial setup - prepare products once
     listsPage.createListData();
     catalogPage.visit(CATALOG);

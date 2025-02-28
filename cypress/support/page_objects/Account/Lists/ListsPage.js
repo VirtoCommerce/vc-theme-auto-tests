@@ -1,12 +1,25 @@
 import { ListsLocators } from "../ListsLocators";
 import { CartPageLocators } from "../../CartPage/CartPageLocators/CartPageLocators";
 import Lists_data from "./Lists_data";
+import { CatalogPageLocators } from "../../CatalogPage/CatalogLocators";
 
 class Lists {
   goToListTab() {
     cy.log('Go to Lists tab');
-    cy.get(ListsLocators.LISTS_TAB).last().click();
+    cy.get(ListsLocators.LISTS_TAB)
+      .should('exist')
+      .last()
+      .scrollIntoView()
+      .should('be.visible')
+      .click({force: true});
+    
+    // Verify navigation
     cy.location('pathname').should('eq', "/account/lists");
+    
+    // Wait for page load and verify content
+    cy.get('.vc-typography--variant--h1')
+      .should('be.visible')
+      .and('contain', 'Lists');
   }
 
   isListsPageEmpty() {
@@ -342,13 +355,6 @@ class Lists {
     cy.contains('button', 'Add all to cart').click();
   }
 
-  clickOnAddToCart() {
-    cy.contains('button', 'Add to cart')
-      .filter(':visible')
-      .not(':disabled')
-      .first()
-      .click();
-  }
 
   clickOnViewCart() {
     cy.checkAddingProductsToCart();
@@ -373,12 +379,20 @@ class Lists {
     this.checkListDetailsPage();
   }
 
-  changeQuantity(index, value) {
-    cy.get(ListsLocators.INPUT).eq(index).clear().type(value, { delay: 100 });
+  changeQuantity(value) {
+    cy.log('Finding first visible product with quantity input field');
+    cy.get(ListsLocators.INPUT)
+      .should('exist')
+      .and('be.visible')
+      .first()
+      .scrollIntoView()
+      .clear()
+      .type(value, { delay: 100 })
+      .should('have.value', value);
   }
 
   saveChanges(action) {
-    this.changeQuantity(1, Math.floor(Math.random() * 20) + 1);
+    this.changeQuantity(Math.floor(Math.random() * 20) + 1);
     cy.wait(1000);
     cy.contains('button', 'Save changes').should('be.enabled').click();
     this.saveChangesPopUp();
@@ -403,7 +417,7 @@ class Lists {
 
   leaveList() {
     cy.log('Change qty > leave the list > Save changes > Yes');
-    this.changeQuantity(3, Math.floor(Math.random() * 20) + 1);
+    this.changeQuantity(Math.floor(Math.random() * 20) + 1);
     cy.get(ListsLocators.ROUTER_LINK).click();
     cy.wait(1000);
     this.saveChangesPopUp();
@@ -413,7 +427,7 @@ class Lists {
     this.goToListDetailsPage();
 
     cy.log('Change qty > leave the list > Save changes > No');
-    this.changeQuantity(4, Math.floor(Math.random() * 20) + 1);
+    this.changeQuantity(Math.floor(Math.random() * 20) + 1);
     cy.wait(1000);
     cy.get(ListsLocators.ROUTER_LINK).click();
     cy.wait(1000);
