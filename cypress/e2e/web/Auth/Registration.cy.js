@@ -26,7 +26,7 @@ describe('Delete personal and company account from admin site', () => {
 
   });
 
-  it('delete personal user account and Contact', () => {
+  it.only('delete personal user account and Contact', () => {
 
     const token = Cypress.env('ADMIN_TOKEN');
     cy.log('Starting deletion of the user');
@@ -37,7 +37,7 @@ describe('Delete personal and company account from admin site', () => {
 
   })
 
-  it('delete company user account and Contact', () => {
+  it.only('delete company user account and Contact', () => {
 
     const token = Cypress.env('ADMIN_TOKEN');
     platform.getContactId(userData.userData[1].user_name, token);
@@ -69,7 +69,7 @@ describe('Successful registration', () => {
 
 
   //Main logic
-  it('Create personal account', () => {
+  it.only('Create personal account', () => {
 
     cy.log('Starting registration');
 
@@ -81,7 +81,7 @@ describe('Successful registration', () => {
 
   })
 
-  it('Create company account', () => {
+  it.only('Create company account', () => {
 
     cy.log('Starting registration');
 
@@ -94,7 +94,7 @@ describe('Successful registration', () => {
   })
 
   //Login as a personal account
-  it.skip('Personal: Email verification is mandatory', () => {
+  it('Personal: Email verification is mandatory', () => {
     cy.log('Login as a personal account');
     loginPage.checkEmailVerification(userData.userData[0].email, userData.userData[0].password);
     cy.log('Need to confirm the email');
@@ -102,7 +102,7 @@ describe('Successful registration', () => {
   })
 
   //Login as a company account
-  it.skip('Company: Email verification is mandatory', () => {
+  it('Company: Email verification is mandatory', () => {
     cy.log('Login as a company account');
     loginPage.checkEmailVerification(userData.userData[1].email, userData.userData[1].password);
     cy.log('Need to confirm the email');
@@ -128,7 +128,7 @@ describe('Confirmation Email Notification. Set confirmation url for Personal acc
   const customerEmail1 = userData.userData[0].email;  
   const tests = new RegistrationNotificationTests(baseUrl);
 
-  it('should validate registration notification email', () => {
+  it.only('should validate registration notification email', () => {
 
     const token = Cypress.env('ADMIN_TOKEN');
     tests.validateNotificationEmail(customerEmail1, token);
@@ -152,7 +152,7 @@ describe('Confirm Email: Personal account', () => {
 
   const signUpPage = new SignUpPage();
 
-  it('should Confirm email', () => {
+  it.only('should Confirm email', () => {
     signUpPage.confirmEmail();
 
   });
@@ -177,7 +177,7 @@ describe('Confirmation Email Notification. Set confirmation url for Company acco
   const customerEmail2 = userData.userData[1].email;
   const tests = new RegistrationNotificationTests(baseUrl);
 
-  it('should validate registration notification email', () => {
+  it.only('should validate registration notification email', () => {
 
     const token = Cypress.env('ADMIN_TOKEN');
     tests.validateNotificationEmail(customerEmail2, token);
@@ -201,7 +201,7 @@ describe('Confirm Email: Company', () => {
 
   const signUpPage = new SignUpPage();
 
-  it('should Confirm email', () => {
+  it.only('should Confirm email', () => {
     signUpPage.confirmEmail();
 
   });
