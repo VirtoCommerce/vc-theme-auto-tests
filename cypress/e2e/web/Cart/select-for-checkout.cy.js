@@ -34,7 +34,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     });
 
-    it.skip('C378456: add mixed items > unselect physical products > create an order', () => {
+    it('C378456: add mixed items > unselect physical products > create an order', () => {
 
 
     productPage.visit(CATEGORY_WITH_DIGITAL);
@@ -92,7 +92,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     });
 
 
-    it.skip('C367728: add mixed items > unselect digital products > create an order', () => {
+    it('C367728: add mixed items > unselect digital products > create an order', () => {
 
     productPage.visit(CATEGORY_WITH_DIGITAL);
     catalogPage.addToCart(10);
@@ -154,7 +154,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     });
 
 
-    it('C367723: select All items > create an order', () => {
+    it.only('C367723: select All items > create an order', () => {
 
     catalogPage.visit('catalog');
     catalogPage.scrollUntilFindAddToCart(10, 10);

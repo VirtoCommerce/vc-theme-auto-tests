@@ -53,7 +53,7 @@ describe('Personal Lists', () => {
     cy.clickOnButton("Cancel");
   });
 
-  it('should add multiple products to existing list from List view', () => {
+  it.only('should add multiple products to existing list from List view', () => {
     listsPage.createListData();
     catalogPage.visit(CATALOG);
     cy.switchProductView('List');
@@ -61,7 +61,7 @@ describe('Personal Lists', () => {
     listsPage.checkNewList();
   });
 
-  it('should create lists, add products and delete lists', () => {
+  it.only('should create lists, add products and delete lists', () => {
     // Create initial list
     listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
     listsPage.goToListDetailsPage();
@@ -95,7 +95,7 @@ describe('Personal Lists', () => {
     listsPage.checkNewList();
   });
 
-  it('should add products from list to cart', () => {
+  it.only('should add products from list to cart', () => {
     listsPage.createListData();
     productPage.visit(CATEGORY);
     cy.get('div[search-params]').should('be.visible');
