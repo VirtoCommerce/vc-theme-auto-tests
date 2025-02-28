@@ -103,7 +103,11 @@ clickInTheList(){
 
 clickOnHeartTFromPDP(){
 
-cy.get(CatalogPageLocators.ADD_TO_LIST).last().click();
+cy.get(CatalogPageLocators.ADD_TO_LIST)
+  .should('be.visible')
+  .last()
+  .should('not.be.disabled')
+  .click({force: true});
 
 }
 
