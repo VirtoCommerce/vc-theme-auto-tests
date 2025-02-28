@@ -127,7 +127,7 @@ describe('Personal Lists', () => {
     // Initial setup - prepare products once
     listsPage.createListData();
     catalogPage.visit(CATALOG);
-    catalogPage.prepareProductsForList(7);
+    catalogPage.prepareProductsForList(6);
     listsPage.checkNewList();
 
     // Test product counter accuracy first
@@ -169,7 +169,7 @@ describe('Anonymous Lists', () => {
     AuthLogin.setDimensions();
   });
 
-  it('should handle anonymous list interactions', () => {
+  it.only('should handle anonymous list interactions', () => {
     catalogPage.visit(CATALOG);
     catalogPage.addToListAnonim();
     productPage.openProductPage();

@@ -6,7 +6,7 @@ class CartPage {
   }
 
   visitByCartClick() {
-    cy.get(CartPageLocators.HEADER_CART_LINK).click();
+    cy.get(CartPageLocators.HEADER_CART_LINK).last().click();
   }
 
 cartLineItemsCheck(){
@@ -73,6 +73,73 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
   cy.log('Cart is empty')
 })
 }
+
+updateQuantity(productIndex, quantity) {
+  cy.log(`Updating quantity for product ${productIndex} to ${quantity}`);
+  cy.get(CartPageLocators.CART_LINE_ITEMS)
+    .eq(productIndex - 1)
+    .within(() => {
+      cy.get(CartPageLocators.QUANTITY_INPUT).clear().type(quantity, {delay: 100});
+    });
+}
+
+getItemPrice() {
+  let itemPrice;
+  cy.get(CartPageLocators.CART_LINE_ITEMS)
+    .first()
+    .within(() => {
+      cy.xpath('(//span[@class=\'vc-product-price__actual\']//span)[2]')
+        .invoke('text')
+        .then(text => {
+          itemPrice = parseFloat(text.replace(/[^0-9.]/g, ''));
+          cy.log(`Price per item: $${itemPrice}`);
+          return itemPrice;
+        });
+    });
+}
+
+
+validateCartTotals() {
+  // Get quantity and price for first cart item
+  cy.get(CartPageLocators.CART_LINE_ITEMS).first().within(() => {
+    // Get quantity
+    cy.get(CartPageLocators.QUANTITY_INPUT)
+      .invoke('val')
+      .then(val => {
+        const quantity = parseInt(val);
+        cy.log(`Item quantity: ${quantity}`);
+
+        // Get price and calculate subtotal
+        return cy.xpath('(//span[@class=\'vc-product-price__actual\']//span)[2]')
+          .invoke('text')
+          .then(text => {
+            const price = parseFloat(text.replace(/[^0-9.]/g, ''));
+            const subtotal = price * quantity;
+            cy.log(`Item price: $${price}`);
+            cy.log(`Item subtotal: $${subtotal}`);
+            
+            return cy.wait(1000).then(() => {
+              // Verify item subtotal
+              return cy.xpath('(//span[@class=\'vc-product-price__actual\']//span)[3]')
+                .invoke('text')
+                .then(subtotalText => {
+                  const displayedSubtotal = parseFloat(subtotalText.replace(/[^0-9.]/g, ''));
+                  expect(displayedSubtotal).to.equal(subtotal);
+                  cy.log(`Displayed subtotal: $${displayedSubtotal}`);
+                });
+            });
+          });
+      });
+  });
+
+}
+
+removeProduct(productIndex) {
+  cy.get(CartPageLocators.REMOVE_BUTTON)
+    .eq(productIndex - 1)
+    .click();
+}
+
 
 }
 
