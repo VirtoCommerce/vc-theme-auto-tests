@@ -45,7 +45,7 @@ jobs:
           BASE_URL: https://vcst-qa.govirto.com
           #BASE_URL: https://vcptcore-qa.govirto.com
           ADMIN_NAME: admin
-          ADMIN_PASSWORD: Password1!
+          ADMIN_PASSWORD: Password3
           API_KEY: ${{ secrets.API_KEY }}
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           LOGIN_CORP_EMAIL: ricreyacrouyi-3425@yopmail.com
