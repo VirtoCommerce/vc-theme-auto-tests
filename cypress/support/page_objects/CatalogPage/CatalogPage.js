@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard";
 import { CatalogPageLocators } from "./CatalogLocators";
+import { CartPageLocators } from "../CartPage/CartPageLocators/CartPageLocators";
 const productCard = new ProductCard();
 
 
@@ -67,18 +68,16 @@ AddToCartSingleBtn() {
 inActiveStateView(){
 
 cy.log('Check color if inActive')
-cy.get('button[class="flex rounded p-2 text-primary hover:text-primary-600"]')
-.should('have.class', 'text-primary')
-.and('be.visible')
+cy.get('input[aria-checked="false"]')
+.should('be.visible')
 
 }
 
 activeStateView(){
 
 cy.log('Check color if Active')
-cy.get('button[class="flex rounded p-2 cursor-auto bg-additional-50 text-neutral-700 hover:shadow-md"]')
-.should('have.class', 'text-neutral-700')
-.and('be.visible')
+cy.get('input[aria-checked="true"]')
+.should('be.visible')
 
 }
 
@@ -162,7 +161,7 @@ cy.checkNotificationBanner('Your lists were successfully updated');
 })
 .else('disabled')
 .then(() => {
-cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
+cy.contains(CartPageLocators.DIALOG_FOOTER, "Save")
 .should('be.disabled');
 cy.contains('button', "Cancel").click();
 cy.log('Add new list and Save buttons are disabled');
@@ -200,7 +199,7 @@ addToExistList(){
 cy.contains('h2', "Please select list").should('exist');
 this.clickOnAllCheckbox();
 cy.wait(500);
-cy.contains('.vc-dialog-footer > .vc-button--color--primary', "Save")
+cy.contains(CartPageLocators.DIALOG_FOOTER, "Save")
 .should('be.enabled')
 .click();
 cy.wait(1000);

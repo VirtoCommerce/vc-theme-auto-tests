@@ -77,9 +77,9 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
 updateQuantity(productIndex, quantity) {
   cy.log(`Updating quantity for product ${productIndex} to ${quantity}`);
   cy.get(CartPageLocators.CART_LINE_ITEMS)
-    .eq(productIndex - 1)
+    .eq(productIndex)
     .within(() => {
-      cy.get(CartPageLocators.QUANTITY_INPUT).clear().type(quantity, {delay: 100});
+      cy.get(CartPageLocators.QUANTITY_INPUT).eq(productIndex).clear().type(quantity, {delay: 100});
     });
 }
 
@@ -113,8 +113,8 @@ validateCartTotals() {
         return cy.xpath('(//span[@class=\'vc-product-price__actual\']//span)[2]')
           .invoke('text')
           .then(text => {
-            const price = parseFloat(text.replace(/[^0-9.]/g, ''));
-            const subtotal = price * quantity;
+            const price = parseFloat(text.replace(/[^0-9.]/g, '')).toFixed(2);
+            const subtotal = parseFloat((price * quantity)).toFixed(2);
             cy.log(`Item price: $${price}`);
             cy.log(`Item subtotal: $${subtotal}`);
             
@@ -124,7 +124,7 @@ validateCartTotals() {
                 .invoke('text')
                 .then(subtotalText => {
                   const displayedSubtotal = parseFloat(subtotalText.replace(/[^0-9.]/g, ''));
-                  expect(displayedSubtotal).to.equal(subtotal);
+                  expect(parseFloat(displayedSubtotal)).to.equal(parseFloat(subtotal));
                   cy.log(`Displayed subtotal: $${displayedSubtotal}`);
                 });
             });

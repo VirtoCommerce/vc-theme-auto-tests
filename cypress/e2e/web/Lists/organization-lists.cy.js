@@ -1,12 +1,11 @@
 import CatalogPage from "../../../support/page_objects/CatalogPage/CatalogPage";
-import LoginPage from "../../../support/page_objects/LoginPage/LoginPage";
+import LoginPage from "../../../support/page_objects/LoginPage/LoginPage"; 
 import userData from "../../Variables/userData";
-import TestData from "../../Variables/TestData";
 import Lists from "../../../support/page_objects/Account/Lists/ListsPage";
 import CartPage from "../../../support/page_objects/CartPage/CartPage";
 import OrganizationLists from "../../../support/page_objects/Account/Lists/OrganizationLists";
 import AuthLogin from "../../../support/navigation/AuthLogin";
-import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";    
+import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 
 describe('Private/Shared lists', ()=> {
 

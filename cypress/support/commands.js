@@ -1,5 +1,6 @@
 import AuthLogin from "./navigation/AuthLogin";
 import  { CartPageLocators } from "./page_objects/CartPage/CartPageLocators/CartPageLocators";
+import { CatalogPageLocators } from "./page_objects/CatalogPage/CatalogLocators";
 require('cypress-xpath');
 import 'cypress-if'
 import 'cypress-real-events/support'
@@ -69,7 +70,7 @@ cy.get(locator).should('not.have.text', 'Digital product');
 
 Cypress.Commands.add('switchProductView', (viewLabel) => {
 
-cy.get('.space-x-2 > .text-primary')
+cy.get('button[class="vc-tab-switch__button"]')
 .contains(viewLabel)
 .click();
 })
@@ -89,7 +90,7 @@ cy.location('pathname').should('eq', "/catalog");
 
 Cypress.Commands.add('clickOnActiveDialogButton', () => {
 
-cy.get('.vc-dialog-footer > .vc-button--color--primary').should('be.enabled').click();
+cy.get('.vc-dialog-footer__container > .vc-button--color--primary').should('be.enabled').click();
 
 })
 

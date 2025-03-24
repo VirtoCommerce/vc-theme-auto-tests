@@ -5,7 +5,7 @@ EMPTY_ICON: '.vc-empty-view__icon',
 LISTS_TAB: 'a[href="/account/lists"]',
 ROUTER_LINK: '.router-link-active > .account-navigation-item__text',
 LISTS_TITLE: 'a[class="truncate text-base font-bold text-[--link-color] hover:text-[--link-hover-color]"]',
-SETTINGS_WHEEL: '.vc-dropdown-menu__trigger > .vc-button',
+SETTINGS_WHEEL: '.absolute > .vc-popover > .vc-popover__trigger > .vc-dropdown-menu__trigger > .vc-button',
 DROP_DOWN: '.vc-dropdown-menu__list',
 DROP_DOWN_ITEM: '.vc-menu-item',
 REMOVE_BUTTON: '.vc-line-item__remove-button',
@@ -19,5 +19,6 @@ LIST_SETTINGS: "List settings",
 LIST_NAME: 'input[aria-label="List name"]',
 NEXT_PAGE_BUTTON: '.vc-pagination__button--next',
 PREVIOUS_PAGE_BUTTON: '.vc-pagination__nav > .vc-button--disabled'
+
 
 }

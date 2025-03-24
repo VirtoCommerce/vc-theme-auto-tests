@@ -21,8 +21,7 @@ cy.get('input[aria-checked="false"]').should('have.value', 'false'); // Ensure s
 cy.get(CartPageLocators.DIALOG_TITLE).should('have.text', 'New List');
 cy.get(ListsLocators.LIST_NAME).type(Lists_data.lists[0].name1);
 cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
-cy.get(CartPageLocators.DIALOG_FOOTER).should('have.text', 'Create list').click();
-cy.wait(500);
+cy.get(CartPageLocators.DIALOG_FOOTER).should('be.enabled').click();
 cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list');
 
@@ -50,7 +49,8 @@ cy.get(ListsLocators.LIST_NAME).type(Lists_data.lists[3].name4);
 cy.get('textarea').type(Lists_data.lists[3].description4 + ' ' + randomWord + randomNumber);
 this.toggleSwitcher();
     
-cy.contains(CartPageLocators.DIALOG_FOOTER, 'Create list').click();
+cy.get(CartPageLocators.DIALOG_FOOTER).click();
+cy.wait(1000);
 cy.contains(CartPageLocators.DIALOG_TITLE, 'New List').should('not.exist');
 cy.log('Check created list');
     
@@ -100,9 +100,9 @@ cy.contains('button', 'Make shared');
 cy.contains('button', 'Save').should('be.disabled');
 cy.get(ListsLocators.LIST_NAME).clear();
 cy.get(ListsLocators.LIST_NAME).type(randomWord + randomNumber);
-cy.get('textarea').type(Lists_data.lists[0].description1 + ' ' + randomWord + randomNumber);
+cy.get('textarea').type(randomWord + randomNumber);
 cy.get('textarea').clear();
-cy.get('textarea').type(Lists_data.lists[1].description2 + ' ' + randomWord + randomNumber);
+cy.get('textarea').type(randomWord + randomNumber);
 this.toggleSwitcher();
 cy.get(CartPageLocators.DIALOG_FOOTER).should('be.enabled').click();
 cy.contains(CartPageLocators.DIALOG_TITLE, ListsLocators.LIST_SETTINGS).should('not.exist');

@@ -53,7 +53,7 @@ describe('Personal Lists', () => {
     cy.clickOnButton("Cancel");
   });
 
-  it.only('should add multiple products to existing list from List view', () => {
+  it('should add multiple products to existing list from List view', () => {
     listsPage.createListData();
     catalogPage.visit(CATALOG);
     cy.switchProductView('List');
@@ -61,7 +61,7 @@ describe('Personal Lists', () => {
     listsPage.checkNewList();
   });
 
-  it.only('should create lists, add products and delete lists', () => {
+  it('should create lists, add products and delete lists', () => {
     // Create initial list
     listsPage.createPersonalList(Lists_data.lists[0].name1, Lists_data.lists[0].description1);
     listsPage.goToListDetailsPage();
@@ -95,7 +95,7 @@ describe('Personal Lists', () => {
     listsPage.checkNewList();
   });
 
-  it.only('should add products from list to cart', () => {
+  it('should add products from list to cart', () => {
     listsPage.createListData();
     productPage.visit(CATEGORY);
     cy.get('div[search-params]').should('be.visible');
@@ -123,7 +123,7 @@ describe('Personal Lists', () => {
     cartPage.confirmClearCart();
   });
 
-  it.only('should handle list product management', () => {
+  it('should handle list product management', () => {
     // Initial setup - prepare products once
     listsPage.createListData();
     catalogPage.visit(CATALOG);
@@ -169,7 +169,7 @@ describe('Anonymous Lists', () => {
     AuthLogin.setDimensions();
   });
 
-  it.only('should handle anonymous list interactions', () => {
+  it('should handle anonymous list interactions', () => {
     catalogPage.visit(CATALOG);
     catalogPage.addToListAnonim();
     productPage.openProductPage();

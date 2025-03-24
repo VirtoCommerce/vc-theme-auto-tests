@@ -1,7 +1,6 @@
 import { ListsLocators } from "../ListsLocators";
 import { CartPageLocators } from "../../CartPage/CartPageLocators/CartPageLocators";
 import Lists_data from "./Lists_data";
-import { CatalogPageLocators } from "../../CatalogPage/CatalogLocators";
 
 class Lists {
   goToListTab() {
