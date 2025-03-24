@@ -41,7 +41,7 @@ describe('Cart Operations', () => {
     cartPage.validateCartTotals();
 
     // Update quantity for second product
-    cartPage.updateQuantity(1, 2);
+    cartPage.updateQuantity(2, 2);
     cy.wait(1000); 
     cartPage.validateCartTotals();
 

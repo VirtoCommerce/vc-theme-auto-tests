@@ -77,9 +77,9 @@ cy.get(CartPageLocators.HEADER_CART_LINK).find('.vc-badge')
 updateQuantity(productIndex, quantity) {
   cy.log(`Updating quantity for product ${productIndex} to ${quantity}`);
   cy.get(CartPageLocators.CART_LINE_ITEMS)
-    .eq(productIndex)
+    .eq(productIndex-1)
     .within(() => {
-      cy.get(CartPageLocators.QUANTITY_INPUT).eq(productIndex).clear().type(quantity, {delay: 100});
+      cy.get(CartPageLocators.QUANTITY_INPUT).clear().type(quantity, {delay: 100});
     });
 }
 
