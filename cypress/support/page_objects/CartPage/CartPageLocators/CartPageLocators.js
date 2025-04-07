@@ -4,7 +4,7 @@ export const CartPageLocators = {
   CHECKBOX: 'input[type="checkbox"]',
   REMOVE_SELECTED_BUTTON: '.vc-line-items__foot > .vc-button--solid--primary',
   CHECKOUT_BUTTON_DISABLED:'#order-summary > .vc-widget__slot-container > .vc-widget__slot > .vc-button--size--md',
-  CART_LINE_ITEMS: '.vc-line-items',
+  CART_LINE_ITEMS: 'div[class="vc-line-item__main"]',
   DIALOG_TITLE: '.vc-dialog-header__title',
   DIALOG_FOOTER: '.vc-dialog-footer__container > .vc-button--color--primary',
   EMPTY_CART_LAYOUT: '.vc-empty-page__main',

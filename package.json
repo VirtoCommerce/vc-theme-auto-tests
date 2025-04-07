@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^14.2.0",
+    "cypress": "^14.2.1",
     "cypress-if": "^1.10.5",
     "cypress-testrail": "^2.10.0",
     "cypress-xpath": "^2.0.1",
-    "vite": "^5.3.2",
+    "vite": "^6.2.5",
     "vue": "^3.4.31"
   },
   "dependencies": {
