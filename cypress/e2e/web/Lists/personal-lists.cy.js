@@ -136,9 +136,9 @@ describe('Personal Lists', () => {
     listsPage.goToListTab();
     listsPage.goToListDetailsPage();
 
-    // Test quantity updates and list navigation
-    listsPage.updateQuantityInList();
-    listsPage.leaveList();
+    // Test quantity updates and list navigation  
+    listsPage.compareValues();    
+    listsPage.leaveList();   
 
     // Test removing products
     listsPage.goToListDetailsPage();

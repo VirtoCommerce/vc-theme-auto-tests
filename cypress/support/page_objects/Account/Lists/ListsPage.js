@@ -6,8 +6,8 @@ class Lists {
   goToListTab() {
     cy.log('Go to Lists tab');
     cy.get(ListsLocators.LISTS_TAB)
-      .should('exist')
-      .last()
+      .first()
+      .should('exist')      
       .scrollIntoView()
       .should('be.visible')
       .click({force: true});
@@ -57,6 +57,9 @@ class Lists {
   goToListDetailsPage() {
     cy.log('Open list details page');
     cy.get(ListsLocators.LISTS_TITLE).last().click();
+    cy.wait(1000);
+    cy.url().should('include', '/account/lists/');
+   
   }
 
   createPersonalList(listName, listDescription) {
@@ -378,27 +381,87 @@ class Lists {
     this.checkListDetailsPage();
   }
 
-  changeQuantity(value) {
-    cy.log('Finding first visible product with quantity input field');
+  valueChecker() {
+    
+    cy.get(ListsLocators.INPUT)
+      .should('exist')
+      .and('be.visible')
+      .first()
+      .scrollIntoView()
+      .invoke('val')
+      .then((value) => {
+        return value;
+      });
+  }
+
+  compareValues() {
+    let value1 = '';
+    let value2 = '';
+    cy.log('Comparing values');
+    
+    // First get value1
+    cy.get(ListsLocators.INPUT)
+      .should('exist')
+      .and('be.visible')
+      .first()
+      .scrollIntoView()
+      .invoke('val')
+      .then((value) => {
+        // Convert string to integer
+        const intValue = parseInt(value, 10);  
+        cy.log(`Value1 is: ${intValue}`);
+        value1 = intValue;
+        
+        // After getting value1, change quantity and get value2
+        this.changeQuantity(Math.floor(Math.random() * 20) + 1);
+        cy.wait(1000);
+        
+        cy.get(ListsLocators.INPUT)
+          .should('exist')
+          .and('be.visible')
+          .first()
+          .scrollIntoView()
+          .invoke('val')    
+          .then((value) => {
+            const intValue = parseInt(value, 10);
+            cy.log(`Value2 is: ${intValue}`);
+            value2 = intValue;
+            
+            // Now compare the values
+            cy.wrap(value1).should('not.eq', value2, 'Values should be different');
+            if (value1 !== value2) {
+              cy.log(`Values differ as expected: ${value1} vs ${value2}`);      
+            } else {
+              cy.log(`Values are unexpectedly the same: ${value1} vs ${value2}`);
+              this.changeQuantity(Math.floor(Math.random() * 20) + 1);
+            }
+          });
+      });
+  }
+  
+
+  changeQuantity(value2) {
+    cy.log('Finding first visible product with quantity input field');     
     cy.get(ListsLocators.INPUT)
       .should('exist')
       .and('be.visible')
       .first()
       .scrollIntoView()
       .clear()
-      .type(value, { delay: 100 })
-      .should('have.value', value);
+      .type(value2, { delay: 100 })
+      .should('have.value', value2);
+     
   }
 
-  saveChanges(action) {
-    this.changeQuantity(Math.floor(Math.random() * 20) + 1);
-    cy.wait(1000);
+  saveChanges(action) {    
+    
     cy.contains('button', 'Save changes').should('be.enabled').click();
     this.saveChangesPopUp();
     cy.clickOnButton(action);
     cy.get(CartPageLocators.DIALOG_TITLE).should('not.exist');
     cy.wait(1000);
     cy.contains('button', 'Save changes').should('be.disabled');
+   
   }
 
   saveChangesPopUp() {
@@ -406,12 +469,6 @@ class Lists {
     cy.get('.vc-dialog-content').contains('Would you like to save changes?');
     cy.contains('button', 'Yes').should('be.enabled');
     cy.contains('button', 'No').should('be.enabled');
-  }
-
-  updateQuantityInList() {
-    cy.log('Check qty update > Save changes');
-    this.saveChanges('No');
-    this.saveChanges('Yes');
   }
 
   leaveList() {
