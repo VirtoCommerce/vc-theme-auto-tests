@@ -1,4 +1,5 @@
 import { ProductPageLocators } from './Locations/ProductPageLocators'
+
 class ProductPage {
   visit(path) {
     cy.visit(`${Cypress.env('PLATFORM_URL')}/${path}`);
@@ -8,7 +9,7 @@ class ProductPage {
   }
 
   openProductPage(){
-    cy.get('.vc-popover > .vc-popover__trigger > .my-px')
+    cy.get(ProductPageLocators.PRODUCT_BUTTON)
     .eq(0)
     .invoke('removeAttr', 'target')
     .click();
