@@ -10,7 +10,7 @@ describe('Cart Operations', () => {
   const cartPage = new CartPage();
   const productPage = new ProductPage();
   const loginPage = new LoginPage();
-  const CATALOG = 'catalog';
+  const CATALOG = 'jewelry-and-gems';
   const PRODUCT = 'snacks';
 
   beforeEach(() => {
@@ -36,22 +36,22 @@ describe('Cart Operations', () => {
     cartPage.cartLineItemsCheck();
 
     // Update quantity for first product
-    cartPage.updateQuantity(1, 3);
+    cartPage.updateQuantity(0, 4);
     cy.wait(1000);
     cartPage.validateCartTotals();
 
     // Update quantity for second product
-    cartPage.updateQuantity(2, 2);
+    cartPage.updateQuantity(1, 2);
     cy.wait(1000); 
     cartPage.validateCartTotals();
 
     // Remove first product
-    cartPage.removeProduct(1);
+    cartPage.removeProduct(0);
     cy.wait(1000);
     cartPage.validateCartTotals();    
 
     // Remove second product
-    cartPage.removeProduct(2);       
+    cartPage.removeProduct(1);       
     cy.wait(1000);
 
   
