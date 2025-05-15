@@ -46,7 +46,7 @@ export class AnonymousCheckout {
     cy.get('.vc-dropdown-menu__trigger').should('be.visible');
     cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a delivery method");
     cy.get('.vc-select__button').click();
-    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
+    cy.xpath(CheckoutFlowLocators.DROPDOWN).should('be.visible');    
     cy.contains('span', method).click();
   }
 
@@ -60,14 +60,14 @@ export class AnonymousCheckout {
     cy.get('.vc-dropdown-menu__trigger').should('be.visible');
     cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a payment method");
     cy.get('.vc-select__button').click();
-    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible')
+    cy.xpath(CheckoutFlowLocators.DROPDOWN).should('be.visible')
       .then($list => {
         // Check if specified method exists in dropdown
         if ($list.find(`span:contains("${method}")`).length > 0) {
           cy.contains('span', method).click();
         } else {
           // If not found, click first available payment method
-          cy.get('ul[class="vc-dropdown-menu__list"] li').first().click();
+          cy.xpath(CheckoutFlowLocators.DROPDOWN).first().click();
         }
       });
   }
@@ -135,7 +135,7 @@ export class PersonalCheckout {
     cy.get('.vc-dropdown-menu__trigger').should('be.visible');
     cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a delivery method");
     cy.get('.vc-select__button').click();
-    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
+    cy.xpath(CheckoutFlowLocators.DROPDOWN).should('be.visible');    
     cy.contains('span', method).click();
   }
 
@@ -192,7 +192,7 @@ cy.contains('Billing');
     cy.get('.vc-dropdown-menu__trigger').should('be.visible');
     cy.get('.vc-select__button-content > .flex').should('contain.text'," Select a payment method");
     cy.get('.vc-select__button').click();
-    cy.get('ul[class="vc-dropdown-menu__list"]').should('be.visible');    
+    cy.xpath(CheckoutFlowLocators.DROPDOWN).should('be.visible');    
     cy.contains('span', method).click();
   }
 

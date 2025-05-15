@@ -8,5 +8,8 @@ export const CheckoutFlowLocators = {
   ADDRESS_EMAIL: 'input[aria-label="Email"]',
   ADDRESS_ZIP: 'input[aria-label="ZIP / Postal code"]',
   ADDRESS_CITY: 'input[aria-label="City"]',
-  ADDRESS: 'input[aria-label="Address"]'
+  ADDRESS: 'input[aria-label="Address"]',
+  DROPDOWN: '//ul[contains(@class, "vc-dropdown-menu__list")]'
+ 
+ 
 };

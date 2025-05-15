@@ -17,8 +17,8 @@ removeAddress() {
 
 cy.get('tr[class="even:bg-neutral-50"]').should('have.length', 1);
 cy.get(AddressesLocators.ACTION_BTN).click();
-cy.get(AddressesLocators.DROP_DOWN).should('be.visible');
-cy.get(AddressesLocators.DROP_DOWN_ITEM).contains('Delete').click();
+cy.xpath(AddressesLocators.DROP_DOWN).should('be.visible');
+cy.xpath(AddressesLocators.DROP_DOWN_ITEM).contains('Delete').click();
 cy.confirmAction('Delete address', 'OK');
 
 }
