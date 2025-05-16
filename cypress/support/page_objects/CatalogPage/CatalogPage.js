@@ -316,7 +316,7 @@ cy.get(CatalogPageLocators.SHOW_IN_STOCK).click();
 
 }
 
-scrollUntilFindAddToCart(maxScrolls = 10, amount) {
+scrollUntilFindAddToCart(maxScrolls = 50, amount) {
   cy.log('Scrolling to find an enabled Add to Cart button');
 
   let attempts = 0;

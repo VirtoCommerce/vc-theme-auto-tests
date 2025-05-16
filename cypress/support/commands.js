@@ -91,6 +91,7 @@ cy.location('pathname').should('eq', "/catalog");
 Cypress.Commands.add('clickOnActiveDialogButton', () => {
 
 cy.get('.vc-dialog-footer__container > .vc-button--color--primary').should('be.enabled').click();
+cy.checkLoading('.vc-loader-overlay__spinner');
 
 })
 

@@ -11,6 +11,7 @@ import AuthLogin from "../../../support/navigation/AuthLogin";
 import ProductPage from "../../../support/page_objects/ProductPage/ProductPage";
 
 const CATEGORY_WITH_DIGITAL= 'soft-drinks/soda';
+const CATEGORY= 'jewelry-and-gems';
 
 describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON', () => {
 
@@ -156,8 +157,8 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
 
     it.only('C367723: select All items > create an order', () => {
 
-    catalogPage.visit('catalog');
-    catalogPage.scrollUntilFindAddToCart(10, 10);
+    catalogPage.visit(CATEGORY);
+    catalogPage.scrollUntilFindAddToCart(50, 10);
     cartPage.visitByCartClick();
     cy.checkLoading('.vc-loader-overlay__spinner');
     cartPage.cartLineItemsCheck();
