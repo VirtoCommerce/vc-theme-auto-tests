@@ -19,7 +19,7 @@ describe('Personal Lists', () => {
   const productCard = new ProductCard();
 
   const CATEGORY = 'printers';
-  const CATALOG = 'catalog';
+  const CATALOG = 'accessories';
 
   beforeEach(() => {
     cy.clearCookies();

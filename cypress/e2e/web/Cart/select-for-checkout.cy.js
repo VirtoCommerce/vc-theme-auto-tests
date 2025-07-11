@@ -172,7 +172,7 @@ describe('Select for checkout. Default "Selected for checkout" state (XAPI) = ON
     cartPage.checkout();
     cy.checkLoading('.vc-loader-overlay__spinner');
     personalCheckout.checkShippingPage();    
-    //personalCheckout.selectShippingAddress();
+    personalCheckout.addNewShippingAddress();
     personalCheckout.selectDelivery('Fixed Rate (Ground)');
     personalCheckout.leaveComment('place-order.cy test');
     cy.checkLoading('.vc-loader-overlay__spinner');

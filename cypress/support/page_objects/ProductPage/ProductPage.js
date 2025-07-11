@@ -9,9 +9,8 @@ class ProductPage {
   }
 
   openProductPage(){
-    cy.get(ProductPageLocators.PRODUCT_BUTTON)
+    cy.get(ProductPageLocators.PRODUCT_TITLE)
     .eq(0)
-    .invoke('removeAttr', 'target')
     .click();
   }
 
