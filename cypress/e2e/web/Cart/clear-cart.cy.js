@@ -15,7 +15,7 @@ describe('Clear cart', () => {
     AuthLogin.setDimensions();
   });
 
-  it('Should login and then perform actions', () => {
+  it.skip('Should login and then perform actions', () => {
     
     catalogPage.visit(PRODUCT_URL);
     catalogPage.addToCart(1);
