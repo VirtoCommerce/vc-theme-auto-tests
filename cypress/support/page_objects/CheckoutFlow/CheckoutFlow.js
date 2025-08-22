@@ -51,6 +51,7 @@ export class AnonymousCheckout {
   }
 
   proceedToBilling() {
+  cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).should('be.enabled');
   cy.get(CheckoutFlowLocators.PROCEED_TO_BILLING).click();
   cy.contains('h1', 'Billing').should('be.visible'); 
   

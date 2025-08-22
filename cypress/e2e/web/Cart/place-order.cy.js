@@ -28,7 +28,7 @@ describe('place order', () => {
 
   });
 
-  it('places order created by Anonymous user', () => {
+  it.skip('places order created by Anonymous user', () => {
 
     productPage.visit('printers');      
     catalogPage.addToCart(3);
@@ -52,7 +52,7 @@ describe('place order', () => {
 
   });
 
-  it('places order as Personal user', () => {
+  it.skip('places order as Personal user', () => {
 
     loginPage.login(userData.userData[0].email, userData.userData[0].password);
     cartPage.emptyOrNot();

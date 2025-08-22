@@ -1,7 +1,7 @@
 export const CheckoutFlowLocators = {
   SELECT_SHIPPING_ADDRESS_BUTTON: 'button[class="vc-address-selection__link"]', 
   SELECT_COUNTRY_INPUT: 'input[placeholder="Select your country"]',
-  PROCEED_TO_BILLING: '.vc-widget__slot > .vc-button > .vc-button__content',
+  PROCEED_TO_BILLING: 'a[data-test-id="checkout.billing-button"]',
   REVIEW_ORDER: '.vc-button',
   ADDRESS_FIRST_NAME: 'input[aria-label="First name"]',
   ADDRESS_LAST_NAME: 'input[aria-label="Last name"]',

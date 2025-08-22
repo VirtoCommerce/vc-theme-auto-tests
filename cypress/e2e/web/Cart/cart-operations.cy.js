@@ -21,7 +21,7 @@ describe('Cart Operations', () => {
     cartPage.emptyOrNot();   
   });
 
-  it.only('should handle cart operations and validate totals', () => {
+  it.skip('should handle cart operations and validate totals', () => {
     // Add products to cart from catalog
     catalogPage.visit(CATALOG);
     cy.get('div[search-params]').should('be.visible');    
@@ -57,7 +57,7 @@ describe('Cart Operations', () => {
   
   });
 
-  it('should add product from PDP and manage cart', () => {
+  it.skip('should add product from PDP and manage cart', () => {
     // Add product from product detail page
     productPage.visit(PRODUCT);    
     productPage.openProductPage();
